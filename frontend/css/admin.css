@@ -43,6 +43,7 @@ p {
     outline: none;
     background-color: var(--shade-primary-color);
     border-bottom: var(--primary-color);
+    transition: background-color 1s;
 }
 
 .button {
