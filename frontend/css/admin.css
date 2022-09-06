@@ -5,6 +5,7 @@
     --primary-color: #ad066a;
     --shade-primary-color: #f5bcc4;
     --shadow: 0 0 5px lightgrey;
+    --button-shadow: 0 0 5px grey;
 }
 
 * {
@@ -54,7 +55,7 @@ p {
     border-radius: 5px;
     border: none;
     outline: none;
-    /* box-shadow: var(--shadow); */
+    box-shadow: var(--button-shadow);
 }
 
 .dashboard {
@@ -77,8 +78,6 @@ form {
     margin-top: 1em;
     display: flex;
     flex-direction: column;
-    /* display: grid; */
-    /* grid-template-columns: 1fr 2fr; */
 }
 
 form label {
