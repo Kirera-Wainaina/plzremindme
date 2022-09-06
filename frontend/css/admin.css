@@ -2,8 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Reggae+One&display=swap');
 
 :root {
-    --primary-color: rgb(191, 34, 55);
+    --primary-color: #ad066a;
     --shade-primary-color: #f5bcc4;
+    --shadow: 0 0 5px lightgrey;
 }
 
 * {
@@ -19,7 +20,7 @@ p {
 }
 
 .card {
-    box-shadow: 0 0 5px lightgrey;
+    box-shadow: var(--shadow);
     border-radius: 5px;
     padding: 0.7em;
 }
@@ -48,6 +49,12 @@ p {
 
 .button {
     font-size: 1.2em;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    /* box-shadow: var(--shadow); */
 }
 
 .dashboard {
