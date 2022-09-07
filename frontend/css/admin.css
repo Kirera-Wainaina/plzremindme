@@ -31,7 +31,7 @@ p {
     height: 2em;
     font-size: 1.3em;
     border: none;
-    border-bottom: 1px solid var(--shade-primary-color);
+    border-bottom: 2px solid var(--shade-primary-color);
     width: 95%;
 }
 
