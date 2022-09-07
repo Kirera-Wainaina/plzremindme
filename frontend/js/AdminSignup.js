@@ -44,25 +44,31 @@ var AdminSignup = function (_React$Component) {
                     'label',
                     null,
                     'First Name ',
-                    React.createElement('input', { className: 'input', type: 'text' })
+                    React.createElement('input', { required: true, className: 'input', type: 'text' })
                 ),
                 React.createElement(
                     'label',
                     null,
                     'Email ',
-                    React.createElement('input', { className: 'input', type: 'email' })
+                    React.createElement('input', { required: true, className: 'input', type: 'email' })
                 ),
                 React.createElement(
                     'label',
                     null,
                     'Password ',
-                    React.createElement('input', { className: 'input', type: 'password' })
+                    React.createElement('input', { required: true, className: 'input', type: 'password' })
+                ),
+                React.createElement(
+                    'label',
+                    null,
+                    'Repeat Password ',
+                    React.createElement('input', { required: true, className: 'input', type: 'password' })
                 ),
                 React.createElement(
                     'label',
                     null,
                     'Admin Password ',
-                    React.createElement('input', { className: 'input', type: 'password' })
+                    React.createElement('input', { required: true, className: 'input', type: 'password' })
                 ),
                 React.createElement('input', { type: 'submit', value: 'Submit', className: 'button' })
             );
