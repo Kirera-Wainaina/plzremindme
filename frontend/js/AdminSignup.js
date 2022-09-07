@@ -1,5 +1,7 @@
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -18,16 +20,24 @@ var AdminSignup = function (_React$Component) {
             firstName: null,
             email: null,
             password: null,
+            repeatPassword: null,
             adminPassword: null
         };
         _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.handleChange = _this.handleChange.bind(_this);
         return _this;
     }
 
     _createClass(AdminSignup, [{
+        key: 'handleChange',
+        value: function handleChange(e) {
+            this.setState(_defineProperty({}, e.target.name, e.target.value));
+        }
+    }, {
         key: 'handleSubmit',
         value: function handleSubmit(e) {
             e.preventDefault();
+            console.log(this.state);
         }
     }, {
         key: 'render',
@@ -43,32 +53,32 @@ var AdminSignup = function (_React$Component) {
                 React.createElement(
                     'label',
                     null,
-                    'First Name ',
-                    React.createElement('input', { required: true, className: 'input', type: 'text' })
+                    'First Name',
+                    React.createElement('input', { required: true, className: 'input', type: 'text', name: 'firstName', onChange: this.handleChange })
                 ),
                 React.createElement(
                     'label',
                     null,
-                    'Email ',
-                    React.createElement('input', { required: true, className: 'input', type: 'email' })
+                    'Email',
+                    React.createElement('input', { required: true, className: 'input', type: 'email', name: 'email', onChange: this.handleChange })
                 ),
                 React.createElement(
                     'label',
                     null,
-                    'Password ',
-                    React.createElement('input', { required: true, className: 'input', type: 'password' })
+                    'Password',
+                    React.createElement('input', { required: true, className: 'input', type: 'password', name: 'password', onChange: this.handleChange })
                 ),
                 React.createElement(
                     'label',
                     null,
-                    'Repeat Password ',
-                    React.createElement('input', { required: true, className: 'input', type: 'password' })
+                    'Repeat Password',
+                    React.createElement('input', { required: true, className: 'input', type: 'password', name: 'repeatPassword', onChange: this.handleChange })
                 ),
                 React.createElement(
                     'label',
                     null,
-                    'Admin Password ',
-                    React.createElement('input', { required: true, className: 'input', type: 'password' })
+                    'Admin Password',
+                    React.createElement('input', { required: true, className: 'input', type: 'password', name: 'adminPassword', onChange: this.handleChange })
                 ),
                 React.createElement('input', { type: 'submit', value: 'Submit', className: 'button' })
             );
