@@ -6,7 +6,8 @@ export default class AdminSignup extends React.Component {
             email: null,
             password: null,
             repeatPassword: null,
-            adminPassword: null
+            adminPassword: null,
+            passwordIsSame: true
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -18,13 +19,20 @@ export default class AdminSignup extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log(this.state)
+        this.comparePassword();
+    }
+
+    comparePassword() {
+        this.state.password === this.state.repeatPassword 
+            ? this.setState({ passwordIsSame: true }) 
+            : this.setState({ passwordIsSame: false })
     }
 
     render() {
         return (
             <form className='card' onSubmit={this.handleSubmit}>
                 <h2>Signup</h2>
+                {!this.state.passwordIsSame && <PasswordError />}
                 <label>First Name 
                     <input required className="input" type='text' name='firstName' onChange={this.handleChange}/>
                 </label>
@@ -44,4 +52,12 @@ export default class AdminSignup extends React.Component {
             </form>
         )
     }
+}
+
+function PasswordError() {
+    return (
+        <div className="error">
+            <p>The 'Repeat Password' should match 'Password'</p>
+        </div>
+    )
 }

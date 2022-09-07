@@ -21,7 +21,8 @@ var AdminSignup = function (_React$Component) {
             email: null,
             password: null,
             repeatPassword: null,
-            adminPassword: null
+            adminPassword: null,
+            passwordIsSame: true
         };
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         _this.handleChange = _this.handleChange.bind(_this);
@@ -37,7 +38,12 @@ var AdminSignup = function (_React$Component) {
         key: 'handleSubmit',
         value: function handleSubmit(e) {
             e.preventDefault();
-            console.log(this.state);
+            this.comparePassword();
+        }
+    }, {
+        key: 'comparePassword',
+        value: function comparePassword() {
+            this.state.password === this.state.repeatPassword ? this.setState({ passwordIsSame: true }) : this.setState({ passwordIsSame: false });
         }
     }, {
         key: 'render',
@@ -50,6 +56,7 @@ var AdminSignup = function (_React$Component) {
                     null,
                     'Signup'
                 ),
+                !this.state.passwordIsSame && React.createElement(PasswordError, null),
                 React.createElement(
                     'label',
                     null,
@@ -89,3 +96,16 @@ var AdminSignup = function (_React$Component) {
 }(React.Component);
 
 export default AdminSignup;
+
+
+function PasswordError() {
+    return React.createElement(
+        'div',
+        { className: 'error' },
+        React.createElement(
+            'p',
+            null,
+            'The \'Repeat Password\' should match \'Password\''
+        )
+    );
+}
