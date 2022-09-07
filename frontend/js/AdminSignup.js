@@ -14,6 +14,12 @@ var AdminSignup = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (AdminSignup.__proto__ || Object.getPrototypeOf(AdminSignup)).call(this, props));
 
+        _this.state = {
+            firstName: null,
+            email: null,
+            password: null,
+            adminPassword: null
+        };
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         return _this;
     }
@@ -30,9 +36,15 @@ var AdminSignup = function (_React$Component) {
                 'form',
                 { className: 'card', onSubmit: this.handleSubmit },
                 React.createElement(
-                    'p',
+                    'h2',
                     null,
-                    'Please Sign up. Login if you have an account'
+                    'Signup'
+                ),
+                React.createElement(
+                    'label',
+                    null,
+                    'First Name ',
+                    React.createElement('input', { className: 'input', type: 'text' })
                 ),
                 React.createElement(
                     'label',
