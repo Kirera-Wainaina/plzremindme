@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 
 export default class AdminSignup extends React.Component {
     constructor(props) {
@@ -22,12 +22,23 @@ export default class AdminSignup extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         this.comparePassword();
+        this.saveCredentials();
     }
 
     comparePassword() {
         this.state.password === this.state.repeatPassword 
             ? this.setState({ passwordIsSame: true }) 
             : this.setState({ passwordIsSame: false })
+    }
+
+    saveCredentials() {
+        if (this.state.passwordIsSame) {
+            const response = fetch('/api/AdminSignup', {
+                method: 'POST',
+                body: JSON.stringify(this.state),
+                headers: { 'content-type': 'application/json'}
+            });
+        }
     }
 
     render() {
