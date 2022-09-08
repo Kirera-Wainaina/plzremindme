@@ -2,7 +2,7 @@ const http = require('http');
 const http2 = require('http2');
 const fs = require('fs');
 const path = require('path');
-const database = require('database');
+const dataConnect = require('database');
 
 const mimes = require('./utils/MIMETypes');
 
@@ -88,10 +88,22 @@ class APIResponder {
     constructor(stream, header) {
         this.stream = stream;
         this.header = header;
-        this.client = database.client;
+        this.mongoClient = dataConnect.mongoClient;
+        this.db = null;
+        this.collection = null;
     }
 
+    set database(name) {
+        this.mongoClient.connect((error, client) => {
+            if (error) console.log(error);
 
+            this.db = client.db(name)
+        });
+    }
+
+    set collection(collectionName) {
+        this.collection = this.db.collection(collectionName);
+    }
 }
 
 function createLog(stream, headers) {
