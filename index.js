@@ -2,12 +2,16 @@ const http = require('http');
 const http2 = require('http2');
 const fs = require('fs');
 const path = require('path');
-const dataConnect = require('database');
+const util = require('util')
+
+const MongoClient = require('mongodb').MongoClient;
 
 const mimes = require('./utils/MIMETypes');
 
 const dotenv = require('dotenv');
 dotenv.config();
+
+const mongoClient = new MongoClient(process.env.DB_URI);
 
 /* HTTP/2 server and the respective handlers below*/
 const options = {
@@ -34,12 +38,15 @@ function handleFileRoutes(stream, headers) {
 
 function handleAPIRoutes(stream, headers) {
     if (isAPIRoute(headers[':path'])) {
-
+        console.log('api called')
+        const ClassCall = require(`.${headers[':path']}`);
+        const call = new ClassCall(stream, headers);
+        call.log();
     }
 }
 
 function isAPIRoute(route) {
-    if (path.dirname(path.dirname(route)) == '/api') return true;
+    if (path.dirname(route) == '/api') return true;
     return false;
 }
 
@@ -88,21 +95,18 @@ class APIResponder {
     constructor(stream, header) {
         this.stream = stream;
         this.header = header;
-        this.mongoClient = dataConnect.mongoClient;
-        this.db = null;
         this.collection = null;
-    }
-
-    set database(name) {
-        this.mongoClient.connect((error, client) => {
-            if (error) console.log(error);
-
-            this.db = client.db(name)
-        });
+        this.client = null;
     }
 
     set collection(collectionName) {
-        this.collection = this.db.collection(collectionName);
+        mongoClient.connect((error, client) => {
+            if (error) console.log(error);
+
+            this.client = client;
+            this.collection = this.client.db(process.env.DB_NAME)
+                .collection(collectionName)
+        })
     }
 }
 
@@ -142,3 +146,4 @@ exports.handleHTTPErrors = handleHTTPErrors;
 exports.handleFileRoutes = handleFileRoutes;
 exports.FileResponder = FileResponder;
 exports.isAPIRoute = isAPIRoute;
+exports.APIResponder = APIResponder;
