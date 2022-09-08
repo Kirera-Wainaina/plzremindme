@@ -27,6 +27,11 @@ function handleFileRoutes(stream, headers) {
     respond.send();
 }
 
+function isAPIRoute(route) {
+    if (path.dirname(path.dirname(route)) == '/api') return true;
+    return false;
+}
+
 class Responder {
     constructor(stream, headers) {
         this.stream = stream;
@@ -103,3 +108,4 @@ exports.server = server;
 exports.handleHTTPErrors = handleHTTPErrors;
 exports.handleFileRoutes = handleFileRoutes;
 exports.Responder = Responder;
+exports.isAPIRoute = isAPIRoute;
