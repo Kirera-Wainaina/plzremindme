@@ -1,8 +1,6 @@
 const path = require('path');
 const dotenv = require('dotenv');
 const index = require('./index');
-const { hasUncaughtExceptionCaptureCallback } = require('process');
-const { Stream } = require('stream');
 
 dotenv.config()
 
@@ -26,7 +24,7 @@ test('throws received error', () => {
 
 describe('check API route', () => {
     test('is API route', () => {
-        const route = '/api/AdminSignup/saveCredentials';
+        const route = '/api/AdminSignup';
         expect(index.isAPIRoute(route)).toBeTruthy();
     })
 
@@ -40,7 +38,7 @@ describe('Responder class', () => {
     const mockStream = {
         _writable: jest.fn(),
     }
-    const respond = new index.Responder(
+    const respond = new index.FileResponder(
         mockStream, 
         { ':path': '/'});
     const homePath = path.join(__dirname, process.env.INDEX_PATH);
@@ -59,7 +57,7 @@ describe('Responder class', () => {
     test('handle browser paths', () => {
         expect(respond.handleBrowserPaths()).toBe(homePath);
 
-        const respondWithOtherPath = new index.Responder(
+        const respondWithOtherPath = new index.FileResponder(
             {respond: jest.fn()}, 
             {':path': '/admin'});
         expect(respondWithOtherPath.handleBrowserPaths())
@@ -69,7 +67,7 @@ describe('Responder class', () => {
     test('gets file path', () => {
         expect(respond.getFilePath()).toBe(homePath);
 
-        const respondWithOtherPath = new index.Responder(
+        const respondWithOtherPath = new index.FileResponder(
             {respond: jest.fn()}, 
             {':path': '/favicon.ico'});
         expect(respondWithOtherPath.getFilePath())
