@@ -2,6 +2,7 @@ const http = require('http');
 const http2 = require('http2');
 const fs = require('fs');
 const path = require('path');
+const database = require('database');
 
 const mimes = require('./utils/MIMETypes');
 
@@ -20,11 +21,21 @@ server.listen(443, console.log('listening for http/s on 443...'))
 
 server.on('stream', handleFileRoutes);
 
+server.on('stream', handleAPIRoutes);
+
 server.on('stream', createLog);
 
 function handleFileRoutes(stream, headers) {
-    const respond = new Responder(stream, headers);
-    respond.send();
+    if (!isAPIRoute(headers[':path'])) {
+        const respond = new FileResponder(stream, headers);
+        respond.send();
+    }
+}
+
+function handleAPIRoutes(stream, headers) {
+    if (isAPIRoute(headers[':path'])) {
+
+    }
 }
 
 function isAPIRoute(route) {
@@ -32,7 +43,7 @@ function isAPIRoute(route) {
     return false;
 }
 
-class Responder {
+class FileResponder {
     constructor(stream, headers) {
         this.stream = stream;
         this.headers = headers;
@@ -73,6 +84,16 @@ class Responder {
     }
 }
 
+class APIResponder {
+    constructor(stream, header) {
+        this.stream = stream;
+        this.header = header;
+        this.client = database.client;
+    }
+
+
+}
+
 function createLog(stream, headers) {
     console.log(new Date, headers[':path'])
 }
@@ -107,5 +128,5 @@ exports.httpServer = httpServer;
 exports.server = server;
 exports.handleHTTPErrors = handleHTTPErrors;
 exports.handleFileRoutes = handleFileRoutes;
-exports.Responder = Responder;
+exports.FileResponder = FileResponder;
 exports.isAPIRoute = isAPIRoute;
