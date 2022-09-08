@@ -24,6 +24,18 @@ test('throws received error', () => {
     expect(() => index.handleHTTPErrors(new Error)).toThrow();
 })
 
+describe('check API route', () => {
+    test('is API route', () => {
+        const route = '/api/AdminSignup/saveCredentials';
+        expect(index.isAPIRoute(route)).toBeTruthy();
+    })
+
+    test('is not API route', () => {
+        const route = '/';
+        expect(index.isAPIRoute(route)).toBeFalsy();
+    })
+})
+
 describe('Responder class', () => {
     const mockStream = {
         _writable: jest.fn(),
