@@ -18,11 +18,11 @@ const server = http2.createSecureServer(options);
 
 server.listen(443, console.log('listening for http/s on 443...'))
 
-server.on('stream', handleRoutes);
+server.on('stream', handleFileRoutes);
 
 server.on('stream', createLog);
 
-function handleRoutes(stream, headers) {
+function handleFileRoutes(stream, headers) {
     const respond = new Responder(stream, headers);
     respond.send();
 }
@@ -101,5 +101,5 @@ exports.redirectHTTPRequests = redirectHTTPRequests;
 exports.httpServer = httpServer;
 exports.server = server;
 exports.handleHTTPErrors = handleHTTPErrors;
-exports.handleRoutes = handleRoutes;
+exports.handleFileRoutes = handleFileRoutes;
 exports.Responder = Responder;
