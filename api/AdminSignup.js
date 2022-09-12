@@ -26,10 +26,13 @@ class AdminSignup extends index.APIResponder {
         const adminIsMatch = await bcrypt.compare(this.data.adminPassword, process.env.ADMIN_PASSWORD);
         if (adminIsMatch) {
             this.saveToDatabase().then(result => {
-                    if (result.acknowledged) this.respondSuccess()
+                    if (result.acknowledged) this.respond('success')
+            }).catch(error => {
+                console.log(error);
+                this.respond('error')
             })
         } else {
-            this.respondUnauthorized();
+            this.respond('unauthorized');
         }
     }
 }
