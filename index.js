@@ -118,16 +118,20 @@ class APIResponder {
         })
     }
 
-    respondUnauthorized() {
+    respond(msg) {
         if (this.client) this.client.close();
-        this.stream.respond({':status': 401});
+        switch (msg) {
+            case 'unauthorized':
+                this.stream.respond({':status': 401});
+                break;
+            case 'success':
+                this.stream.respond({':status': 200});
+                break;
+            case 'error':
+                this.stream.respond({':status': 500});
+                break;
+        }
         this.stream.end()
-    }
-
-    respondSuccess() {
-        if (this.client) this.client.close();
-        this.stream.respond({':status': 200});
-        this.stream.end();
     }
 }
 
