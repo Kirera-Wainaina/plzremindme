@@ -117,6 +117,7 @@ class APIResponder {
     }
 
     respondUnauthorized() {
+        if (this.client) this.client.close();
         this.stream.respond({':status': 401});
         this.stream.end()
     }
