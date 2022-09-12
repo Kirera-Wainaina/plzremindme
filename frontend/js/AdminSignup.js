@@ -22,7 +22,8 @@ var AdminSignup = function (_React$Component) {
             password: null,
             repeatPassword: null,
             adminPassword: null,
-            passwordIsSame: true
+            passwordIsSame: true,
+            status: null
         };
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         _this.handleChange = _this.handleChange.bind(_this);
@@ -49,13 +50,16 @@ var AdminSignup = function (_React$Component) {
     }, {
         key: 'saveCredentials',
         value: function saveCredentials() {
-            if (this.state.passwordIsSame) {
-                var response = fetch('/api/AdminSignup', {
+            var _this2 = this;
+
+            if (this.state.password == this.state.repeatPassword) {
+                fetch('/api/AdminSignup', {
                     method: 'POST',
                     body: JSON.stringify(this.state),
                     headers: { 'content-type': 'application/json' }
+                }).then(function (response) {
+                    return _this2.setState({ status: response.status });
                 });
-                console.log(response);
             }
         }
     }, {
@@ -70,6 +74,7 @@ var AdminSignup = function (_React$Component) {
                     'Signup'
                 ),
                 !this.state.passwordIsSame && React.createElement(PasswordError, null),
+                this.state.status && React.createElement(ServerError, { status: this.state.status }),
                 React.createElement(
                     'label',
                     null,
@@ -120,5 +125,26 @@ function PasswordError() {
             null,
             'The \'Repeat Password\' should match \'Password\''
         )
+    );
+}
+
+function ServerError(props) {
+    var errMsg = {
+        '401': React.createElement(
+            'p',
+            null,
+            'You are unauthorized to signup as an admin'
+        ),
+        '500': React.createElement(
+            'p',
+            null,
+            'Something happened. Our fault. Please try again later!'
+        )
+    };
+    if (props.status == 200) return;
+    return React.createElement(
+        'div',
+        { className: 'error' },
+        errMsg[props.status]
     );
 }

@@ -7,7 +7,8 @@ export default class AdminSignup extends React.Component {
             password: null,
             repeatPassword: null,
             adminPassword: null,
-            passwordIsSame: true
+            passwordIsSame: true,
+            status: null
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -30,13 +31,12 @@ export default class AdminSignup extends React.Component {
     }
 
     saveCredentials() {
-        if (this.state.passwordIsSame) {
-            const response = fetch('/api/AdminSignup', {
+        if (this.state.password == this.state.repeatPassword) {
+            fetch('/api/AdminSignup', {
                 method: 'POST',
                 body: JSON.stringify(this.state),
                 headers: { 'content-type': 'application/json'}
-            });
-            console.log(response)
+            }).then(response => this.setState({status: response.status}))
         }
     }
 
@@ -45,6 +45,7 @@ export default class AdminSignup extends React.Component {
             <form className='card' onSubmit={this.handleSubmit}>
                 <h2>Signup</h2>
                 {!this.state.passwordIsSame && <PasswordError />}
+                {this.state.status && <ServerError status={this.state.status}/>}
                 <label>First Name 
                     <input required className="input" type='text' name='firstName' onChange={this.handleChange}/>
                 </label>
@@ -70,6 +71,19 @@ function PasswordError() {
     return (
         <div className="error">
             <p>The 'Repeat Password' should match 'Password'</p>
+        </div>
+    )
+}
+
+function ServerError(props) {
+    const errMsg = {
+        '401': <p>You are unauthorized to signup as an admin</p>,
+        '500': <p>Something happened. Our fault. Please try again later!</p>
+    };
+    if (props.status == 200) return ;
+    return (
+        <div className="error">
+            {errMsg[props.status]}
         </div>
     )
 }
