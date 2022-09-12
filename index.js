@@ -107,6 +107,19 @@ class APIResponder {
                 .collection(collectionName)
         })
     }
+
+    retrieveData() {
+        return new Promise((resolve, reject) => {
+            this.stream.on('data', data => {
+                resolve(JSON.parse(data))
+            })  
+        })
+    }
+
+    respondUnauthorized() {
+        this.stream.respond({':status': 401});
+        this.stream.end()
+    }
 }
 
 function createLog(stream, headers) {
@@ -143,6 +156,7 @@ exports.httpServer = httpServer;
 exports.server = server;
 exports.handleHTTPErrors = handleHTTPErrors;
 exports.handleFileRoutes = handleFileRoutes;
+exports.handleAPIRoutes = handleAPIRoutes;
 exports.FileResponder = FileResponder;
 exports.isAPIRoute = isAPIRoute;
 exports.APIResponder = APIResponder;
