@@ -39,7 +39,7 @@ var AdminSignup = function (_React$Component) {
         value: function handleSubmit(e) {
             e.preventDefault();
             this.comparePassword();
-            //this.saveCredentials();
+            this.saveCredentials();
         }
     }, {
         key: 'comparePassword',

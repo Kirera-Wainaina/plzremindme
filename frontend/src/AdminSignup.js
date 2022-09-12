@@ -20,7 +20,7 @@ export default class AdminSignup extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         this.comparePassword();
-        //this.saveCredentials();
+        this.saveCredentials();
     }
 
     comparePassword() {
