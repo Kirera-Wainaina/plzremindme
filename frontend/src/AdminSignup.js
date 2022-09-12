@@ -36,6 +36,7 @@ export default class AdminSignup extends React.Component {
                 body: JSON.stringify(this.state),
                 headers: { 'content-type': 'application/json'}
             });
+            console.log(response)
         }
     }
 

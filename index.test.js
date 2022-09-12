@@ -22,6 +22,7 @@ test('throws received error', () => {
     expect(() => index.handleHTTPErrors(new Error)).toThrow();
 })
 
+
 describe('check API route', () => {
     test('is API route', () => {
         const route = '/api/AdminSignup';
@@ -76,7 +77,13 @@ describe('Responder class', () => {
 
 })
 
-afterAll(() => {
+describe('APIResponder class', () => {
+    test('connects to mongodb', () => {
+        
+    })
+})
+
+afterEach(() => {
     index.httpServer.close();
     index.server.close();
 })

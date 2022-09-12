@@ -123,6 +123,12 @@ class APIResponder {
         this.stream.respond({':status': 401});
         this.stream.end()
     }
+
+    respondSuccess() {
+        if (this.client) this.client.close();
+        this.stream.respond({':status': 200});
+        this.stream.end();
+    }
 }
 
 function createLog(stream, headers) {
