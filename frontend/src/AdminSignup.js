@@ -1,5 +1,3 @@
-//import React from 'react';
-
 export default class AdminSignup extends React.Component {
     constructor(props) {
         super(props);
@@ -22,7 +20,7 @@ export default class AdminSignup extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         this.comparePassword();
-        this.saveCredentials();
+        //this.saveCredentials();
     }
 
     comparePassword() {
