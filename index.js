@@ -9,6 +9,7 @@ const MongoClient = require('mongodb').MongoClient;
 const mimes = require('./utils/MIMETypes');
 
 const dotenv = require('dotenv');
+const { resolve } = require('path');
 dotenv.config();
 
 const mongoClient = new MongoClient(process.env.DB_URI);
@@ -94,17 +95,18 @@ class APIResponder {
     constructor(stream, header) {
         this.stream = stream;
         this.header = header;
-        this.collection = null;
         this.client = null;
     }
 
-    collection(collectionName) {
-        mongoClient.connect((error, client) => {
-            if (error) console.log(error);
-
-            this.client = client;
-            this.collection = this.client.db(process.env.DB_NAME)
-                .collection(collectionName)
+    async getCollection(collectionName) {
+        return new Promise((resolve, reject) => {
+            mongoClient.connect((error, client) => {
+                if (error) reject(error);
+    
+                this.client = client;
+                resolve(this.client.db(process.env.DB_NAME)
+                        .collection(collectionName))
+            })
         })
     }
 
