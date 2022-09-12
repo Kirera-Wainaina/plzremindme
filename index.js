@@ -38,10 +38,9 @@ function handleFileRoutes(stream, headers) {
 
 function handleAPIRoutes(stream, headers) {
     if (isAPIRoute(headers[':path'])) {
-        console.log('api called')
         const ClassCall = require(`.${headers[':path']}`);
         const call = new ClassCall(stream, headers);
-        call.log();
+        call.run();
     }
 }
 
@@ -99,7 +98,7 @@ class APIResponder {
         this.client = null;
     }
 
-    set collection(collectionName) {
+    collection(collectionName) {
         mongoClient.connect((error, client) => {
             if (error) console.log(error);
 
