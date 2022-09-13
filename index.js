@@ -2,14 +2,12 @@ const http = require('http');
 const http2 = require('http2');
 const fs = require('fs');
 const path = require('path');
-const util = require('util')
 
 const MongoClient = require('mongodb').MongoClient;
 
 const mimes = require('./utils/MIMETypes');
 
 const dotenv = require('dotenv');
-const { resolve } = require('path');
 dotenv.config();
 
 const mongoClient = new MongoClient(process.env.DB_URI);
