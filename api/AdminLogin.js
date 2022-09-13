@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const { APIResponder } = require("..");
 
 class AdminLogin extends APIResponder {
@@ -13,10 +14,23 @@ class AdminLogin extends APIResponder {
         return user
     }
 
+    verifyUser() {
+        if (!this.user) { // email is not registered
+            this.respond('unauthorized');
+            return ;
+        }
+        this.comparePassword()
+    }
+
+    async comparePassword() {
+        const result = await bcrypt.compare(this.data.password, this.user.password);
+        result ? this.respond('success') : this.respond('unauthorized');
+    }
+
     async run() {
         this.data = await this.retrieveData();
         this.user = await this.getUserData();
-        console.log(this.user)
+        this.verifyUser()
     }
 }
 
