@@ -3,7 +3,8 @@ export default class AdminLogin extends React.Component {
         super(props);
         this.state = {
             email: null,
-            password: null
+            password: null,
+            status: null
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,12 +20,13 @@ export default class AdminLogin extends React.Component {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: { 'content-encoding': 'application/json'}
-        }).then(response => console.log(response))
+        }).then(response => this.setState({ status: response.status }))
     }
 
     render() {
         return (
             <form className="card" onSubmit={this.handleSubmit}>
+                {this.state.status == 401 && <LoginError />}
                 <h2>Login</h2>
                 <label>Email 
                     <input required className='input' type='email' name='email' onChange={this.handleChange}/>
@@ -37,3 +39,11 @@ export default class AdminLogin extends React.Component {
         )
     }
 }
+
+function LoginError() {
+    return (
+        <div className="error">
+            <p>The email or password you entered is incorrect</p>
+        </div>
+    )
+} 

@@ -18,7 +18,8 @@ var AdminLogin = function (_React$Component) {
 
         _this.state = {
             email: null,
-            password: null
+            password: null,
+            status: null
         };
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
@@ -33,13 +34,15 @@ var AdminLogin = function (_React$Component) {
     }, {
         key: 'handleSubmit',
         value: function handleSubmit(e) {
+            var _this2 = this;
+
             e.preventDefault();
             fetch('/api/AdminLogin', {
                 method: 'POST',
                 body: JSON.stringify(this.state),
                 headers: { 'content-encoding': 'application/json' }
             }).then(function (response) {
-                return console.log(response);
+                return _this2.setState({ status: response.status });
             });
         }
     }, {
@@ -48,6 +51,7 @@ var AdminLogin = function (_React$Component) {
             return React.createElement(
                 'form',
                 { className: 'card', onSubmit: this.handleSubmit },
+                this.state.status == 401 && React.createElement(LoginError, null),
                 React.createElement(
                     'h2',
                     null,
@@ -74,3 +78,16 @@ var AdminLogin = function (_React$Component) {
 }(React.Component);
 
 export default AdminLogin;
+
+
+function LoginError() {
+    return React.createElement(
+        'div',
+        { className: 'error' },
+        React.createElement(
+            'p',
+            null,
+            'The email or password you entered is incorrect'
+        )
+    );
+}
