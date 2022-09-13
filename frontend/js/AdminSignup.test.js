@@ -1,11 +1,11 @@
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import React from 'react';
+import AdminSignup from './AdminSignup.js'
+//import React from 'react';
 
 global.fetch = jest.fn();
 
-import AdminSignup from './AdminSignup.js'
 
 test('displays error if passwords dont match', async () => {
     const user = userEvent.setup();
