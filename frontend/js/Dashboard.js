@@ -8,6 +8,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import Menu from './Menu.js';
 import AdminSignup from './AdminSignup.js';
+import AdminLogin from './AdminLogin.js';
 
 var Dashboard = function (_React$Component) {
     _inherits(Dashboard, _React$Component);
@@ -25,7 +26,7 @@ var Dashboard = function (_React$Component) {
                 'div',
                 { className: 'dashboard' },
                 React.createElement(Menu, null),
-                React.createElement(AdminSignup, null)
+                React.createElement(AdminLogin, null)
             );
         }
     }]);
