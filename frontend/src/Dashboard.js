@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Menu from './Menu.js';
 import AdminSignup from './AdminSignup.js';
 import AdminLogin from './AdminLogin.js';
