@@ -5,7 +5,7 @@ module.exports = {
     devtool: 'inline-source-map',
     entry: {
         app: path.join(__dirname, 'frontend/src/index.js'),
-        adminApp: path.join(__dirname, 'frontend/src/admin.js')
+        // adminApp: path.join(__dirname, 'frontend/src/admin.js')
     },
     output: {
         filename: '[name].bundle.js',
