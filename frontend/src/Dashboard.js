@@ -13,12 +13,12 @@ class Dashboard extends React.Component {
                 <Menu />
                 {/* <AdminSignup /> */}
                 {/* <AdminLogin /> */}
-
-                <Routes>
-                    <Route path='/' element={<AdminLogin />}/>
-                    <Route path='login' element={<AdminLogin />}/>
-                    <Route path='signup' element={<AdminSignup />} />
-                </Routes>
+                <p>Hello, Dashboard</p>
+                {/* <Routes> */}
+                    {/* <Route path='/' element={<AdminLogin />}/> */}
+                    {/* <Route path='login' element={<AdminLogin />}/> */}
+                    {/* <Route path='signup' element={<AdminSignup />} /> */}
+                {/* </Routes> */}
             </div>
         )
     }
