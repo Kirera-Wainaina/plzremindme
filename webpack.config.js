@@ -4,7 +4,7 @@ module.exports = {
     mode: 'development',
     devtool: 'inline-source-map',
     entry: {
-        // app: './src/App.js',
+        app: path.join(__dirname, 'frontend/src/index.js'),
         adminApp: path.join(__dirname, 'frontend/src/admin.js')
     },
     output: {
