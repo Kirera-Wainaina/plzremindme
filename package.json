@@ -33,6 +33,7 @@
   "scripts": {
     "test": "jest --env=jsdom",
     "babel": "npx babel --watch frontend/src --out-dir frontend/js --presets react-app/prod > babel.log &",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "npx webpack --watch > webpack.log &"
   }
 }
