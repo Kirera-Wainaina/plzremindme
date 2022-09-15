@@ -66,10 +66,10 @@ class FileResponder {
     }
 
     handleBrowserPaths() {
-        if (this.headers[':path'] == '/') {
-            return path.join(__dirname, process.env.INDEX_PATH)
+        if (this.headers[':path'].match(/admin/)) {
+            return path.join(__dirname, 'frontend/html', 'admin.html');
         } else {
-            return path.join(__dirname, 'frontend/html', this.headers[':path'] + '.html');
+            return path.join(__dirname, process.env.INDEX_PATH)
         }
     }
 
