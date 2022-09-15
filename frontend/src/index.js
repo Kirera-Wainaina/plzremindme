@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.js';
 import Dashboard from './Dashboard.js';
+import AdminLogin from './AdminLogin.js';
+import AdminSignup from './AdminSignup.js';
 
 const router = createBrowserRouter([
     {
@@ -11,7 +13,17 @@ const router = createBrowserRouter([
     },
     {
         path: 'admin',
-        element: <Dashboard />
+        element: <Dashboard />,
+        children: [
+            {
+                path: 'login',
+                element: <AdminLogin />
+            },
+            {
+                path: 'signup',
+                element: <AdminSignup />
+            }
+        ]
     }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
