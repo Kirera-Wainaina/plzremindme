@@ -39,7 +39,18 @@ export default class AdminSignup extends React.Component {
                 method: 'POST',
                 body: JSON.stringify(this.state),
                 headers: { 'content-type': 'application/json'}
-            }).then(response => this.setState({status: response.status}))
+            }).then(response => this.handleResponse(response))
+        }
+    }
+
+    handleResponse(response) {
+        if (response.status == 200) sessionStorage.setItem('isLoggedIn', true);
+        this.setState({ status: response.status })
+    }
+
+    componentDidUpdate() {
+        if (sessionStorage.getItem('isLoggedIn')) {
+            location.pathname = '/admin/home'
         }
     }
 
