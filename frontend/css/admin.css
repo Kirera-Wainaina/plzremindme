@@ -71,6 +71,12 @@ p {
     grid-template-columns: repeat(12, 1fr);
 }
 
+.dashboard h2 {
+    grid-column: 1 / 13;
+    text-align: center;
+    margin-top: 1em;
+}
+
 header {
     grid-column: 1 / 13;
     border-bottom: 1px solid lightgrey;
@@ -131,5 +137,9 @@ form h2 {
         grid-column: 1 / 7;
         margin-left: .5em;
         margin-right: .5em;
+    }
+
+    .admin-link {
+        grid-column: 1 / 7;
     }
 }
