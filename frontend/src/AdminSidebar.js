@@ -12,10 +12,15 @@ export default class AdminSidebar extends React.Component {
     }
 
     render() {
+        const buttons = this.props.sports.map(sport => {
+                return <button className="button" onClick={this.handleClick} key={sport} data-id={sport}>
+                    {sport}
+                    </button>
+            })
+
         return (
             <section className="card">
-                <button className="button" onClick={this.handleClick} data-id='AdminFormula1'>Formula 1</button>
-                <button className="button" onClick={this.handleClick} data-id='AdminFootball'>Football</button>
+                {buttons}
             </section>
         )
     }

@@ -30,7 +30,10 @@ export default class AdminHome extends React.Component {
 
         return (
             <React.Fragment>
-                <AdminSidebar component={this.displayComponent}/>
+                <AdminSidebar 
+                    component={this.displayComponent} 
+                    sports={Object.keys(components)}
+                />
                 {this.state.sportComponent}
             </React.Fragment>
         )
@@ -38,6 +41,6 @@ export default class AdminHome extends React.Component {
 }
 
 const components = {
-    'AdminFormula1': <AdminFormula1 />,
-    'AdminFootball': <AdminFootball />
+    'Formula 1': <AdminFormula1 />,
+    'Football': <AdminFootball />
 }
