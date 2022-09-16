@@ -9,9 +9,7 @@ class Dashboard extends React.Component {
         return (
             <div className='dashboard'>
                 <Menu />
-                <p>Hello, Dashboard</p>
-                <Link to='signup'>Signup</Link>
-                <Link to='login'>Login</Link>
+                <h2>Welcome to the Dashboard</h2>
 
                 <Outlet />
             </div>
