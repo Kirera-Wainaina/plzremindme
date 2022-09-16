@@ -5,6 +5,7 @@ import App from './App.js';
 import Dashboard from './Dashboard.js';
 import AdminLogin from './AdminLogin.js';
 import AdminSignup from './AdminSignup.js';
+import AdminHome from './AdminHome.js';
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
             {
                 path: 'signup',
                 element: <AdminSignup />
+            },
+            {
+                path: 'home',
+                element: <AdminHome />
             }
         ]
     }
