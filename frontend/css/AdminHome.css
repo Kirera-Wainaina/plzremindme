@@ -1,0 +1,17 @@
+section {
+    grid-column: 1 / 4;
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
+
+section button {
+    margin: .3em;
+    height: 2em;
+}
+
+@media (max-width: 500px) {
+    section {
+        grid-column: 1 / 7;
+    }
+}
