@@ -22,6 +22,11 @@ p {
     font-size: 1.2em;
 }
 
+#root {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
 .card {
     box-shadow: var(--shadow);
     border-radius: 5px;
@@ -127,7 +132,7 @@ form h2 {
 
 
 @media (max-width: 500px) {
-    .dashboard {
+    #root, .dashboard {
         grid-template-columns: repeat(6, 1fr);
     }
 
