@@ -110,6 +110,13 @@ form h2 {
     margin-top: 1em;
 }
 
+.admin-link {
+    grid-column: 4 / 10;
+    margin: 1em;
+    height: 3em;
+    text-align: center;
+}
+
 
 @media (max-width: 500px) {
     .dashboard {
