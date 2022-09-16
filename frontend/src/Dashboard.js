@@ -7,12 +7,12 @@ class Dashboard extends React.Component {
     
     render() {
         return (
-            <div className='dashboard'>
+            <React.Fragment>
                 <Menu />
-                <h2>Welcome to the Dashboard</h2>
 
                 <Outlet />
-            </div>
+
+            </React.Fragment>
         )
     }
 }
