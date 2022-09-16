@@ -13,7 +13,7 @@ export default class AdminSidebar extends React.Component {
 
     render() {
         const buttons = this.props.sports.map(sport => {
-                return <button className="button" onClick={this.handleClick} key={sport} data-id={sport}>
+                return <button className="sec-button" onClick={this.handleClick} key={sport} data-id={sport}>
                     {sport}
                     </button>
             })
