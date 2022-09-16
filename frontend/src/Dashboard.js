@@ -2,8 +2,6 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
 import Menu from './Menu.js';
-import AdminSignup from './AdminSignup.js';
-import AdminLogin from './AdminLogin.js';
 
 class Dashboard extends React.Component {
     
@@ -16,13 +14,6 @@ class Dashboard extends React.Component {
                 <Link to='login'>Login</Link>
 
                 <Outlet />
-                {/* <AdminSignup /> */}
-                {/* <AdminLogin /> */}
-                {/* <Routes> */}
-                    {/* <Route path='/' element={<AdminLogin />}/> */}
-                    {/* <Route path='login' element={<AdminLogin />}/> */}
-                    {/* <Route path='signup' element={<AdminSignup />} /> */}
-                {/* </Routes> */}
             </div>
         )
     }
