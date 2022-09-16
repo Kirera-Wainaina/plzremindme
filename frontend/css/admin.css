@@ -72,7 +72,29 @@ p {
     background-size: 100%;
     transition: background 0s;
 }
- 
+
+.sec-button:hover {
+    background-color: var(--shade-primary-color);
+}
+
+.sec-button:active {
+    background-color: grey;
+    background-size: 100%;
+    transition: background 0s;
+}
+
+.sec-button {
+    border: 1px solid lightgrey;
+    color: black;
+    font-size: 1em;
+    height: 1.9em;
+    border-radius: 5px;
+    padding: 0.5em;
+    background-color: white;
+    background-position: center;
+    transition: background 0.8s;
+}
+
 header {
     grid-column: 1 / 13;
     border-bottom: 1px solid lightgrey;
