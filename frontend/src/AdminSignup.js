@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default class AdminSignup extends React.Component {
     constructor(props) {
@@ -44,27 +45,30 @@ export default class AdminSignup extends React.Component {
 
     render() {
         return (
-            <form className='card' onSubmit={this.handleSubmit}>
-                <h2>Signup</h2>
-                {!this.state.passwordIsSame && <PasswordError />}
-                {this.state.status && <ServerError status={this.state.status}/>}
-                <label>First Name 
-                    <input required className="input" type='text' name='firstName' onChange={this.handleChange}/>
-                </label>
-                <label>Email 
-                    <input required className='input' type='email' name='email' onChange={this.handleChange}/>
-                </label>
-                <label>Password 
-                    <input required className='input' type='password' name='password' onChange={this.handleChange}/>
-                </label>
-                <label>Repeat Password 
-                    <input required className='input' type='password' name='repeatPassword' onChange={this.handleChange}/>
-                </label>
-                <label>Admin Password 
-                    <input required className='input' type='password' name='adminPassword' onChange={this.handleChange}/>
-                </label>
-                <input type='submit' value='Submit' className="button" />
-            </form>
+            <React.Fragment>
+                <form className='card' onSubmit={this.handleSubmit}>
+                    <h2>Signup</h2>
+                    {!this.state.passwordIsSame && <PasswordError />}
+                    {this.state.status && <ServerError status={this.state.status}/>}
+                    <label>First Name 
+                        <input required className="input" type='text' name='firstName' onChange={this.handleChange}/>
+                    </label>
+                    <label>Email 
+                        <input required className='input' type='email' name='email' onChange={this.handleChange}/>
+                    </label>
+                    <label>Password 
+                        <input required className='input' type='password' name='password' onChange={this.handleChange}/>
+                    </label>
+                    <label>Repeat Password 
+                        <input required className='input' type='password' name='repeatPassword' onChange={this.handleChange}/>
+                    </label>
+                    <label>Admin Password 
+                        <input required className='input' type='password' name='adminPassword' onChange={this.handleChange}/>
+                    </label>
+                    <input type='submit' value='Submit' className="button" />
+                </form>
+                <Link to='../login' className="card admin-link">Please Login if you already have an account</Link>
+            </React.Fragment>
         )
     }
 }

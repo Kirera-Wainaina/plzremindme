@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default class AdminLogin extends React.Component {
     constructor(props) {
@@ -27,17 +28,22 @@ export default class AdminLogin extends React.Component {
 
     render() {
         return (
-            <form className="card" onSubmit={this.handleSubmit}>
-                {this.state.status == 401 && <LoginError />}
-                <h2>Login</h2>
-                <label>Email 
-                    <input required className='input' type='email' name='email' onChange={this.handleChange}/>
-                </label>
-                <label>Password 
-                    <input required className='input' type='password' name='password' onChange={this.handleChange}/>
-                </label>
-                <input type='submit' value='Submit' className="button" />
-            </form>
+            <React.Fragment>
+                <form className="card" onSubmit={this.handleSubmit}>
+                    {this.state.status == 401 && <LoginError />}
+                    <h2>Login</h2>
+                    <label>Email 
+                        <input required className='input' type='email' name='email' onChange={this.handleChange}/>
+                    </label>
+                    <label>Password 
+                        <input required className='input' type='password' name='password' onChange={this.handleChange}/>
+                    </label>
+                    <input type='submit' value='Submit' className="button" />
+                </form>
+                <Link to='../signup' className="card admin-link">
+                    Please talk to the admin to sign you up if you don't have an account
+                </Link>
+            </React.Fragment>
         )
     }
 }
