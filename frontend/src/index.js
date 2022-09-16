@@ -13,17 +13,17 @@ const router = createBrowserRouter([
         element: <App />
     },
     {
+        path: 'admin-login',
+        element: <AdminLogin />
+    },
+    {
+        path: 'admin-signup',
+        element: <AdminSignup />
+    },
+    {
         path: 'admin',
         element: <Dashboard />,
         children: [
-            {
-                path: 'login',
-                element: <AdminLogin />
-            },
-            {
-                path: 'signup',
-                element: <AdminSignup />
-            },
             {
                 path: 'home',
                 element: <AdminHome />
