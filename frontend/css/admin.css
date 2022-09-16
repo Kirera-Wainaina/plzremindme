@@ -73,17 +73,6 @@ p {
     transition: background 0s;
 }
  
-.dashboard {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-}
-
-.dashboard h2 {
-    grid-column: 1 / 13;
-    text-align: center;
-    margin-top: 1em;
-}
-
 header {
     grid-column: 1 / 13;
     border-bottom: 1px solid lightgrey;
@@ -132,7 +121,7 @@ form h2 {
 
 
 @media (max-width: 500px) {
-    #root, .dashboard {
+    #root {
         grid-template-columns: repeat(6, 1fr);
     }
 
