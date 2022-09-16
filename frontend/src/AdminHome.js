@@ -1,5 +1,7 @@
 import React from "react";
 
+import AdminSidebar from "./AdminSidebar";
+
 export default class AdminHome extends React.Component {
     confirmLogin() {
         if (!sessionStorage.getItem('isLoggedIn')) {
@@ -9,9 +11,11 @@ export default class AdminHome extends React.Component {
 
     render() {
         this.confirmLogin();
-        
+
         return (
-            <p>Welcome home</p>
+            <React.Fragment>
+                <AdminSidebar />
+            </React.Fragment>
         )
     }
 }
