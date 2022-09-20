@@ -3,14 +3,16 @@ const http2 = require('http2');
 const fs = require('fs');
 const path = require('path');
 
-const MongoClient = require('mongodb').MongoClient;
-
+const { Firestore } = require('@google-cloud/firestore');
 const mimes = require('./utils/MIMETypes');
 
 const dotenv = require('dotenv');
 dotenv.config();
 
-const mongoClient = new MongoClient(process.env.DB_URI);
+const firestore = new Firestore({
+    keyFilename: process.env.SERVICE_ACCOUNT_PATH,
+    projectId: process.env.GCLOUD_PROJECT_ID
+})
 
 /* HTTP/2 server and the respective handlers below*/
 const options = {
@@ -92,16 +94,8 @@ class APIResponder {
         this.client = null;
     }
 
-    async getCollection(collectionName) {
-        return new Promise((resolve, reject) => {
-            mongoClient.connect((error, client) => {
-                if (error) reject(error);
-    
-                this.client = client;
-                resolve(this.client.db(process.env.DB_NAME)
-                        .collection(collectionName))
-            })
-        })
+    getCollection(collectionName) {
+        return firestore.collection(collectionName)
     }
 
     retrieveData() {
