@@ -11,9 +11,9 @@ class AdminSignup extends index.APIResponder {
     }
 
     async saveToDatabase() {
-        const collection = await this.getCollection('admins');
+        const collection = this.getCollection('admins');
         const hash = await bcrypt.hash(this.data.password, 12);
-        const result = await collection.insertOne({
+        const result = await collection.add({
             firstName: this.data.firstName,
             email: this.data.email,
             password: hash
@@ -26,7 +26,7 @@ class AdminSignup extends index.APIResponder {
         const adminIsMatch = await bcrypt.compare(this.data.adminPassword, process.env.ADMIN_PASSWORD);
         if (adminIsMatch) {
             this.saveToDatabase().then(result => {
-                    if (result.acknowledged) this.respond('success')
+                    if (result.id) this.respond('success')
             }).catch(error => {
                 console.log(error);
                 this.respond('error')
