@@ -9,9 +9,9 @@ class AdminLogin extends APIResponder {
     }
 
     async getUserData() {
-        const collection = await this.getCollection('admins');
-        const user = collection.findOne({ 'email': this.data.email});
-        return user
+        const collection = this.getCollection('admins');
+        const user = await collection.where('email', '==', this.data.email).get()
+        return user.docs[0].data();
     }
 
     verifyUser() {
