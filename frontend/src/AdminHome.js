@@ -17,7 +17,7 @@ export default class AdminHome extends React.Component {
 
     confirmLogin() {
         if (!sessionStorage.getItem('isLoggedIn')) {
-            location.pathname = '/admin/login'
+            location.pathname = '/admin-login'
         }
     }
 
