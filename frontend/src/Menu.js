@@ -7,9 +7,9 @@ function Menu() {
         <AppBar position='relative'>
             <Toolbar>
                 <IconButton sx={{ color: "white"}}>
-                    <MenuIcon fontSize="large"/>
+                    <MenuIcon fontSize="medium"/>
                 </IconButton>
-                <Typography variant='h5' sx={{ ml: 3 }}>Plzremindme</Typography>
+                <Typography variant='h5' sx={{ ml: 2 }}>Plzremindme</Typography>
             </Toolbar>
         </AppBar>
     )
