@@ -1,6 +1,6 @@
 import React from "react";
 import Button from '@mui/material/Button'
-import { Card, List, ListItemButton, ListSubheader } from "@mui/material";
+import { Card, List, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
 
 export default class AdminSidebar extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ export default class AdminSidebar extends React.Component {
     render() {
         const buttons = this.props.sports.map(sport => {
                 return <ListItemButton onClick={this.handleClick} key={sport} data-id={sport}>
-                    {sport}
+                        <ListItemText primary={sport}/>
                     </ListItemButton>
             })
 
