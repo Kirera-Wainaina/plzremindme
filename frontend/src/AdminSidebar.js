@@ -22,7 +22,11 @@ export default class AdminSidebar extends React.Component {
 
         return (
             <Card>
-                <List>
+                <List className='admin-list' sx={{
+                    position: 'fixed',
+                    height: '100vh',
+                    border: '1px solid lightgrey',
+                }}>
                     <ListSubheader>Categories</ListSubheader>
                     {buttons}
                 </List>
