@@ -1,3 +1,13 @@
 * {
     margin: 0;
 }
+
+.admin-list {
+    width: 20vw;
+}
+
+@media (max-width: 500px) {
+    .admin-list {
+        width: 60vw;
+    }
+}
