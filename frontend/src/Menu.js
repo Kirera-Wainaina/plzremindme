@@ -4,7 +4,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 function Menu() {
     return (
-        <AppBar sx={{ height: '8%' }} component='nav'>
+        <AppBar position='relative'>
             <Toolbar>
                 <IconButton sx={{ color: "white"}}>
                     <MenuIcon fontSize="large"/>
