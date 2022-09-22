@@ -1,8 +1,7 @@
 import React from "react";
-import Button from '@mui/material/Button'
 import { Card, List, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
 
-export default class AdminSidebar extends React.Component {
+export default class AdminPanel extends React.Component {
     constructor(props) {
         super(props);
 
