@@ -11,6 +11,7 @@ export default class AdminHome extends React.Component {
 
         this.state = {
             sportComponent: <AdminFormula1 />,
+            panelOn: false
         }
 
         this.displayComponent = this.displayComponent.bind(this);
@@ -29,6 +30,7 @@ export default class AdminHome extends React.Component {
 
     handleMenuClick() {
         console.log('clicked from home')
+        this.setState({ panelOn: !this.state.panelOn });
     }
 
     render() {
@@ -38,10 +40,13 @@ export default class AdminHome extends React.Component {
             <React.Fragment>
                 <Menu handleMenuClick={this.handleMenuClick}/>
                 
-                <AdminPanel 
-                    component={this.displayComponent} 
-                    sports={Object.keys(components)}
-                />
+                {
+                    this.state.panelOn &&
+                    <AdminPanel 
+                        component={this.displayComponent} 
+                        sports={Object.keys(components)}
+                    />
+                }
                 {this.state.sportComponent}
             </React.Fragment>
         )
