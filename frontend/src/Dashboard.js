@@ -1,17 +1,12 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
-
-import Menu from './Menu.js';
+import { Outlet } from 'react-router-dom';
 
 class Dashboard extends React.Component {
-    
+
     render() {
         return (
             <React.Fragment>
-                <Menu />
-
                 <Outlet />
-
             </React.Fragment>
         )
     }

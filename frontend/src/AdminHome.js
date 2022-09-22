@@ -3,6 +3,7 @@ import React from "react";
 import AdminSidebar from "./AdminSidebar";
 import AdminFootball from "./AdminFootball";
 import AdminFormula1 from "./AdminFormula1";
+import Menu from "./Menu";
 
 export default class AdminHome extends React.Component {
     constructor(props) {
@@ -13,6 +14,7 @@ export default class AdminHome extends React.Component {
         }
 
         this.displayComponent = this.displayComponent.bind(this);
+        this.handleMenuClick = this.handleMenuClick.bind(this);
     }
 
     confirmLogin() {
@@ -25,11 +27,17 @@ export default class AdminHome extends React.Component {
         this.setState({ sportComponent: components[id] })
     }
 
+    handleMenuClick() {
+        console.log('clicked from home')
+    }
+
     render() {
         this.confirmLogin();
 
         return (
             <React.Fragment>
+                <Menu handleMenuClick={this.handleMenuClick}/>
+                
                 <AdminSidebar 
                     component={this.displayComponent} 
                     sports={Object.keys(components)}
