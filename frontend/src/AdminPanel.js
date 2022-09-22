@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, List, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
+import { List, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
 
 export default class AdminPanel extends React.Component {
     constructor(props) {
@@ -20,16 +20,14 @@ export default class AdminPanel extends React.Component {
             })
 
         return (
-            <Card>
-                <List className='admin-list' sx={{
-                    position: 'fixed',
-                    height: '100vh',
-                    border: '1px solid lightgrey',
-                }}>
-                    <ListSubheader>Categories</ListSubheader>
-                    {buttons}
-                </List>
-            </Card>
+            <List id='admin-panel' className='admin-list' sx={{
+                position: 'fixed',
+                height: '100vh',
+                border: '1px solid lightgrey',
+            }}>
+                <ListSubheader>Admin Panel</ListSubheader>
+                {buttons}
+            </List>
         )
     }
 }
