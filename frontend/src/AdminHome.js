@@ -16,6 +16,7 @@ export default class AdminHome extends React.Component {
 
         this.displayComponent = this.displayComponent.bind(this);
         this.handleMenuClick = this.handleMenuClick.bind(this);
+        this.handlePageClick = this.handlePageClick.bind(this);
     }
 
     confirmLogin() {
@@ -29,15 +30,22 @@ export default class AdminHome extends React.Component {
     }
 
     handleMenuClick() {
-        console.log('clicked from home')
         this.setState({ panelOn: !this.state.panelOn });
+    }
+
+    handlePageClick(e) {
+        if (e.target.id != 'admin-panel' && e.target.id != 'menu-icon') {
+            // only turn off the panel if it's on
+            if (this.state.panelOn) this.setState({ panelOn: ! this.state.panelOn });
+            console.log(e.target.id);
+        }
     }
 
     render() {
         this.confirmLogin();
 
         return (
-            <React.Fragment>
+            <div onClick={this.handlePageClick}>
                 <Menu handleMenuClick={this.handleMenuClick}/>
                 
                 {
@@ -48,7 +56,7 @@ export default class AdminHome extends React.Component {
                     />
                 }
                 {this.state.sportComponent}
-            </React.Fragment>
+            </div>
         )
     }
 }
