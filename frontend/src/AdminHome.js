@@ -37,7 +37,6 @@ export default class AdminHome extends React.Component {
         if (e.target.id != 'admin-panel' && e.target.id != 'menu-icon') {
             // only turn off the panel if it's on
             if (this.state.panelOn) this.setState({ panelOn: ! this.state.panelOn });
-            console.log(e.target.id);
         }
     }
 
