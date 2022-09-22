@@ -1,6 +1,6 @@
 import React from "react";
 
-import AdminSidebar from "./AdminSidebar";
+import AdminPanel from "./AdminPanel";
 import AdminFootball from "./AdminFootball";
 import AdminFormula1 from "./AdminFormula1";
 import Menu from "./Menu";
@@ -38,7 +38,7 @@ export default class AdminHome extends React.Component {
             <React.Fragment>
                 <Menu handleMenuClick={this.handleMenuClick}/>
                 
-                <AdminSidebar 
+                <AdminPanel 
                     component={this.displayComponent} 
                     sports={Object.keys(components)}
                 />
