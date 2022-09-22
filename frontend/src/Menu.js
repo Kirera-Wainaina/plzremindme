@@ -6,7 +6,7 @@ function Menu(props) {
     return (
         <AppBar position='relative'>
             <Toolbar>
-                <IconButton sx={{ color: "white"}} onClick={props.handleMenuClick}>
+                <IconButton sx={{ color: "white"}} onClick={props.handleMenuClick} id='menu-icon'>
                     <MenuIcon fontSize="medium"/>
                 </IconButton>
                 <Typography variant='h5' sx={{ ml: 2 }}>Plzremindme</Typography>
