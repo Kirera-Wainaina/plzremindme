@@ -9,12 +9,12 @@ export default class AdminPanel extends React.Component {
     }
 
     handleClick(e) {
-        this.props.component(e.target.dataset.id)
+        this.props.component(e.target.textContent)
     }
 
     render() {
         const buttons = this.props.sports.map(sport => {
-                return <ListItemButton onClick={this.handleClick} key={sport} data-id={sport}>
+                return <ListItemButton onClick={this.handleClick} key={sport}>
                         <ListItemText primary={sport}/>
                     </ListItemButton>
             })
