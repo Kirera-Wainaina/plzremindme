@@ -1,4 +1,4 @@
-import { Tab, Tabs } from "@mui/material";
+import { Card, Tab, Tabs } from "@mui/material";
 import React from "react";
 
 export default function AdminFootball() {
@@ -9,18 +9,21 @@ export default function AdminFootball() {
     }
 
     return (
-        <div className="admin-component">
-            <Tabs 
-                variant='fullWidth' 
-                onChange={handleChange}
-                value={value}
-            >
-                <Tab label='Upload Matches' value={0}/>
-                <Tab label='Edit Matches' value={1}/>
-            </Tabs>
-            <p>She blew the team for some red bottoms</p>
-            <TabPanel value={value} index={0}>Upload Matches</TabPanel>
-            <TabPanel value={value} index={1}>Edit Matches</TabPanel>
+        <div className="category-component">
+            <Card id='category-card' sx={{ mt: 5 }}>
+                <Tabs 
+                    variant='fullWidth' 
+                    onChange={handleChange}
+                    value={value}
+                >
+                    <Tab label='Upload Matches' value={0}/>
+                    <Tab label='Edit Matches' value={1}/>
+                </Tabs>
+                <p>She blew the team for some red bottoms</p>
+                <TabPanel value={value} index={0}>Upload Matches</TabPanel>
+                <TabPanel value={value} index={1}>Edit Matches</TabPanel>
+
+            </Card>
 
         </div>
     )
