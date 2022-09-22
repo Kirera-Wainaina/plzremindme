@@ -6,6 +6,12 @@
     width: 20vw;
 }
 
+.category-component {
+    width: 99vw;
+    height: 100vh;
+    border: 1px solid black;
+}
+
 @media (max-width: 500px) {
     .admin-list {
         width: 60vw;
