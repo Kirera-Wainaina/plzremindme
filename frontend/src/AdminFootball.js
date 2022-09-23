@@ -17,13 +17,17 @@ export default function AdminFootball() {
                 orientation='vertical'
                 className='category-tabs'
             >
-                <Tab label='Upload Matches' value={0}/>
-                <Tab label='Edit Matches' value={1}/>
+                <Tab label='View Clubs/Countries' value={0}/>
+                <Tab label='Add Clubs/Countries' value={1}/>
+                <Tab label='Upload Matches' value={2}/>
+                <Tab label='Edit Matches' value={3}/>
             </Tabs>
             <Card id='category-card' sx={{ mt: 5 }}>
                 <p>She blew the team for some red bottoms</p>
-                <TabPanel value={value} index={0}>Upload Matches</TabPanel>
-                <TabPanel value={value} index={1}>Edit Matches</TabPanel>
+                <TabPanel value={value} index={0}>View Clubs/Countries</TabPanel>
+                <TabPanel value={value} index={1}>Add Clubs/Countries</TabPanel>
+                <TabPanel value={value} index={2}>Upload Matches</TabPanel>
+                <TabPanel value={value} index={3}>Edit Matches</TabPanel>
 
             </Card>
 
