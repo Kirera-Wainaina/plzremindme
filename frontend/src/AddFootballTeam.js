@@ -1,4 +1,4 @@
-import { MenuItem, TextField, Box, Typography } from "@mui/material";
+import { MenuItem, TextField, Box, Typography, Button } from "@mui/material";
 import React from "react";
 
 export default class AddFootballTeam extends React.Component {
@@ -10,10 +10,16 @@ export default class AddFootballTeam extends React.Component {
         }
         
         this.handleTeamTypeChange = this.handleTeamTypeChange.bind(this);
+        this.openFileUpload = this.openFileUpload.bind(this);
     }
 
     handleTeamTypeChange(e) {
         this.setState({ teamType: e.target.value })
+    }
+
+    openFileUpload(e) {
+        const parent = e.target.parentElement;
+        parent.querySelector('.invisible-file-upload').click();
     }
 
     render() {
@@ -21,7 +27,8 @@ export default class AddFootballTeam extends React.Component {
             <Box component='form'
                 sx={{
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    padding: 5
                 }}
             >
                 <Typography variant='h6' align='center'>Add Team(s)</Typography>
@@ -46,6 +53,8 @@ export default class AddFootballTeam extends React.Component {
                         </MenuItem>
                     ))}
                 </TextField>
+                <Button variant="outlined" onClick={this.openFileUpload}>Upload Team Logo</Button>
+                <input type='file' className="invisible-file-upload"/>
             </Box>
         )
     }
