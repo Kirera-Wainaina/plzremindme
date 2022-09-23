@@ -18,8 +18,8 @@ export default function AdminFootball() {
                 orientation='vertical'
                 className='category-tabs'
             >
-                <Tab label='View Clubs/Countries' value={0}/>
-                <Tab label='Add Clubs/Countries' value={1}/>
+                <Tab label='View Teams' value={0}/>
+                <Tab label='Add Teams' value={1}/>
                 <Tab label='Upload Matches' value={2}/>
                 <Tab label='Edit Matches' value={3}/>
             </Tabs>
