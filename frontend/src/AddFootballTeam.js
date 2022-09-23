@@ -6,8 +6,11 @@ export default class AddFootballTeam extends React.Component {
         super(props);
 
         this.state = {
-            teamType: 'country'
+            teamType: 'country',
+            clubCountry: 'England'
         }
+
+        this.countries = ['England', 'Spain', 'France', 'Italy', 'Germany']
         
         this.handleTeamTypeChange = this.handleTeamTypeChange.bind(this);
         this.openFileUpload = this.openFileUpload.bind(this);
@@ -53,6 +56,23 @@ export default class AddFootballTeam extends React.Component {
                         </MenuItem>
                     ))}
                 </TextField>
+                { 
+                    this.state.teamType == 'club' && 
+                    <TextField 
+                        label='Club country'
+                        variant='filled'
+                        margin="normal"
+                        value={this.state.clubCountry}
+                        required
+                        select
+                    >
+                        {this.countries.map((country, index) => (
+                            <MenuItem key={index} value={country}>
+                                {country}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                }
                 <Button variant="outlined" onClick={this.openFileUpload}>Upload Team Logo</Button>
                 <input type='file' className="invisible-file-upload"/>
             </Box>
