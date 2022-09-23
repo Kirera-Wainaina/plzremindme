@@ -17,6 +17,7 @@ export default class AddFootballTeam extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.openFileUpload = this.openFileUpload.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(e) {
@@ -30,6 +31,11 @@ export default class AddFootballTeam extends React.Component {
 
     handleFileUpload(e) {
         this.setState({ teamLogo: e.target.files[0]})
+    }
+
+    handleSubmit(e) {
+        // handle submit
+        e.preventDefault();
     }
 
     render() {
