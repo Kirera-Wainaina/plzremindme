@@ -88,9 +88,9 @@ class FileResponder {
 }
 
 class APIResponder {
-    constructor(stream, header) {
+    constructor(stream, headers) {
         this.stream = stream;
-        this.header = header;
+        this.headers = headers;
         this.client = null;
     }
 
