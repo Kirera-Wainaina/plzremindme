@@ -8,13 +8,15 @@ export default class AddFootballTeam extends React.Component {
         this.state = {
             teamType: 'country',
             clubCountry: 'England',
-            teamName: ''
+            teamName: '',
+            teamLogo: null
         }
 
         this.countries = ['England', 'Spain', 'France', 'Italy', 'Germany']
         
         this.handleChange = this.handleChange.bind(this);
         this.openFileUpload = this.openFileUpload.bind(this);
+        this.handleFileUpload = this.handleFileUpload.bind(this);
     }
 
     handleChange(e) {
@@ -24,6 +26,10 @@ export default class AddFootballTeam extends React.Component {
     openFileUpload(e) {
         const parent = e.target.parentElement;
         parent.querySelector('.invisible-file-upload').click();
+    }
+
+    handleFileUpload(e) {
+        this.setState({ teamLogo: e.target.files[0]})
     }
 
     render() {
@@ -80,7 +86,8 @@ export default class AddFootballTeam extends React.Component {
                     </TextField>
                 }
                 <Button variant="outlined" onClick={this.openFileUpload}>Upload Team Logo</Button>
-                <input type='file' className="invisible-file-upload"/>
+                <input onChange={this.handleFileUpload} type='file' className="invisible-file-upload"/>
+                <Button variant="contained" type="submit">submit</Button>
             </Box>
         )
     }
