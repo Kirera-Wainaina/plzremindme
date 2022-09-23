@@ -36,6 +36,28 @@ export default class AddFootballTeam extends React.Component {
     handleSubmit(e) {
         // handle submit
         e.preventDefault();
+        const formdata = this.appendToFormData();
+        uploadData(formdata)
+    }
+
+    appendToFormData() {
+        const formdata = new FormData();
+        formdata.append('teamName', this.state.teamName);
+        formdata.append('teamType', this.state.teamType);
+        formdata.append('teamLogo', this.state.teamLogo);
+        if (this.state.teamType == 'club') {
+            formdata.append('clubCountry', this.state.teamCountry)
+        }
+        return formdata
+    }
+
+    uploadData(formdata) {
+        fetch('/api/AdminAddFootballTeam', {
+            method: 'POST',
+            body: formdata,
+            headers: { 'content-encoding': 'multipart/form-data'}
+        })
+        .then(response => console.log(response))
     }
 
     render() {
