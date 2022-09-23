@@ -12,12 +12,12 @@ export default class AddFootballTeam extends React.Component {
 
         this.countries = ['England', 'Spain', 'France', 'Italy', 'Germany']
         
-        this.handleTeamTypeChange = this.handleTeamTypeChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.openFileUpload = this.openFileUpload.bind(this);
     }
 
-    handleTeamTypeChange(e) {
-        this.setState({ teamType: e.target.value })
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     openFileUpload(e) {
@@ -43,12 +43,13 @@ export default class AddFootballTeam extends React.Component {
                 />
                 <TextField
                     label='Team Type'
-                    required
                     variant='filled'
                     value={this.state.teamType}
-                    select
-                    onChange={this.handleTeamTypeChange}
+                    onChange={this.handleChange}
                     margin="normal"
+                    name="teamType"
+                    select
+                    required
                 >
                     {['Country', 'Club'].map((type, index) => (
                         <MenuItem key={index} value={type.toLowerCase()}>
@@ -63,6 +64,8 @@ export default class AddFootballTeam extends React.Component {
                         variant='filled'
                         margin="normal"
                         value={this.state.clubCountry}
+                        name="clubCountry"
+                        onChange={this.handleChange}
                         required
                         select
                     >
