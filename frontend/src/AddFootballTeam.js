@@ -7,7 +7,8 @@ export default class AddFootballTeam extends React.Component {
 
         this.state = {
             teamType: 'country',
-            clubCountry: 'England'
+            clubCountry: 'England',
+            teamName: ''
         }
 
         this.countries = ['England', 'Spain', 'France', 'Italy', 'Germany']
@@ -37,9 +38,11 @@ export default class AddFootballTeam extends React.Component {
                 <Typography variant='h6' align='center'>Add Team(s)</Typography>
                 <TextField 
                     label='Team Name'
-                    required
                     variant="filled"
                     margin="normal"
+                    name="teamName"
+                    onChange={this.handleChange}
+                    required
                 />
                 <TextField
                     label='Team Type'
