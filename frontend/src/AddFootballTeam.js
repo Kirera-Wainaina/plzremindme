@@ -1,7 +1,50 @@
+import { MenuItem, TextField, Box, Typography } from "@mui/material";
 import React from "react";
 
-export default function AddFootballTeam() {
-    return (
-        <p>Add club</p>
-    )
+export default class AddFootballTeam extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            teamType: 'country'
+        }
+        
+        this.handleTeamTypeChange = this.handleTeamTypeChange.bind(this);
+    }
+
+    handleTeamTypeChange(e) {
+        this.setState({ teamType: e.target.value })
+    }
+
+    render() {
+        return (
+            <Box component='form'
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}
+            >
+                <Typography variant='h6' align='center'>Add Team(s)</Typography>
+                <TextField 
+                    label='Team Name'
+                    required
+                    variant="filled"
+                />
+                <TextField
+                    label='Team Type'
+                    required
+                    variant='filled'
+                    value={this.state.teamType}
+                    select
+                    onChange={this.handleTeamTypeChange}
+                >
+                    {['Country', 'Club'].map((type, index) => (
+                        <MenuItem key={index} value={type.toLowerCase()}>
+                            {type}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </Box>
+        )
+    }
 }
