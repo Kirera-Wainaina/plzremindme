@@ -8,12 +8,33 @@
 
 .category-component {
     width: 99vw;
-    height: 100vh;
-    border: 1px solid black;
+    height: 80vh;
+    /* border: 1px solid black; */
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+#category-card {
+    grid-column: 4 / 9;
+}
+
+.category-tabs {
+    grid-column: 1 / 4;
 }
 
 @media (max-width: 500px) {
     .admin-list {
         width: 60vw;
+    }
+
+    .category-component {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    #category-card {
+        grid-column: 1 / 7;
+    }
+
+    .category-tabs {
+        grid-column: 1 / 7;
     }
 }
