@@ -85,9 +85,22 @@ export default class AddFootballTeam extends React.Component {
                         ))}
                     </TextField>
                 }
-                <Button variant="outlined" onClick={this.openFileUpload}>Upload Team Logo</Button>
-                <input onChange={this.handleFileUpload} type='file' className="invisible-file-upload"/>
-                <Button variant="contained" type="submit">submit</Button>
+                <Button variant="outlined" 
+                    onClick={this.openFileUpload} 
+                    sx={{ my: 2 }}
+                >
+                    Upload Team Logo
+                </Button>
+                <input onChange={this.handleFileUpload} 
+                    type='file' 
+                    className="invisible-file-upload"/>
+                <Button variant="contained" 
+                    type="submit" 
+                    sx={{ m: 2 }} 
+                    onSubmit={this.handleSubmit}
+                >
+                    submit
+                </Button>
             </Box>
         )
     }
