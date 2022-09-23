@@ -1,5 +1,6 @@
 import { Card, Tab, Tabs } from "@mui/material";
 import React from "react";
+import AddFootballTeam from "./AddFootballTeam";
 
 export default function AdminFootball() {
     const [value, setValue] = React.useState(0);
@@ -25,7 +26,9 @@ export default function AdminFootball() {
             <Card id='category-card' sx={{ mt: 5 }}>
                 <p>She blew the team for some red bottoms</p>
                 <TabPanel value={value} index={0}>View Clubs/Countries</TabPanel>
-                <TabPanel value={value} index={1}>Add Clubs/Countries</TabPanel>
+                <TabPanel value={value} index={1}>
+                    <AddFootballTeam />
+                </TabPanel>
                 <TabPanel value={value} index={2}>Upload Matches</TabPanel>
                 <TabPanel value={value} index={3}>Edit Matches</TabPanel>
 
