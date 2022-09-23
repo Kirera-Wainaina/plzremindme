@@ -29,6 +29,7 @@ export default class AddFootballTeam extends React.Component {
                     label='Team Name'
                     required
                     variant="filled"
+                    margin="normal"
                 />
                 <TextField
                     label='Team Type'
@@ -37,6 +38,7 @@ export default class AddFootballTeam extends React.Component {
                     value={this.state.teamType}
                     select
                     onChange={this.handleTeamTypeChange}
+                    margin="normal"
                 >
                     {['Country', 'Club'].map((type, index) => (
                         <MenuItem key={index} value={type.toLowerCase()}>
