@@ -24,6 +24,8 @@ export default class AdminPanel extends React.Component {
                 position: 'fixed',
                 height: '100vh',
                 border: '1px solid lightgrey',
+                backgroundColor: 'white',
+                zIndex: 1
             }}>
                 <ListSubheader>Admin Panel</ListSubheader>
                 {buttons}
