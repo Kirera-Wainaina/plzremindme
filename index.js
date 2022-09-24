@@ -7,6 +7,7 @@ const { Firestore } = require('@google-cloud/firestore');
 const mimes = require('./utils/MIMETypes');
 
 const dotenv = require('dotenv');
+const { RequestQuote } = require('@mui/icons-material');
 dotenv.config();
 
 const firestore = new Firestore({
@@ -26,20 +27,35 @@ server.listen(443, console.log('listening for http/s on 443...'))
 
 server.on('stream', handleFileRoutes);
 
-server.on('stream', handlePOSTRequests);
+server.on('stream', handleJSONPOSTRequests);
 
 server.on('stream', createLog);
+
+server.on('request', handleFormDataPOSTRequests)
 
 function handleFileRoutes(stream, headers) {
     if (!isPOSTRequest(headers)) {
         const respond = new FileResponder(stream, headers);
         respond.send();
     }
+    // There will be an alternative to handle GET API requests
 }
 
-function handlePOSTRequests(stream, headers) {
+function handleJSONPOSTRequests(stream, headers) {
     if (isPOSTRequest(headers)) {
-        callClassFromPath(stream, headers)
+        if (isJSONRequest(headers)) {
+            callClassFromPathThroughStream(stream, headers)
+        }
+    }
+}
+
+function handleFormDataPOSTRequests(request, response) {
+    if (isPOSTRequest(request.headers)) {
+        if (!isJSONRequest(request.headers)) {
+            // handle form data
+            console.log(request.headers)
+            console.log('above should be a form data request')
+        }
     }
 }
 
@@ -48,7 +64,12 @@ function isPOSTRequest(headers) {
     return false;
 }
 
-function callClassFromPath(stream, headers) {
+function isJSONRequest(headers) {
+    if (headers['content-encoding'] == 'application/json') return true
+    return false
+}
+
+function callClassFromPathThroughStream(stream, headers) {
     const ClassCall = require(`.${headers[':path']}`);
     const call = new ClassCall(stream, headers);
     call.run();
@@ -129,7 +150,6 @@ class APIResponder {
 
 function createLog(stream, headers) {
     console.log(new Date, headers[':path'])
-    console.log(headers)
 }
 
 /* HTTP server and the respective functions are handled below */
@@ -162,7 +182,7 @@ exports.httpServer = httpServer;
 exports.server = server;
 exports.handleHTTPErrors = handleHTTPErrors;
 exports.handleFileRoutes = handleFileRoutes;
-exports.handlePOSTRequests = handlePOSTRequests;
+exports.handleJSONPOSTRequests = handleJSONPOSTRequests;
 exports.FileResponder = FileResponder;
 exports.isPOSTRequest = isPOSTRequest;
 exports.APIResponder = APIResponder;
