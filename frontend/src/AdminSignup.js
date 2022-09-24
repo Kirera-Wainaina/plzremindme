@@ -35,7 +35,7 @@ export default class AdminSignup extends React.Component {
 
     saveCredentials() {
         if (this.state.password == this.state.repeatPassword) {
-            fetch('/api/AdminSignup', {
+            fetch('/api/admin/Signup', {
                 method: 'POST',
                 body: JSON.stringify(this.state),
                 headers: { 'content-type': 'application/json'}

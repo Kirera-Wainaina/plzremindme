@@ -37,7 +37,7 @@ export default class AddFootballTeam extends React.Component {
         // handle submit
         e.preventDefault();
         const formdata = this.appendToFormData();
-        uploadData(formdata)
+        this.uploadData(formdata)
     }
 
     appendToFormData() {
@@ -52,7 +52,7 @@ export default class AddFootballTeam extends React.Component {
     }
 
     uploadData(formdata) {
-        fetch('/api/AdminAddFootballTeam', {
+        fetch('/api/admin/AddFootballTeam', {
             method: 'POST',
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}
@@ -63,6 +63,7 @@ export default class AddFootballTeam extends React.Component {
     render() {
         return (
             <Box component='form'
+                onSubmit={this.handleSubmit}
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -125,7 +126,6 @@ export default class AddFootballTeam extends React.Component {
                 <Button variant="contained" 
                     type="submit" 
                     sx={{ m: 2 }} 
-                    onSubmit={this.handleSubmit}
                 >
                     submit
                 </Button>

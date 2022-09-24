@@ -19,7 +19,7 @@ export default class AdminLogin extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        fetch('/api/AdminLogin', {
+        fetch('/api/admin/Login', {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: { 'content-encoding': 'application/json'}
