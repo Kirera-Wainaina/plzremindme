@@ -1,4 +1,3 @@
-const Busboy = require("busboy");
 const { FormDataHandler } = require("../../index");
 
 class AddFootballTeam extends FormDataHandler {
@@ -6,15 +5,10 @@ class AddFootballTeam extends FormDataHandler {
         super(props)
     }
 
-    run() {
-        console.log('called')
-        const busboy = Busboy({ headers: this.headers});
-
-        busboy.on('field', (name, value) => {
-            console.log(name, value)
-        })
-
-        this.stream.pipe(busboy)
+    async run() {
+        this.fields = await this.retrieveData();
+        console.log(this.fields);
+        this.respond('success')
     }
 }
 

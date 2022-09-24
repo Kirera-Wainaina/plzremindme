@@ -44,7 +44,7 @@ function handleFileRoutes(stream, headers) {
 function handleJSONPOSTRequests(stream, headers) {
     if (isPOSTRequest(headers)) {
         if (isJSONRequest(headers)) {
-            callClassFromPathThroughStream(stream, headers)
+            callClassFromPath(stream, headers, 'v2')
         }
     }
 }
@@ -53,8 +53,7 @@ function handleFormDataPOSTRequests(request, response) {
     if (isPOSTRequest(request.headers)) {
         if (!isJSONRequest(request.headers)) {
             // handle form data
-            console.log(request.headers)
-            console.log('above should be a form data request')
+            callClassFromPath(request, response, 'v1')
         }
     }
 }
@@ -69,9 +68,11 @@ function isJSONRequest(headers) {
     return false
 }
 
-function callClassFromPathThroughStream(stream, headers) {
-    const ClassCall = require(`.${headers[':path']}`);
-    const call = new ClassCall(stream, headers);
+function callClassFromPath(object1, object2, version) {
+    let headers; // v2 -> (object1, object2) -> (stream, headers)
+    version == 'v2' ? headers = object2 : headers = object1.headers;
+    const ClassCall = require(`.${headers[':path']}`)
+    const call = new ClassCall(object1, object2);
     call.run();
 }
 
@@ -158,14 +159,19 @@ class FormDataHandler {
     }
 
     retrieveData() {
-        const busboy = Busboy({ headers: this.request.headers });
-        busboy.on('file', handleFile);
-        busboy.on('field', handleFields);
-        this.request.pipe(busboy);
+        return new Promise((resolve, reject) => {
+            const fields = {};
+            const busboy = Busboy({ headers: this.request.headers });
+            busboy.on('file', this.handleFile);
+            busboy.on('field', (name, value) => fields[name] = value);
+            busboy.on('close', () => resolve(fields))
+            this.request.pipe(busboy);
+        })
+
     }
 
     handleFile(name, file, info) {
-
+        console.log(name)
     }
 
     handleFields(name, value) {
