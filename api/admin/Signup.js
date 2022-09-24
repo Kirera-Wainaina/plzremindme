@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
-const { JSONHandler } = require('..');
+const { JSONHandler } = require('../../index');
+
 
 dotenv.config();
 

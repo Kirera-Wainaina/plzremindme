@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { JSONHandler } = require("..");
+const { JSONHandler } = require('../../index');
 
 class AdminLogin extends JSONHandler {
     constructor(props) {
