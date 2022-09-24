@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { Firestore } = require('@google-cloud/firestore');
+const Busboy = require('busboy');
 const mimes = require('./utils/MIMETypes');
 
 const dotenv = require('dotenv');
@@ -149,6 +150,38 @@ class FormDataHandler {
     constructor(request, response) {
         this.request = request;
         this.response = response;
+        this.fields = {};
+    }
+
+    getCollection(collectionName) {
+        return firestore.collection(collectionName)
+    }
+
+    retrieveData() {
+        const busboy = Busboy({ headers: this.request.headers });
+        busboy.on('file', handleFile);
+        busboy.on('field', handleFields);
+        this.request.pipe(busboy);
+    }
+
+    handleFile(name, file, info) {
+
+    }
+
+    handleFields(name, value) {
+        this.fields[name] = value;
+    }
+
+    respond(msg) {
+        switch(msg){
+            case 'success':
+                this.response.writeHead(200);
+                break;
+            case 'error':
+                this.response.writeHead(500);
+                break;
+        }
+        this.response.end();
     }
 }
 
@@ -190,3 +223,4 @@ exports.handleJSONPOSTRequests = handleJSONPOSTRequests;
 exports.FileResponder = FileResponder;
 exports.isPOSTRequest = isPOSTRequest;
 exports.JSONHandler = JSONHandler;
+exports.FormDataHandler = FormDataHandler;
