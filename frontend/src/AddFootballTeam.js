@@ -46,7 +46,7 @@ export default class AddFootballTeam extends React.Component {
         formdata.append('teamType', this.state.teamType);
         formdata.append('teamLogo', this.state.teamLogo);
         if (this.state.teamType == 'club') {
-            formdata.append('clubCountry', this.state.teamCountry)
+            formdata.append('clubCountry', this.state.clubCountry)
         }
         return formdata
     }
