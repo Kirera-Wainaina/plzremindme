@@ -115,7 +115,6 @@ class JSONHandler {
     constructor(stream, headers) {
         this.stream = stream;
         this.headers = headers;
-        this.client = null;
     }
 
     getCollection(collectionName) {
@@ -131,7 +130,6 @@ class JSONHandler {
     }
 
     respond(msg) {
-        if (this.client) this.client.close();
         switch (msg) {
             case 'unauthorized':
                 this.stream.respond({':status': 401});
@@ -144,6 +142,13 @@ class JSONHandler {
                 break;
         }
         this.stream.end()
+    }
+}
+
+class FormDataHandler {
+    constructor(request, response) {
+        this.request = request;
+        this.response = response;
     }
 }
 
