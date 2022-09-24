@@ -7,7 +7,6 @@ const { Firestore } = require('@google-cloud/firestore');
 const mimes = require('./utils/MIMETypes');
 
 const dotenv = require('dotenv');
-const { RequestQuote } = require('@mui/icons-material');
 dotenv.config();
 
 const firestore = new Firestore({
@@ -112,7 +111,7 @@ class FileResponder {
     }
 }
 
-class APIResponder {
+class JSONHandler {
     constructor(stream, headers) {
         this.stream = stream;
         this.headers = headers;
@@ -185,4 +184,4 @@ exports.handleFileRoutes = handleFileRoutes;
 exports.handleJSONPOSTRequests = handleJSONPOSTRequests;
 exports.FileResponder = FileResponder;
 exports.isPOSTRequest = isPOSTRequest;
-exports.APIResponder = APIResponder;
+exports.JSONHandler = JSONHandler;
