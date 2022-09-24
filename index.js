@@ -26,28 +26,32 @@ server.listen(443, console.log('listening for http/s on 443...'))
 
 server.on('stream', handleFileRoutes);
 
-server.on('stream', handleAPIRoutes);
+server.on('stream', handlePOSTRequests);
 
 server.on('stream', createLog);
 
 function handleFileRoutes(stream, headers) {
-    if (!isAPIRoute(headers[':path'])) {
+    if (!isPOSTRequest(headers)) {
         const respond = new FileResponder(stream, headers);
         respond.send();
     }
 }
 
-function handleAPIRoutes(stream, headers) {
-    if (isAPIRoute(headers[':path'])) {
-        const ClassCall = require(`.${headers[':path']}`);
-        const call = new ClassCall(stream, headers);
-        call.run();
+function handlePOSTRequests(stream, headers) {
+    if (isPOSTRequest(headers)) {
+        callClassFromPath(stream, headers)
     }
 }
 
-function isAPIRoute(route) {
-    if (path.dirname(route) == '/api') return true;
+function isPOSTRequest(headers) {
+    if (headers[':method'] == 'POST') return true
     return false;
+}
+
+function callClassFromPath(stream, headers) {
+    const ClassCall = require(`.${headers[':path']}`);
+    const call = new ClassCall(stream, headers);
+    call.run();
 }
 
 class FileResponder {
@@ -125,6 +129,7 @@ class APIResponder {
 
 function createLog(stream, headers) {
     console.log(new Date, headers[':path'])
+    console.log(headers)
 }
 
 /* HTTP server and the respective functions are handled below */
@@ -157,7 +162,7 @@ exports.httpServer = httpServer;
 exports.server = server;
 exports.handleHTTPErrors = handleHTTPErrors;
 exports.handleFileRoutes = handleFileRoutes;
-exports.handleAPIRoutes = handleAPIRoutes;
+exports.handlePOSTRequests = handlePOSTRequests;
 exports.FileResponder = FileResponder;
-exports.isAPIRoute = isAPIRoute;
+exports.isPOSTRequest = isPOSTRequest;
 exports.APIResponder = APIResponder;
