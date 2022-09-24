@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const { JSONHandler } = require('../../index');
 
-class AdminLogin extends JSONHandler {
+class Login extends JSONHandler {
     constructor(props) {
         super(props);
         this.data = null;
@@ -34,4 +34,4 @@ class AdminLogin extends JSONHandler {
     }
 }
 
-module.exports = AdminLogin;
+module.exports = Login;

@@ -5,7 +5,7 @@ const { JSONHandler } = require('../../index');
 
 dotenv.config();
 
-class AdminSignup extends JSONHandler {
+class Signup extends JSONHandler {
     constructor(props) {
         super(props);
         this.data = null;
@@ -38,4 +38,4 @@ class AdminSignup extends JSONHandler {
     }
 }
 
-module.exports = AdminSignup;
+module.exports = Signup;
