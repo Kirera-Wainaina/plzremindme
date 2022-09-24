@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
-const { APIResponder } = require("..");
+const { JSONHandler } = require("..");
 
-class AdminLogin extends APIResponder {
+class AdminLogin extends JSONHandler {
     constructor(props) {
         super(props);
         this.data = null;

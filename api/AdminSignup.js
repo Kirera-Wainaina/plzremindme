@@ -1,10 +1,10 @@
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
-const index = require('../index.js');
+const { JSONHandler } = require('..');
 
 dotenv.config();
 
-class AdminSignup extends index.APIResponder {
+class AdminSignup extends JSONHandler {
     constructor(props) {
         super(props);
         this.data = null;
