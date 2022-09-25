@@ -50,23 +50,8 @@ function handleJSONPOSTRequests(stream, headers) {
     }
 }
 
-function handleFormDataPOSTRequests(request, response) {
-    // function respondThroughResponseStream(msg) {
-        // switch(msg){
-            // case 'success':
-                // response.writeHead(200);
-                // break;
-            // case 'error':
-                // response.writeHead(500);
-                // break;
-        // }
-        // response.end();
-    // }
-    
+function handleFormDataPOSTRequests(request, response) { 
     if (isFormData(request.headers)) {
-        // This function should call a class
-        // The class handles ops without response object
-        // class signals when done and function responds
         callClassWithRequestArg(request, response);
     }
 }
@@ -169,7 +154,7 @@ class JSONHandler {
     }
 }
 
-class FormDataHandler_ {
+class FormDataHandler {
     constructor(request) {
         this.request = request;
         this.fields = {};
@@ -215,49 +200,6 @@ class FormDataHandler_ {
 
 }
 
-class FormDataHandler {
-    constructor(request, response) {
-        this.request = request;
-        this.response = response;
-        this.fields = {};
-    }
-
-    getCollection(collectionName) {
-        return firestore.collection(collectionName)
-    }
-
-    retrieveData() {
-        return new Promise((resolve, reject) => {
-            const fields = {};
-            const busboy = Busboy({ headers: this.request.headers });
-            busboy.on('file', this.handleFile);
-            busboy.on('field', (name, value) => fields[name] = value);
-            busboy.on('close', () => resolve(fields))
-            this.request.pipe(busboy);
-        })
-    }
-
-    handleFile(name, file, info) {
-        console.log(name)
-    }
-
-    handleFields(name, value) {
-        this.fields[name] = value;
-    }
-
-    respond(msg) {
-        switch(msg){
-            case 'success':
-                this.response.writeHead(200);
-                break;
-            case 'error':
-                this.response.writeHead(500);
-                break;
-        }
-        //this.response.end();
-    }
-}
-
 function createLog(stream, headers) {
     console.log(new Date, headers[':path'])
 }
@@ -297,4 +239,3 @@ exports.FileResponder = FileResponder;
 exports.isPOSTRequest = isPOSTRequest;
 exports.JSONHandler = JSONHandler;
 exports.FormDataHandler = FormDataHandler;
-exports.FormDataHandler_ = FormDataHandler_;
