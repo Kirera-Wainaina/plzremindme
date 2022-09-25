@@ -50,11 +50,8 @@ function handleJSONPOSTRequests(stream, headers) {
 }
 
 function handleFormDataPOSTRequests(request, response) {
-    if (isPOSTRequest(request.headers)) {
-        if (!isJSONRequest(request.headers)) {
-            // handle form data
-            callClassFromPath(request, response, 'v1')
-        }
+    if (isFormData(request.headers)) {
+        
     }
 }
 
@@ -68,10 +65,16 @@ function isJSONRequest(headers) {
     return false
 }
 
+function isFormData(headers) {
+    if (isPOSTRequest(headers) && !isJSONRequest(headers)) return true;
+    return false
+}
+
 function callClassFromPath(object1, object2, version) {
     let headers; // v2 -> (object1, object2) -> (stream, headers)
     version == 'v2' ? headers = object2 : headers = object1.headers;
     const ClassCall = require(`.${headers[':path']}`)
+    console.log(object2)
     const call = new ClassCall(object1, object2);
     call.run();
 }
@@ -147,6 +150,7 @@ class JSONHandler {
     }
 }
 
+
 class FormDataHandler {
     constructor(request, response) {
         this.request = request;
@@ -187,7 +191,7 @@ class FormDataHandler {
                 this.response.writeHead(500);
                 break;
         }
-        this.response.end();
+        //this.response.end();
     }
 }
 
