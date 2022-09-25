@@ -36,7 +36,8 @@ export default class AddFootballTeam extends React.Component {
     handleSubmit(e) {
         // handle submit
         e.preventDefault();
-        const formdata = this.appendToFormData();
+        //const formdata = this.appendToFormData();
+        const formdata = new FormData(e.target)
         this.uploadData(formdata)
     }
 
@@ -122,6 +123,7 @@ export default class AddFootballTeam extends React.Component {
                 </Button>
                 <input onChange={this.handleFileUpload} 
                     type='file' 
+                    name={`${this.state.teamName}-logo`}
                     className="invisible-file-upload"/>
                 <Button variant="contained" 
                     type="submit" 
