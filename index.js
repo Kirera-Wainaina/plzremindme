@@ -51,17 +51,17 @@ function handleJSONPOSTRequests(stream, headers) {
 }
 
 function handleFormDataPOSTRequests(request, response) {
-    function respondThroughResponseStream(msg) {
-        switch(msg){
-            case 'success':
-                response.writeHead(200);
-                break;
-            case 'error':
-                response.writeHead(500);
-                break;
-        }
-        response.end();
-    }
+    // function respondThroughResponseStream(msg) {
+        // switch(msg){
+            // case 'success':
+                // response.writeHead(200);
+                // break;
+            // case 'error':
+                // response.writeHead(500);
+                // break;
+        // }
+        // response.end();
+    // }
     
     if (isFormData(request.headers)) {
         // This function should call a class
@@ -196,6 +196,19 @@ class FormDataHandler_ {
                 .on('close', () => resolve())
         })
     }
+
+    respond(response, msg) {
+        switch(msg){
+            case 'success':
+                response.writeHead(200);
+                break;
+            case 'error':
+                response.writeHead(500);
+                break;
+        }
+        response.end();
+    }
+
 }
 
 class FormDataHandler {
