@@ -175,6 +175,10 @@ class FormDataHandler_ {
         this.fields = {};
     }
 
+    getCollection(collectionName) {
+        return firestore.collection(collectionName)
+    }
+
     retrieveData() {
         return new Promise(async (resolve, reject) => {
             const busboy = Busboy({ headers: this.request.headers });
