@@ -164,22 +164,19 @@ class FormDataHandler {
     }
 
     retrieveData() {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const busboy = Busboy({ headers: this.request.headers });
             busboy.on('field', (name, value) => this.fields[name] = value);
-            busboy.on('file', await this.handleFile);
+            busboy.on('file', this.handleFile);
             busboy.on('close', () => resolve())
             this.request.pipe(busboy);
         })
     }
 
     handleFile(name, file, info) {
-        return new Promise((resolve, reject) => {
-            console.log(info)
-            const extension = mimes.findExtensionFromMIMEType(info.mimeType);
-            file.pipe(fs.createWriteStream(path.join(__dirname, `${name}${extension}`)))
-                .on('close', () => resolve())
-        })
+        const extension = mimes.findExtensionFromMIMEType(info.mimeType);
+        file.pipe(fs.createWriteStream(path.join(__dirname, `${name}${extension}`)))
+            .on('close', () => console.log(`${name}${extension}`, 'Written to disk'))
     }
 
     respond(response, msg) {
