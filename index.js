@@ -67,8 +67,7 @@ function handleFormDataPOSTRequests(request, response) {
         // This function should call a class
         // The class handles ops without response object
         // class signals when done and function responds
-        const responseMsg = callClassWithRequestArg(request, response);
-        //respondThroughResponseStream(responseMsg);
+        callClassWithRequestArg(request, response);
     }
 }
 
@@ -96,7 +95,7 @@ function callClassWithStreamArg(stream, headers) {
 function callClassWithRequestArg(request, response) {
     const ClassCall = require(`.${request.headers[':path']}`);
     const call = new ClassCall(request);
-    return call.run(response);
+    call.run(response);
 }
 
 class FileResponder {
