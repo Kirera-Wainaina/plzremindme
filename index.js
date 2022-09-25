@@ -8,7 +8,6 @@ const Busboy = require('busboy');
 const mimes = require('./utils/MIMETypes');
 
 const dotenv = require('dotenv');
-const { time } = require('console');
 dotenv.config();
 
 const firestore = new Firestore({
@@ -169,10 +168,7 @@ class FormDataHandler {
             const busboy = Busboy({ headers: this.request.headers });
             busboy.on('field', (name, value) => this.fields[name] = value);
             busboy.on('file', await this.handleFile);
-            busboy.on('close', () => {
-                console.log(this.fields)
-                resolve();
-            })
+            busboy.on('close', () => resolve())
             this.request.pipe(busboy);
         })
     }
