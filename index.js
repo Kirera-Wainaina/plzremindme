@@ -44,7 +44,7 @@ function handleFileRoutes(stream, headers) {
 function handleJSONPOSTRequests(stream, headers) {
     if (isPOSTRequest(headers)) {
         if (isJSONRequest(headers)) {
-            callClassFromPath(stream, headers, 'v2')
+            callClassWithStreamArg(stream, headers)
         }
     }
 }
@@ -86,11 +86,9 @@ function isFormData(headers) {
     return false
 }
 
-function callClassFromPath(object1, object2, version) {
-    let headers; // v2 -> (object1, object2) -> (stream, headers)
-    version == 'v2' ? headers = object2 : headers = object1.headers;
-    const ClassCall = require(`.${headers[':path']}`)
-    const call = new ClassCall(object1, object2);
+function callClassWithStreamArg(stream, headers) {
+    const ClassCall = require(`.${headers[':path']}`);
+    const call = new ClassCall(stream, headers);
     call.run();
 }
 
