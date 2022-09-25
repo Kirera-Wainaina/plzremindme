@@ -8,6 +8,7 @@ const Busboy = require('busboy');
 const mimes = require('./utils/MIMETypes');
 
 const dotenv = require('dotenv');
+const { time } = require('console');
 dotenv.config();
 
 const firestore = new Firestore({
@@ -67,7 +68,7 @@ function handleFormDataPOSTRequests(request, response) {
         // The class handles ops without response object
         // class signals when done and function responds
         const responseMsg = callClassWithRequestArg(request);
-        respondThroughResponseStream(responseMsg);
+        //respondThroughResponseStream(responseMsg);
     }
 }
 
@@ -172,21 +173,22 @@ class JSONHandler {
 class FormDataHandler_ {
     constructor(request) {
         this.request = request;
+        this.fields = {};
     }
 
     retrieveData() {
-        return new Promise((resolve, reject) => {
-            const fields = {};
-            const busboy = Busboy({ headers: this.request.headers });
-            busboy.on('file', this.handleFile);
-            busboy.on('field', (name, value) => fields[name] = value);
-            busboy.on('close', () => resolve(fields))
-            this.request.pipe(busboy);
+        const busboy = Busboy({ headers: this.request.headers });
+        busboy.on('field', (name, value) => this.fields[name] = value);
+        busboy.on('close', () => {
+            console.log(this.fields)
         })
+        this.request.pipe(busboy);
     }
 
     handleFile(name, file, info) {
-        console.log(name)
+        console.log(info)
+        file.pipe(fs.createWriteStream(path.join(__dirname, `${name}.png`)))
+            .on('end', () => console.log('done'))
     }
 }
 
