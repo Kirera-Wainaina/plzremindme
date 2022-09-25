@@ -67,7 +67,7 @@ function handleFormDataPOSTRequests(request, response) {
         // This function should call a class
         // The class handles ops without response object
         // class signals when done and function responds
-        const responseMsg = callClassWithRequestArg(request);
+        const responseMsg = callClassWithRequestArg(request, response);
         //respondThroughResponseStream(responseMsg);
     }
 }
@@ -93,10 +93,10 @@ function callClassWithStreamArg(stream, headers) {
     call.run();
 }
 
-function callClassWithRequestArg(request) {
+function callClassWithRequestArg(request, response) {
     const ClassCall = require(`.${request.headers[':path']}`);
     const call = new ClassCall(request);
-    return call.run();
+    return call.run(response);
 }
 
 class FileResponder {
@@ -177,20 +177,25 @@ class FormDataHandler_ {
     }
 
     retrieveData() {
-        const busboy = Busboy({ headers: this.request.headers });
-        busboy.on('field', (name, value) => this.fields[name] = value);
-        busboy.on('file', this.handleFile);
-        busboy.on('close', () => {
-            console.log(this.fields)
+        return new Promise(async (resolve, reject) => {
+            const busboy = Busboy({ headers: this.request.headers });
+            busboy.on('field', (name, value) => this.fields[name] = value);
+            busboy.on('file', await this.handleFile);
+            busboy.on('close', () => {
+                console.log(this.fields)
+                resolve();
+            })
+            this.request.pipe(busboy);
         })
-        this.request.pipe(busboy);
     }
 
     handleFile(name, file, info) {
-        console.log(info)
-        const extension = mimes.findExtensionFromMIMEType(info.mimeType);
-        file.pipe(fs.createWriteStream(path.join(__dirname, `${name}${extension}`)))
-            .on('end', () => console.log('done'))
+        return new Promise((resolve, reject) => {
+            console.log(info)
+            const extension = mimes.findExtensionFromMIMEType(info.mimeType);
+            file.pipe(fs.createWriteStream(path.join(__dirname, `${name}${extension}`)))
+                .on('close', () => resolve())
+        })
     }
 }
 
