@@ -50,8 +50,24 @@ function handleJSONPOSTRequests(stream, headers) {
 }
 
 function handleFormDataPOSTRequests(request, response) {
+    function respondThroughResponseStream(msg) {
+        switch(msg){
+            case 'success':
+                response.writeHead(200);
+                break;
+            case 'error':
+                response.writeHead(500);
+                break;
+        }
+        response.end();
+    }
+    
     if (isFormData(request.headers)) {
-        
+        // This function should call a class
+        // The class handles ops without response object
+        // class signals when done and function responds
+        const responseMsg = callClassWithRequestArg(request);
+        respondThroughResponseStream(responseMsg);
     }
 }
 
@@ -74,9 +90,14 @@ function callClassFromPath(object1, object2, version) {
     let headers; // v2 -> (object1, object2) -> (stream, headers)
     version == 'v2' ? headers = object2 : headers = object1.headers;
     const ClassCall = require(`.${headers[':path']}`)
-    console.log(object2)
     const call = new ClassCall(object1, object2);
     call.run();
+}
+
+function callClassWithRequestArg(request) {
+    const ClassCall = require(`.${request.headers[':path']}`);
+    const call = new ClassCall(request);
+    return call.run();
 }
 
 class FileResponder {
@@ -150,6 +171,26 @@ class JSONHandler {
     }
 }
 
+class FormDataHandler_ {
+    constructor(request) {
+        this.request = request;
+    }
+
+    retrieveData() {
+        return new Promise((resolve, reject) => {
+            const fields = {};
+            const busboy = Busboy({ headers: this.request.headers });
+            busboy.on('file', this.handleFile);
+            busboy.on('field', (name, value) => fields[name] = value);
+            busboy.on('close', () => resolve(fields))
+            this.request.pipe(busboy);
+        })
+    }
+
+    handleFile(name, file, info) {
+        console.log(name)
+    }
+}
 
 class FormDataHandler {
     constructor(request, response) {
@@ -171,7 +212,6 @@ class FormDataHandler {
             busboy.on('close', () => resolve(fields))
             this.request.pipe(busboy);
         })
-
     }
 
     handleFile(name, file, info) {
@@ -234,3 +274,4 @@ exports.FileResponder = FileResponder;
 exports.isPOSTRequest = isPOSTRequest;
 exports.JSONHandler = JSONHandler;
 exports.FormDataHandler = FormDataHandler;
+exports.FormDataHandler_ = FormDataHandler_;

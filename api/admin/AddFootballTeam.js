@@ -1,6 +1,6 @@
-const { FormDataHandler } = require("../../index");
+const { FormDataHandler, FormDataHandler_ } = require("../../index");
 
-class AddFootballTeam extends FormDataHandler {
+class AddFootballTeam extends FormDataHandler_ {
     constructor(props) {
         super(props)
     }
@@ -8,7 +8,7 @@ class AddFootballTeam extends FormDataHandler {
     async run() {
         this.fields = await this.retrieveData();
         console.log(this.fields);
-        this.respond('success')
+        return 'success'
     }
 }
 
