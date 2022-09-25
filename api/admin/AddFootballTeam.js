@@ -1,3 +1,7 @@
+const Busboy = require('busboy');
+const fs = require('fs');
+const path = require('path')
+
 const { FormDataHandler, FormDataHandler_ } = require("../../index");
 
 class AddFootballTeam extends FormDataHandler_ {
@@ -5,10 +9,12 @@ class AddFootballTeam extends FormDataHandler_ {
         super(props)
     }
 
-    async run() {
-        this.fields = await this.retrieveData();
-        console.log(this.fields);
-        return 'success'
+    async run(response) {
+        console.log('called')
+        await this.retrieveData();
+        //return 'success'
+        response.writeHead(200);
+        response.end()
     }
 }
 
