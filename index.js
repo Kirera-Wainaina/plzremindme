@@ -179,6 +179,7 @@ class FormDataHandler_ {
     retrieveData() {
         const busboy = Busboy({ headers: this.request.headers });
         busboy.on('field', (name, value) => this.fields[name] = value);
+        busboy.on('file', this.handleFile);
         busboy.on('close', () => {
             console.log(this.fields)
         })
@@ -187,7 +188,8 @@ class FormDataHandler_ {
 
     handleFile(name, file, info) {
         console.log(info)
-        file.pipe(fs.createWriteStream(path.join(__dirname, `${name}.png`)))
+        const extension = mimes.findExtensionFromMIMEType(info.mimeType);
+        file.pipe(fs.createWriteStream(path.join(__dirname, `${name}${extension}`)))
             .on('end', () => console.log('done'))
     }
 }
