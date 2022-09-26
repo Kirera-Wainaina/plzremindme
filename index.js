@@ -158,6 +158,7 @@ class FormDataHandler {
     constructor(request) {
         this.request = request;
         this.fields = {};
+        this.logoMetadata = null;
     }
 
     getCollection(collectionName) {
@@ -168,22 +169,27 @@ class FormDataHandler {
         return new Promise((resolve, reject) => {
             const busboy = Busboy({ headers: this.request.headers });
             busboy.on('field', (name, value) => this.fields[name] = value);
-            busboy.on('file', this.handleFile);
-            busboy.on('close', () => resolve())
+            busboy.on('file', async (name, file, info) => {
+                await this.handleFile(name, file, info);
+                resolve()
+            });
+            busboy.on('close', () => console.log('All file uploaded data is received'))
             this.request.pipe(busboy);
         })
     }
 
     handleFile(name, file, info) {
-        const extension = mimes.findExtensionFromMIMEType(info.mimeType);
-        const filePath = path.join(__dirname, 'uploads', `${name}${extension}`)
-        file.pipe(fs.createWriteStream(filePath))
-            .on('close', async () => {
-                const cloudUploader =  new CloudUploader(filePath);
-                const fileMetadata = await cloudUploader.run();
-                console.log(fileMetadata)
-            })
+        return new Promise((resolve, reject) => {
+            const extension = mimes.findExtensionFromMIMEType(info.mimeType);
+            const filePath = path.join(__dirname, 'uploads', `${name}${extension}`)
+            file.pipe(fs.createWriteStream(filePath))
             .on('close', () => console.log(`${name}${extension}`, 'Written to disk'))
+            .on('close', async () => {
+                    const cloudUploader =  new CloudUploader(filePath);
+                    this.logoMetadata = await cloudUploader.run();
+                    resolve()
+                })
+        })
     }
 
     respond(response, msg) {
