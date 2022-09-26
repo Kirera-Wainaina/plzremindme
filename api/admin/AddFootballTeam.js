@@ -12,10 +12,10 @@ class AddFootballTeam extends FormDataHandler {
     }
 
     async run(response) {
-        console.log('called')
         await this.retrieveData()
             .then(() => this.createTeamObject());
-        console.log(this.fields)
+        await this.getCollection('football-teams').add(this.fields);
+        console.log('team has been uploaded')
         this.respond(response, 'success')
     }
 }
