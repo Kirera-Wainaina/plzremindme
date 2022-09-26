@@ -1,4 +1,4 @@
-import { MenuItem, TextField, Box, Typography, Button, Alert } from "@mui/material";
+import { MenuItem, TextField, Box, Typography, Button, Alert, LinearProgress } from "@mui/material";
 import React from "react";
 
 export default class AddFootballTeam extends React.Component {
@@ -10,7 +10,8 @@ export default class AddFootballTeam extends React.Component {
             clubCountry: 'England',
             teamName: '',
             teamLogo: null,
-            statusCode: null
+            statusCode: null,
+            showLinearProgress: false
         }
 
         this.countries = ['England', 'Spain', 'France', 'Italy', 'Germany']
@@ -37,6 +38,7 @@ export default class AddFootballTeam extends React.Component {
     handleSubmit(e) {
         // handle submit
         e.preventDefault();
+        this.setState({ showLinearProgress: true });
         const formdata = new FormData(e.target)
         this.uploadData(formdata)
     }
@@ -47,7 +49,10 @@ export default class AddFootballTeam extends React.Component {
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}
         })
-        .then(response => this.setState({ statusCode: response.status }))
+        .then(response => this.setState({ 
+            statusCode: response.status,
+            showLinearProgress: false
+        }))
     }
 
     render() {
@@ -60,6 +65,7 @@ export default class AddFootballTeam extends React.Component {
                     padding: 5
                 }}
             >
+                {this.state.showLinearProgress && <LinearProgress />}
                 {this.state.statusCode == 200 && <Alert severity="success">The upload was successful!</Alert>}
                 <Typography variant='h6' align='center'>Add Team(s)</Typography>
                 <TextField 
