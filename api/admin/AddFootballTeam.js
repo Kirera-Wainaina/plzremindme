@@ -8,6 +8,7 @@ class AddFootballTeam extends FormDataHandler {
     async run(response) {
         console.log('called')
         await this.retrieveData();
+        console.log(this.fields)
         this.respond(response, 'success')
     }
 }

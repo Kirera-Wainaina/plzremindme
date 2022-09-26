@@ -6,7 +6,7 @@ const path = require('path');
 const { Firestore } = require('@google-cloud/firestore');
 const Busboy = require('busboy');
 const mimes = require('./utils/MIMETypes');
-const ImageHandler = require('./handlers/ImageHandler')
+const CloudUploader = require('./handlers/CloudUploader')
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -179,8 +179,11 @@ class FormDataHandler {
         const filePath = path.join(__dirname, 'uploads', `${name}${extension}`)
         file.pipe(fs.createWriteStream(filePath))
             .on('close', () => {
-                const imageHandler =  new ImageHandler(filePath);
-                imageHandler.minimizeImage().then(file => console.log(file))
+                const CloudUploader =  new CloudUploader(filePath);
+                CloudUploader.minimizeImage()
+                .then(file => CloudUploader.uploadToBucket())
+                .then(() => CloudUploader.deleteAfterUpload())
+                .then(() => CloudUploader.getCloudFileMetadata());
             })
             .on('close', () => console.log(`${name}${extension}`, 'Written to disk'))
     }
