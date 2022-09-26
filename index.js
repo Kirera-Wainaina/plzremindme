@@ -178,12 +178,10 @@ class FormDataHandler {
         const extension = mimes.findExtensionFromMIMEType(info.mimeType);
         const filePath = path.join(__dirname, 'uploads', `${name}${extension}`)
         file.pipe(fs.createWriteStream(filePath))
-            .on('close', () => {
-                const CloudUploader =  new CloudUploader(filePath);
-                CloudUploader.minimizeImage()
-                .then(file => CloudUploader.uploadToBucket())
-                .then(() => CloudUploader.deleteAfterUpload())
-                .then(() => CloudUploader.getCloudFileMetadata());
+            .on('close', async () => {
+                const cloudUploader =  new CloudUploader(filePath);
+                const fileMetadata = await cloudUploader.run();
+                console.log(fileMetadata)
             })
             .on('close', () => console.log(`${name}${extension}`, 'Written to disk'))
     }

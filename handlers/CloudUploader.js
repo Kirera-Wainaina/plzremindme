@@ -51,6 +51,13 @@ class CloudUploader {
     getCloudFileMetadata() {
         return this.cloudFile.getMetadata().then(data => data[0]);
     }
+
+    run() {
+        return this.minimizeImage()
+            .then(() => this.uploadToBucket())
+            .then(() => this.deleteAfterUpload())
+            .then(() => this.getCloudFileMetadata())
+    }
 }
 
 module.exports = CloudUploader;
