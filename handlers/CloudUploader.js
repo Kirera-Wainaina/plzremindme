@@ -49,10 +49,7 @@ class CloudUploader {
     }
 
     getCloudFileMetadata() {
-        this.cloudFile.getMetadata().then(data => {
-            console.log(data[0]);
-            // console.log(data[1]);
-        })
+        return this.cloudFile.getMetadata().then(data => data[0]);
     }
 }
 
