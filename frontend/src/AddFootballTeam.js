@@ -1,4 +1,4 @@
-import { MenuItem, TextField, Box, Typography, Button, Alert, LinearProgress } from "@mui/material";
+import { MenuItem, TextField, Box, Typography, Button, Alert, LinearProgress, Card } from "@mui/material";
 import React from "react";
 
 export default class AddFootballTeam extends React.Component {
@@ -59,78 +59,82 @@ export default class AddFootballTeam extends React.Component {
 
     render() {
         return (
-            <Box component='form'
-                onSubmit={this.handleSubmit}
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    padding: 5
-                }}
-            >
-                {this.state.showLinearProgress && <LinearProgress />}
-                {this.state.statusCode == 200 && <Alert severity="success">The upload was successful!</Alert>}
-                <Typography variant='h6' align='center'>Add Team(s)</Typography>
-                <TextField 
-                    label='Team Name'
-                    variant="filled"
-                    margin="normal"
-                    name="teamName"
-                    value={this.state.teamName}
-                    onChange={this.handleChange}
-                    required
-                />
-                <TextField
-                    label='Team Type'
-                    variant='filled'
-                    value={this.state.teamType}
-                    onChange={this.handleChange}
-                    margin="normal"
-                    name="teamType"
-                    select
-                    required
+            <Card sx={{ 
+                mt: 5,
+                }}>
+                <Box component='form'
+                    onSubmit={this.handleSubmit}
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        padding: 5,
+                    }}
                 >
-                    {['Country', 'Club'].map((type, index) => (
-                        <MenuItem key={index} value={type.toLowerCase()}>
-                            {type}
-                        </MenuItem>
-                    ))}
-                </TextField>
-                { 
-                    this.state.teamType == 'club' && 
+                    {this.state.showLinearProgress && <LinearProgress />}
+                    {this.state.statusCode == 200 && <Alert severity="success">The upload was successful!</Alert>}
+                    <Typography variant='h6' align='center'>Add Team(s)</Typography>
                     <TextField 
-                        label='Club country'
-                        variant='filled'
+                        label='Team Name'
+                        variant="filled"
                         margin="normal"
-                        value={this.state.clubCountry}
-                        name="clubCountry"
+                        name="teamName"
+                        value={this.state.teamName}
                         onChange={this.handleChange}
                         required
+                    />
+                    <TextField
+                        label='Team Type'
+                        variant='filled'
+                        value={this.state.teamType}
+                        onChange={this.handleChange}
+                        margin="normal"
+                        name="teamType"
                         select
+                        required
                     >
-                        {this.countries.map((country, index) => (
-                            <MenuItem key={index} value={country}>
-                                {country}
+                        {['Country', 'Club'].map((type, index) => (
+                            <MenuItem key={index} value={type.toLowerCase()}>
+                                {type}
                             </MenuItem>
                         ))}
                     </TextField>
-                }
-                <Button variant="outlined" 
-                    onClick={this.openFileUpload} 
-                    sx={{ my: 2 }}
-                >
-                    Upload Team Logo
-                </Button>
-                <input onChange={this.handleFileUpload} 
-                    type='file' 
-                    name={`${this.state.teamName}-logo`}
-                    className="invisible-file-upload"/>
-                <Button variant="contained" 
-                    type="submit" 
-                    sx={{ m: 2 }} 
-                >
-                    submit
-                </Button>
-            </Box>
+                    { 
+                        this.state.teamType == 'club' && 
+                        <TextField 
+                            label='Club country'
+                            variant='filled'
+                            margin="normal"
+                            value={this.state.clubCountry}
+                            name="clubCountry"
+                            onChange={this.handleChange}
+                            required
+                            select
+                        >
+                            {this.countries.map((country, index) => (
+                                <MenuItem key={index} value={country}>
+                                    {country}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    }
+                    <Button variant="outlined" 
+                        onClick={this.openFileUpload} 
+                        sx={{ my: 2 }}
+                    >
+                        Upload Team Logo
+                    </Button>
+                    <input onChange={this.handleFileUpload} 
+                        type='file' 
+                        name={`${this.state.teamName}-logo`}
+                        className="invisible-file-upload"/>
+                    <Button variant="contained" 
+                        type="submit" 
+                        sx={{ m: 2 }} 
+                    >
+                        submit
+                    </Button>
+                </Box>
+            </Card>
         )
     }
 }

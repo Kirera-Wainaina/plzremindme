@@ -14,16 +14,16 @@
     grid-template-columns: repeat(12, 1fr);
 }
 
-#category-card {
-    grid-column: 5 / 10;
-}
-
 .category-tabs {
     grid-column: 1 / 3;
 }
 
 .invisible-file-upload {
     display: none;
+}
+
+.uploadForm {
+    grid-column: 5 / 10;
 }
 
 @media (max-width: 500px) {
@@ -34,11 +34,8 @@
     .category-component {
         grid-template-columns: repeat(6, 1fr);
     }
-    #category-card {
-        grid-column: 1 / 7;
-    }
 
-    .category-tabs {
+    .category-tabs, .uploadForm {
         grid-column: 1 / 7;
     }
 }
