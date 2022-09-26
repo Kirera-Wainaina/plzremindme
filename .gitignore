@@ -14,5 +14,7 @@ yarn-error.log
 
 # everything in uploads and converted directories
 # except the placeholder files
-uploads/!x.txt
-converted/!x.txt
+uploads/
+!uploads/x.txt
+converted/
+!converted/x.txt
