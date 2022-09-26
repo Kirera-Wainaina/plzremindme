@@ -23,7 +23,7 @@ export default class AddFootballTeam extends React.Component {
     }
 
     handleChange(e) {
-        this.setState({ [e.target.name]: e.target.value })
+        this.setState({ [e.target.name]: e.target.value, statusCode: null })
     }
 
     openFileUpload(e) {
