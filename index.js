@@ -6,6 +6,7 @@ const path = require('path');
 const { Firestore } = require('@google-cloud/firestore');
 const Busboy = require('busboy');
 const mimes = require('./utils/MIMETypes');
+const ImageHandler = require('./handlers/ImageHandler')
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -177,7 +178,11 @@ class FormDataHandler {
         const extension = mimes.findExtensionFromMIMEType(info.mimeType);
         const filePath = path.join(__dirname, 'uploads', `${name}${extension}`)
         file.pipe(fs.createWriteStream(filePath))
-            .on('close', () => console.log(`${name}${extension}`, 'Written to disk'));
+            .on('close', () => {
+                const imageHandler =  new ImageHandler(filePath);
+                imageHandler.minimizeImage().then(file => console.log(file))
+            })
+            .on('close', () => console.log(`${name}${extension}`, 'Written to disk'))
     }
 
     respond(response, msg) {
