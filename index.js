@@ -175,8 +175,9 @@ class FormDataHandler {
 
     handleFile(name, file, info) {
         const extension = mimes.findExtensionFromMIMEType(info.mimeType);
-        file.pipe(fs.createWriteStream(path.join(__dirname, 'uploads', `${name}${extension}`)))
-            .on('close', () => console.log(`${name}${extension}`, 'Written to disk'))
+        const filePath = path.join(__dirname, 'uploads', `${name}${extension}`)
+        file.pipe(fs.createWriteStream(filePath))
+            .on('close', () => console.log(`${name}${extension}`, 'Written to disk'));
     }
 
     respond(response, msg) {
