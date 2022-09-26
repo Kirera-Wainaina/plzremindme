@@ -5,9 +5,16 @@ class AddFootballTeam extends FormDataHandler {
         super(props)
     }
 
+    createTeamObject() {
+        this.fields['logoName'] = this.logoMetadata.name;
+        this.fields['logoLink'] = this.logoMetadata.mediaLink;
+        this.fields['logoId'] = this.logoMetadata.id;
+    }
+
     async run(response) {
         console.log('called')
-        await this.retrieveData();
+        await this.retrieveData()
+            .then(() => this.createTeamObject());
         console.log(this.fields)
         this.respond(response, 'success')
     }
