@@ -1,4 +1,4 @@
-import { MenuItem, TextField, Box, Typography, Button } from "@mui/material";
+import { MenuItem, TextField, Box, Typography, Button, Alert } from "@mui/material";
 import React from "react";
 
 export default class AddFootballTeam extends React.Component {
@@ -9,7 +9,8 @@ export default class AddFootballTeam extends React.Component {
             teamType: 'country',
             clubCountry: 'England',
             teamName: '',
-            teamLogo: null
+            teamLogo: null,
+            statusCode: null
         }
 
         this.countries = ['England', 'Spain', 'France', 'Italy', 'Germany']
@@ -36,20 +37,8 @@ export default class AddFootballTeam extends React.Component {
     handleSubmit(e) {
         // handle submit
         e.preventDefault();
-        //const formdata = this.appendToFormData();
         const formdata = new FormData(e.target)
         this.uploadData(formdata)
-    }
-
-    appendToFormData() {
-        const formdata = new FormData();
-        formdata.append('teamName', this.state.teamName);
-        formdata.append('teamType', this.state.teamType);
-        formdata.append('teamLogo', this.state.teamLogo);
-        if (this.state.teamType == 'club') {
-            formdata.append('clubCountry', this.state.clubCountry)
-        }
-        return formdata
     }
 
     uploadData(formdata) {
@@ -58,7 +47,7 @@ export default class AddFootballTeam extends React.Component {
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}
         })
-        .then(response => console.log(response))
+        .then(response => this.setState({ statusCode: response.status }))
     }
 
     render() {
@@ -71,6 +60,7 @@ export default class AddFootballTeam extends React.Component {
                     padding: 5
                 }}
             >
+                {this.state.statusCode == 200 && <Alert severity="success">The upload was successful!</Alert>}
                 <Typography variant='h6' align='center'>Add Team(s)</Typography>
                 <TextField 
                     label='Team Name'
