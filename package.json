@@ -10,6 +10,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@google-cloud/firestore": "^6.2.0",
+    "@google-cloud/storage": "^6.5.2",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.6",
     "bcrypt": "^5.0.1",
