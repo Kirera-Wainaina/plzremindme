@@ -4,6 +4,7 @@ const imageminWebp = require('imagemin-webp');
 const { Storage } = require('@google-cloud/storage');
 const dotenv = require('dotenv');
 const fs = require('fs');
+const fsPromises = require('fs/promises');
 dotenv.config();
 
 class ImageHandler {
@@ -30,11 +31,20 @@ class ImageHandler {
     }
 
     uploadToBucket() {
-        const file = this.bucket.file(path.basename(this.convertedFilePath));
-        fs.createReadStream(this.convertedFilePath)
-            .pipe(file.createWriteStream())
-            .on('error', error => console.log(error))
-            .on('finish', () => console.log(`${path.basename(this.convertedFilePath)} - uploaded`))
+        return new Promise((resolve, reject) => {
+            const file = this.bucket.file(path.basename(this.convertedFilePath));
+            fs.createReadStream(this.convertedFilePath)
+                .pipe(file.createWriteStream())
+                .on('error', error => reject(error))
+                .on('finish', () => {
+                    console.log(`uploaded ${this.convertedFilePath} to cloud`);
+                    resolve();
+                })
+        })
+    }
+
+    deleteAfterUpload() {
+        return Promise.all([fsPromises.unlink(this.filePath), fsPromises.unlink(this.convertedFilePath)])
     }
 }
 
