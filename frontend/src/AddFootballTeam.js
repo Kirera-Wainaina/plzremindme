@@ -51,7 +51,9 @@ export default class AddFootballTeam extends React.Component {
         })
         .then(response => this.setState({ 
             statusCode: response.status,
-            showLinearProgress: false
+            showLinearProgress: false,
+            teamName: '',
+            teamLogo: null
         }))
     }
 
@@ -73,6 +75,7 @@ export default class AddFootballTeam extends React.Component {
                     variant="filled"
                     margin="normal"
                     name="teamName"
+                    value={this.state.teamName}
                     onChange={this.handleChange}
                     required
                 />
