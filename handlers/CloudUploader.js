@@ -7,7 +7,7 @@ const fs = require('fs');
 const fsPromises = require('fs/promises');
 dotenv.config();
 
-class ImageHandler {
+class CloudUploader {
     constructor(filePath) {
         this.filePath = filePath;
         this.convertedFilePath = null;
@@ -16,6 +16,7 @@ class ImageHandler {
             projectId: process.env.GCLOUD_PROJECT_ID
         });
         this.bucket = this.storage.bucket(process.env.BUCKET_NAME);
+        this.cloudFile = null;
     }
 
     async minimizeImage() {
@@ -31,10 +32,10 @@ class ImageHandler {
     }
 
     uploadToBucket() {
+        this.cloudFile = this.bucket.file(path.basename(this.convertedFilePath));
         return new Promise((resolve, reject) => {
-            const file = this.bucket.file(path.basename(this.convertedFilePath));
             fs.createReadStream(this.convertedFilePath)
-                .pipe(file.createWriteStream())
+                .pipe(this.cloudFile.createWriteStream())
                 .on('error', error => reject(error))
                 .on('finish', () => {
                     console.log(`uploaded ${this.convertedFilePath} to cloud`);
@@ -46,6 +47,13 @@ class ImageHandler {
     deleteAfterUpload() {
         return Promise.all([fsPromises.unlink(this.filePath), fsPromises.unlink(this.convertedFilePath)])
     }
+
+    getCloudFileMetadata() {
+        this.cloudFile.getMetadata().then(data => {
+            console.log(data[0]);
+            // console.log(data[1]);
+        })
+    }
 }
 
-module.exports = ImageHandler;
+module.exports = CloudUploader;
