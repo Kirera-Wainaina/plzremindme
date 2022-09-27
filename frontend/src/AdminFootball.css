@@ -1,4 +1,4 @@
-.uploadForm {
+#upload-form {
     grid-column: 5 / 10;
 }
 
@@ -16,7 +16,7 @@
 
 
 @media (max-width: 500px) {
-    .uploadForm {
+    #upload-form {
         grid-column: 1 / 7;
     }
     .category-component {

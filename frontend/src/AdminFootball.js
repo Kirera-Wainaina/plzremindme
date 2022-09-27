@@ -27,7 +27,7 @@ export default function AdminFootball() {
             
             <p>She blew the team for some red bottoms</p>
             <TabPanel value={value} index={0} >View Clubs/Countries</TabPanel>
-            <TabPanel value={value} index={1} className='uploadForm'>
+            <TabPanel value={value} index={1} id='upload-form'>
                 <AddFootballTeam />
             </TabPanel>
             <TabPanel value={value} index={2} >Upload Matches</TabPanel>
@@ -40,7 +40,7 @@ export default function AdminFootball() {
 function TabPanel(props) {
     return (
         <div role='tabpanel' 
-            className={props.className}
+            id={props.id}
             hidden={props.value != props.index}>
             {props.children}
         </div>
