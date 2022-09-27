@@ -1,5 +1,6 @@
 import { MenuItem, TextField, Box, Typography, Button, Alert, LinearProgress, Card } from "@mui/material";
 import React from "react";
+import './AddFootballTeam.css';
 
 export default class AddFootballTeam extends React.Component {
     constructor(props) {

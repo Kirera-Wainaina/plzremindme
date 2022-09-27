@@ -1,5 +1,6 @@
 import React from "react";
 import { List, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
+import './AdminPanel.css';
 
 export default class AdminPanel extends React.Component {
     constructor(props) {

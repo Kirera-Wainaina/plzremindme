@@ -1,6 +1,7 @@
 import { Card, Tab, Tabs } from "@mui/material";
 import React from "react";
 import AddFootballTeam from "./AddFootballTeam";
+import './AdminFootball.css';
 
 export default function AdminFootball() {
     const [value, setValue] = React.useState(0);
