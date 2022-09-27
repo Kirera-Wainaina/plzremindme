@@ -2,17 +2,6 @@
     grid-column: 5 / 10;
 }
 
-.category-component {
-    width: 99vw;
-    height: 80vh;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-}
-
-.category-tabs {
-    grid-column: 1 / 3;
-}
-
 #edit-team {
     grid-column: 5 / 11;
     /* border: 1px solid black; */
@@ -20,13 +9,7 @@
 
 
 @media (max-width: 500px) {
-    #upload-form {
-        grid-column: 1 / 7;
-    }
-    .category-component {
-        grid-template-columns: repeat(6, 1fr);
-    }
-    .category-tabs {
+    #upload-form, #edit-team {
         grid-column: 1 / 7;
     }
 }
