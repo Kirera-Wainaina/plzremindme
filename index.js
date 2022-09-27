@@ -136,14 +136,18 @@ class FileResponder {
     }
 }
 
-class JSONHandler {
-    constructor(stream, headers) {
-        this.stream = stream;
-        this.headers = headers;
-    }
+class RequestHandler {
+    constructor() {}
 
     getCollection(collectionName) {
         return firestore.collection(collectionName)
+    }
+}
+
+class JSONHandler extends RequestHandler {
+    constructor(stream, headers) {
+        this.stream = stream;
+        this.headers = headers;
     }
 
     retrieveData() {
@@ -170,15 +174,11 @@ class JSONHandler {
     }
 }
 
-class FormDataHandler {
+class FormDataHandler extends RequestHandler {
     constructor(request) {
         this.request = request;
         this.fields = {};
         this.logoMetadata = null;
-    }
-
-    getCollection(collectionName) {
-        return firestore.collection(collectionName)
     }
 
     retrieveData() {
@@ -222,14 +222,14 @@ class FormDataHandler {
 
 }
 
-class GETHandler {
+class GETHandler extends RequestHandler {
     constructor(stream, headers) {
         this.stream = stream;
         this.headers = headers;
     }
 
-    getCollection(collectionName) {
-        return firestore.collection(collectionName)
+    respond() {
+        // fill in once you have the data
     }
 
 }
