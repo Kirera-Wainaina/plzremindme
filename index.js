@@ -43,7 +43,6 @@ function handleFileRoutes(stream, headers) {
             respond.send();
         }
     }
-    // There will be an alternative to handle GET API requests
 }
 
 function handleJSONPOSTRequests(stream, headers) {
@@ -63,7 +62,7 @@ function handleFormDataPOSTRequests(request, response) {
 function handleAPIGETRequests(stream, headers) {
     if (!isPOSTRequest(headers)) {
         if (isAPIGETRequest(headers)) {
-            console.log('we got a live one')
+            callClassWithStreamArg(stream, headers);
         }
     }
 }
@@ -223,6 +222,13 @@ class FormDataHandler {
 
 }
 
+class GETHandler {
+    constructor(stream, headers) {
+        this.stream = stream;
+        this.headers = headers;
+    }
+}
+
 function createLog(stream, headers) {
     console.log(new Date, headers[':path'])
 }
@@ -262,3 +268,4 @@ exports.FileResponder = FileResponder;
 exports.isPOSTRequest = isPOSTRequest;
 exports.JSONHandler = JSONHandler;
 exports.FormDataHandler = FormDataHandler;
+exports.GETHandler = GETHandler;
