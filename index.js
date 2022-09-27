@@ -227,6 +227,11 @@ class GETHandler {
         this.stream = stream;
         this.headers = headers;
     }
+
+    getCollection(collectionName) {
+        return firestore.collection(collectionName)
+    }
+
 }
 
 function createLog(stream, headers) {
