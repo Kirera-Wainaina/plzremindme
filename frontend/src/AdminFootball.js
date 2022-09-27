@@ -26,7 +26,7 @@ export default function AdminFootball() {
                 <Tab label='Edit Matches' value={3}/>
             </Tabs>
             
-            <p>She blew the team for some red bottoms</p>
+            {/* <p>She blew the team for some red bottoms</p> */}
             <TabPanel value={value} index={0} id='edit-team'>
                 <EditFootballTeam />
             </TabPanel>
