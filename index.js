@@ -30,14 +30,18 @@ server.on('stream', handleFileRoutes);
 
 server.on('stream', handleJSONPOSTRequests);
 
+server.on('stream', handleAPIGETRequests);
+
 server.on('stream', createLog);
 
 server.on('request', handleFormDataPOSTRequests)
 
 function handleFileRoutes(stream, headers) {
     if (!isPOSTRequest(headers)) {
-        const respond = new FileResponder(stream, headers);
-        respond.send();
+        if (!isAPIGETRequest(headers)) {
+            const respond = new FileResponder(stream, headers);
+            respond.send();
+        }
     }
     // There will be an alternative to handle GET API requests
 }
@@ -56,6 +60,14 @@ function handleFormDataPOSTRequests(request, response) {
     }
 }
 
+function handleAPIGETRequests(stream, headers) {
+    if (!isPOSTRequest(headers)) {
+        if (isAPIGETRequest(headers)) {
+            console.log('we got a live one')
+        }
+    }
+}
+
 function isPOSTRequest(headers) {
     if (headers[':method'] == 'POST') return true
     return false;
@@ -69,6 +81,11 @@ function isJSONRequest(headers) {
 function isFormData(headers) {
     if (isPOSTRequest(headers) && !isJSONRequest(headers)) return true;
     return false
+}
+
+function isAPIGETRequest(headers) {
+    const parentDir = path.dirname(path.dirname(headers[':path']));
+    return parentDir == '/api' ? true : false;
 }
 
 function callClassWithStreamArg(stream, headers) {
