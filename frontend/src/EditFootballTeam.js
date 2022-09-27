@@ -24,15 +24,28 @@ export default class EditFootballTeam extends React.Component {
                 </Grid>
 
                 <Grid item xs={12} sm={8}>
-                    <Card sx={{ 
-                        width: '100%',
-                        height: '50%'
-                    }}>
-                        <p>Team List</p>
-                    </Card>
+                    <FootballTeams />
                 </Grid>
 
             </Grid>
         )
     }
+}
+
+function FootballTeams() {
+    const [teams, setTeams] = React.useState(null);
+
+    React.useEffect(() => {
+        fetch('/api/admin/GetFootballTeams')
+            .then(response => console.log(response))
+    })
+
+    return (
+        <Card sx={{ 
+            width: '100%',
+            height: '50%'
+        }}>
+            <p>Team List</p>
+        </Card>
+    )
 }
