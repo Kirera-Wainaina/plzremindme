@@ -5,15 +5,10 @@ import React from "react";
 export default class EditFootballTeam extends React.Component {
     render() {
         return (
-            <Grid container direction='column' spacing={2}>
+            <Grid container justifyContent='center' spacing={2}>
 
-                <Grid item xs={12}>
-                    <Card sx={{
-                        width: '100%',
-                        height: '10%',
-                        mt: '3%',
-                        paddingBottom: '5px'
-                    }}>
+                <Grid item xs={12} sm={8} sx={{ mt: '1%'}}>
+                    <Card>
                         <Grid container direction='row'>
                             <Grid item xs={2} sm={1}>
                                 <IconButton size='large'><FilterList color="primary"/></IconButton>
@@ -28,7 +23,7 @@ export default class EditFootballTeam extends React.Component {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={8}>
                     <Card sx={{ 
                         width: '100%',
                         height: '50%'
