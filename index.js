@@ -146,6 +146,7 @@ class RequestHandler {
 
 class JSONHandler extends RequestHandler {
     constructor(stream, headers) {
+        super();
         this.stream = stream;
         this.headers = headers;
     }
@@ -176,6 +177,7 @@ class JSONHandler extends RequestHandler {
 
 class FormDataHandler extends RequestHandler {
     constructor(request) {
+        super();
         this.request = request;
         this.fields = {};
         this.logoMetadata = null;
@@ -224,6 +226,8 @@ class FormDataHandler extends RequestHandler {
 
 class GETHandler extends RequestHandler {
     constructor(stream, headers) {
+        super();
+
         this.stream = stream;
         this.headers = headers;
     }
