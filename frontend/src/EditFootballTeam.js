@@ -1,4 +1,4 @@
-import { FilterList, Search } from "@mui/icons-material";
+import { EditSharp, FilterList, Search } from "@mui/icons-material";
 import { Card, IconButton, Grid, TextField, List, ListItemAvatar, Avatar, ListItem, ListItemText, Typography } from "@mui/material";
 import React from "react";
 
@@ -48,7 +48,15 @@ function FootballTeams() {
             <Typography variant='h5' align="center">Teams</Typography>
             <List>
                 {teams.map(team => (
-                    <ListItem key={team.docId}>
+                    <ListItem 
+                        key={team.docId}
+                        divider={true}
+                        secondaryAction={
+                            <IconButton>
+                                <EditSharp color="primary"/>
+                            </IconButton>
+                        }
+                    >
                         <ListItemAvatar>
                             <Avatar src={team.logoLink} alt={team.logoName}/>
                         </ListItemAvatar>
