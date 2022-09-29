@@ -18,8 +18,6 @@ export default class AddFootballTeam extends React.Component {
             showLinearProgress: false
         }
 
-        // this.countries = ['England', 'Spain', 'France', 'Italy', 'Germany']
-        
         this.handleChange = this.handleChange.bind(this);
         this.openFileUpload = this.openFileUpload.bind(this);
         this.handleFileUpload = this.handleFileUpload.bind(this);

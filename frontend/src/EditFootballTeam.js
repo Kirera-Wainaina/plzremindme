@@ -38,7 +38,7 @@ export default class EditFootballTeam extends React.Component {
 
 function FootballTeams() {
     const [teams, setTeams] = React.useState([]);
-    const [editTeam, setEditTeam] = React.useState(null);
+    const [teamId, setTeamId] = React.useState(null);
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -48,7 +48,7 @@ function FootballTeams() {
     }, [])
 
     function openEditModal(team) {
-        setEditTeam(team)
+        setTeamId(team.docId);
         setModalIsOpen(true);
     }
 
@@ -60,7 +60,6 @@ function FootballTeams() {
         <Card sx={{ 
             width: '100%',
         }}>
-            {editTeam && <EditComponent isOpen={modalIsOpen} close={closeEditModal} team={editTeam}/>}
             <Typography variant='h5' align="center">Teams</Typography>
             <List>
                 {teams.map(team => (
@@ -73,6 +72,10 @@ function FootballTeams() {
                             </IconButton>
                         }
                     >
+                        {
+                            teamId == team.docId && 
+                            <EditComponent isOpen={modalIsOpen} close={closeEditModal} team={team}/>
+                        }
                         <ListItemAvatar>
                             <Avatar src={team.logoLink} alt={team.logoName}/>
                         </ListItemAvatar>
@@ -91,13 +94,14 @@ class EditComponent extends React.Component {
 
         this.state = {
             teamName: '',
-            teamType: 'country'
+            teamType: null,
+            clubCountry: null
         }
 
         this.handleClose = this.handleClose.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
+        this.displayClubCountry = this.displayClubCountry.bind(this);
     }
 
     handleClose() {
@@ -110,6 +114,18 @@ class EditComponent extends React.Component {
 
     handleSubmit() {
 
+    }
+
+    displayClubCountry() {
+        if (this.state.teamType == 'club') {    // is club
+            return true
+        } else if (this.state.teamType == 'country') {
+            return false
+        } else {    // use props if there is no teamType in state
+            // initial
+            if (this.props.team.teamType == 'club') return true;
+            return false
+        }
     }
 
     render() {
@@ -166,9 +182,9 @@ class EditComponent extends React.Component {
                                         </MenuItem>
                                     ))}
                                 </TextField>
-                                { 
-                                    this.state.teamType == 'club' || 
-                                    this.props.team.teamType == 'club' && 
+                                {
+                                    
+                                    this.displayClubCountry() &&
                                      <TextField 
                                         label='Club country'
                                         variant='outlined'
