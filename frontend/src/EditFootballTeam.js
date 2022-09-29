@@ -1,6 +1,10 @@
 import { EditSharp, FilterList, Search } from "@mui/icons-material";
-import { Card, IconButton, Grid, TextField, List, ListItemAvatar, Avatar, ListItem, ListItemText, Typography, Modal } from "@mui/material";
+import { Card, IconButton, Grid, TextField, List, ListItemAvatar, 
+    Avatar, ListItem, ListItemText, Typography, Modal,
+    Box, MenuItem } from "@mui/material";
 import React from "react";
+
+import COUNTRIES from "./countries";
 
 export default class EditFootballTeam extends React.Component {
     render() {
@@ -34,6 +38,7 @@ export default class EditFootballTeam extends React.Component {
 
 function FootballTeams() {
     const [teams, setTeams] = React.useState([]);
+    const [editTeam, setEditTeam] = React.useState(null);
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -42,7 +47,8 @@ function FootballTeams() {
             .then(data => setTeams(data))
     }, [])
 
-    function openEditModal() {
+    function openEditModal(team) {
+        setEditTeam(team)
         setModalIsOpen(true);
     }
 
@@ -54,7 +60,7 @@ function FootballTeams() {
         <Card sx={{ 
             width: '100%',
         }}>
-            <EditComponent isOpen={modalIsOpen} close={closeEditModal}/>
+            {editTeam && <EditComponent isOpen={modalIsOpen} close={closeEditModal} team={editTeam}/>}
             <Typography variant='h5' align="center">Teams</Typography>
             <List>
                 {teams.map(team => (
@@ -62,7 +68,7 @@ function FootballTeams() {
                         key={team.docId}
                         divider={true}
                         secondaryAction={
-                            <IconButton onClick={openEditModal}>
+                            <IconButton onClick={() => openEditModal(team)}>
                                 <EditSharp color="primary"/>
                             </IconButton>
                         }
@@ -79,17 +85,113 @@ function FootballTeams() {
     )
 }
 
-function EditComponent(props) {
-    function handleClose() {
-        props.close();
+class EditComponent extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            teamName: '',
+            teamType: 'country'
+        }
+
+        this.handleClose = this.handleClose.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+
     }
 
-    return (
-        <Modal
-            open={props.isOpen}
-            onClose={handleClose}
-        >
-            <p>Hello</p>
-        </Modal>
-    )
+    handleClose() {
+        this.props.close();
+    }
+
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    handleSubmit() {
+
+    }
+
+    render() {
+        return (
+            <Modal
+                open={this.props.isOpen}
+                onClose={this.handleClose}
+            >
+                <Card sx={{ 
+                    width: '80%',
+                    ml: '10%',
+                    mt: 5,
+                    padding: 5
+                }}>
+                    <Grid container>
+
+                        <Grid item xs={12} sm={12}>
+                            <Typography variant='h5' align="center">Edit {this.props.team.teamName}</Typography>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <Box component='form' 
+                                onSubmit={this.handleSubmit}
+                                sx={{
+                                    display: 'form',
+                                    flexDirection: 'column',
+                                    border: '1px solid black',
+                                    px: 5
+                            }}>
+                                <TextField 
+                                    label='Team Name'
+                                    variant="outlined"
+                                    margin="normal"
+                                    name="teamName"
+                                    defaultValue={this.props.team.teamName}
+                                    onChange={this.handleChange}
+                                    fullWidth={true}
+                                    required
+                                />
+                                <TextField
+                                    label='Team Type'
+                                    variant='outlined'
+                                    defaultValue={this.props.team.teamType}
+                                    onChange={this.handleChange}
+                                    margin="normal"
+                                    name="teamType"
+                                    fullWidth={true}
+                                    select
+                                    required
+                                >
+                                    {['Country', 'Club'].map((type, index) => (
+                                        <MenuItem key={index} value={type.toLowerCase()}>
+                                            {type}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                                { 
+                                    this.state.teamType == 'club' || 
+                                    this.props.team.teamType == 'club' && 
+                                     <TextField 
+                                        label='Club country'
+                                        variant='outlined'
+                                        margin="normal"
+                                        defaultValue={this.props.team.clubCountry}
+                                        name="clubCountry"
+                                        onChange={this.handleChange}
+                                        fullWidth
+                                        required
+                                        select
+                                    >
+                                        {COUNTRIES.map((country, index) => (
+                                            <MenuItem key={index} value={country}>
+                                                {country}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                }
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Card>
+            </Modal>
+        )
+    }
 }
