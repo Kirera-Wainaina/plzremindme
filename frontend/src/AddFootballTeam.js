@@ -1,6 +1,8 @@
-import { MenuItem, TextField, Box, Typography, Button, Alert, LinearProgress, Card, Grid, CardMedia } from "@mui/material";
+import { MenuItem, TextField, Box, Typography, Button, Alert, 
+    LinearProgress, Card, Grid, CardMedia } from "@mui/material";
 import React from "react";
 import './AddFootballTeam.css';
+import COUNTRIES from "./countries";
 
 export default class AddFootballTeam extends React.Component {
     constructor(props) {
@@ -16,7 +18,7 @@ export default class AddFootballTeam extends React.Component {
             showLinearProgress: false
         }
 
-        this.countries = ['England', 'Spain', 'France', 'Italy', 'Germany']
+        // this.countries = ['England', 'Spain', 'France', 'Italy', 'Germany']
         
         this.handleChange = this.handleChange.bind(this);
         this.openFileUpload = this.openFileUpload.bind(this);
@@ -78,7 +80,10 @@ export default class AddFootballTeam extends React.Component {
                             }}
                         >
                             {this.state.showLinearProgress && <LinearProgress />}
-                            {this.state.statusCode == 200 && <Alert severity="success">The upload was successful!</Alert>}
+                            {
+                                this.state.statusCode == 200 && 
+                                <Alert severity="success">The upload was successful!</Alert>
+                            }
                             <Typography variant='h6' align='center'>Add Team(s)</Typography>
                             <TextField 
                                 label='Team Name'
@@ -117,7 +122,7 @@ export default class AddFootballTeam extends React.Component {
                                     required
                                     select
                                 >
-                                    {this.countries.map((country, index) => (
+                                    {COUNTRIES.map((country, index) => (
                                         <MenuItem key={index} value={country}>
                                             {country}
                                         </MenuItem>
