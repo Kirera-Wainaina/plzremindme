@@ -174,20 +174,6 @@ class JSONHandler extends RequestHandler {
         })
     }
 
-    respond(msg) {
-        switch (msg) {
-            case 'unauthorized':
-                this.stream.respond({':status': 401});
-                break;
-            case 'success':
-                this.stream.respond({':status': 200});
-                break;
-            case 'error':
-                this.stream.respond({':status': 500});
-                break;
-        }
-        this.stream.end()
-    }
 }
 
 class FormDataHandler extends RequestHandler {
