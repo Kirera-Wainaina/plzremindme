@@ -1,5 +1,5 @@
 import { EditSharp, FilterList, Search } from "@mui/icons-material";
-import { Card, IconButton, Grid, TextField, List, ListItemAvatar, Avatar, ListItem, ListItemText, Typography } from "@mui/material";
+import { Card, IconButton, Grid, TextField, List, ListItemAvatar, Avatar, ListItem, ListItemText, Typography, Modal } from "@mui/material";
 import React from "react";
 
 export default class EditFootballTeam extends React.Component {
@@ -34,6 +34,7 @@ export default class EditFootballTeam extends React.Component {
 
 function FootballTeams() {
     const [teams, setTeams] = React.useState([]);
+    const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
         fetch('/api/admin/GetFootballTeams')
@@ -41,10 +42,19 @@ function FootballTeams() {
             .then(data => setTeams(data))
     }, [])
 
+    function openEditModal() {
+        setModalIsOpen(true);
+    }
+
+    function closeEditModal() {
+        setModalIsOpen(false);
+    }
+
     return (
         <Card sx={{ 
             width: '100%',
         }}>
+            <EditComponent isOpen={modalIsOpen} close={closeEditModal}/>
             <Typography variant='h5' align="center">Teams</Typography>
             <List>
                 {teams.map(team => (
@@ -52,7 +62,7 @@ function FootballTeams() {
                         key={team.docId}
                         divider={true}
                         secondaryAction={
-                            <IconButton>
+                            <IconButton onClick={openEditModal}>
                                 <EditSharp color="primary"/>
                             </IconButton>
                         }
@@ -66,5 +76,20 @@ function FootballTeams() {
                 ))}
             </List>
         </Card>
+    )
+}
+
+function EditComponent(props) {
+    function handleClose() {
+        props.close();
+    }
+
+    return (
+        <Modal
+            open={props.isOpen}
+            onClose={handleClose}
+        >
+            <p>Hello</p>
+        </Modal>
     )
 }
