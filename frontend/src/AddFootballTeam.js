@@ -1,4 +1,4 @@
-import { MenuItem, TextField, Box, Typography, Button, Alert, LinearProgress, Card, Grid } from "@mui/material";
+import { MenuItem, TextField, Box, Typography, Button, Alert, LinearProgress, Card, Grid, CardMedia } from "@mui/material";
 import React from "react";
 import './AddFootballTeam.css';
 
@@ -11,6 +11,7 @@ export default class AddFootballTeam extends React.Component {
             clubCountry: 'England',
             teamName: '',
             teamLogo: null,
+            teamLogoURL: null,
             statusCode: null,
             showLinearProgress: false
         }
@@ -33,7 +34,10 @@ export default class AddFootballTeam extends React.Component {
     }
 
     handleFileUpload(e) {
-        this.setState({ teamLogo: e.target.files[0]})
+        this.setState({ 
+            teamLogo: e.target.files[0], 
+            teamLogoURL: URL.createObjectURL(e.target.files[0])
+        })
     }
 
     handleSubmit(e) {
@@ -130,6 +134,9 @@ export default class AddFootballTeam extends React.Component {
                                 type='file' 
                                 name={`${this.state.teamName}-logo`}
                                 className="invisible-file-upload"/>
+
+                            {this.state.teamLogo && <DisplayImage src={this.state.teamLogoURL}/>}
+
                             <Button variant="contained" 
                                 type="submit" 
                                 sx={{ m: 2 }} 
@@ -142,4 +149,19 @@ export default class AddFootballTeam extends React.Component {
             </Grid>
         )
     }
+}
+
+function DisplayImage(props) {
+    return (
+        <Card>
+            <CardMedia
+                component='img'
+                height='180'
+                image={props.src}
+                sx={{
+                    objectFit: 'contain'
+                }}
+            />
+        </Card>
+    )
 }
