@@ -1,5 +1,5 @@
 import { FilterList, Search } from "@mui/icons-material";
-import { Card, IconButton, Grid, TextField } from "@mui/material";
+import { Card, IconButton, Grid, TextField, List, ListItemAvatar, Avatar, ListItem, ListItemText, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditFootballTeam extends React.Component {
@@ -33,19 +33,30 @@ export default class EditFootballTeam extends React.Component {
 }
 
 function FootballTeams() {
-    const [teams, setTeams] = React.useState(null);
+    const [teams, setTeams] = React.useState([]);
 
     React.useEffect(() => {
         fetch('/api/admin/GetFootballTeams')
-            .then(response => console.log(response))
-    })
+            .then(response => response.json())
+            .then(data => setTeams(data))
+    }, [])
 
     return (
         <Card sx={{ 
             width: '100%',
-            height: '50%'
         }}>
-            <p>Team List</p>
+            <Typography variant='h5' align="center">Teams</Typography>
+            <List>
+                {teams.map(team => (
+                    <ListItem key={team.docId}>
+                        <ListItemAvatar>
+                            <Avatar src={team.logoLink} alt={team.logoName}/>
+                        </ListItemAvatar>
+                        <ListItemText primary={team.teamName} />
+                    </ListItem>
+                    
+                ))}
+            </List>
         </Card>
     )
 }

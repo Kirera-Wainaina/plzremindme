@@ -10,7 +10,7 @@ export default class AdminHome extends React.Component {
         super(props);
 
         this.state = {
-            sportComponent: <AdminFormula1 />,
+            sportComponent: <AdminFootball />,
             panelOn: false
         }
 
