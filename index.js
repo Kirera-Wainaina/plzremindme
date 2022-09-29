@@ -142,6 +142,21 @@ class RequestHandler {
     getCollection(collectionName) {
         return firestore.collection(collectionName)
     }
+
+    respond(msg, data=null) {
+        switch (msg) {
+            case 'unauthorized':
+                this.stream.respond({':status': 401});
+                break;
+            case 'success':
+                this.stream.respond({':status': 200});
+                break;
+            case 'error':
+                this.stream.respond({':status': 500});
+                break;
+        }
+        data ? this.stream.end(data) : this.stream.end()
+    }
 }
 
 class JSONHandler extends RequestHandler {
@@ -230,10 +245,6 @@ class GETHandler extends RequestHandler {
 
         this.stream = stream;
         this.headers = headers;
-    }
-
-    respond() {
-        // fill in once you have the data
     }
 
 }
