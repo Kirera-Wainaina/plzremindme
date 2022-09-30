@@ -1,7 +1,7 @@
 import { EditSharp, FilterList, Search } from "@mui/icons-material";
 import { Card, CardMedia, IconButton, Grid, TextField, List, ListItemAvatar, 
     Avatar, ListItem, ListItemText, Typography, Modal,
-    Box, MenuItem, CardContent, Button } from "@mui/material";
+    Box, MenuItem, CardContent, Button, LinearProgress } from "@mui/material";
 import React from "react";
 
 import COUNTRIES from "./countries";
@@ -97,7 +97,8 @@ class EditComponent extends React.Component {
             teamType: null,
             clubCountry: null,
             teamLogo: null,
-            teamLogoURL: null
+            teamLogoURL: null,
+            showLinearProgress: false
         }
 
         this.handleClose = this.handleClose.bind(this);
@@ -116,8 +117,20 @@ class EditComponent extends React.Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    handleSubmit() {
+    handleSubmit(e) {
+        e.preventDefault();
+        this.setState({ showLinearProgress: true });
+        const formdata = new FormData(e.target);
+        this.uploadData(formdata);
+    }
 
+    uploadData(formdata) {
+        fetch('/api/admin/EditFootballTeam', {
+            method: 'POST',
+            body: formdata,
+            headers: { 'content-encoding': 'multipart/form-data'}
+        }).then(response => console.log(response))
+        
     }
 
     displayClubCountry() {
@@ -168,9 +181,10 @@ class EditComponent extends React.Component {
                                 sx={{
                                     display: 'form',
                                     flexDirection: 'column',
-                                    border: '1px solid black',
+                                    // border: '1px solid black',
                                     px: 5
                             }}>
+                                {this.showLinearProgress && <LinearProgress />}
                                 <TextField 
                                     label='Team Name'
                                     variant="outlined"
@@ -232,6 +246,13 @@ class EditComponent extends React.Component {
                                     className="invisible-file-upload"/>
 
                                 {this.state.teamLogo && <DisplayImage src={this.state.teamLogoURL}/>}
+
+                                <Button variant="contained" 
+                                    type="submit" 
+                                    sx={{ m: 2 }} 
+                                >
+                                    submit
+                                </Button>
 
                             </Box>
                         </Grid>
