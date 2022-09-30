@@ -1,7 +1,7 @@
 import { EditSharp, FilterList, Search } from "@mui/icons-material";
-import { Card, IconButton, Grid, TextField, List, ListItemAvatar, 
+import { Card, CardMedia, IconButton, Grid, TextField, List, ListItemAvatar, 
     Avatar, ListItem, ListItemText, Typography, Modal,
-    Box, MenuItem } from "@mui/material";
+    Box, MenuItem, CardContent } from "@mui/material";
 import React from "react";
 
 import COUNTRIES from "./countries";
@@ -203,6 +203,21 @@ class EditComponent extends React.Component {
                                         ))}
                                     </TextField>
                                 }
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant='body1' align="center" color='text.secondary'>
+                                            Current Logo
+                                        </Typography>
+                                    </CardContent>
+                                    <CardMedia
+                                        component='img'
+                                        height='180'
+                                        image={this.props.team.logoLink}
+                                        sx={{
+                                            objectFit: 'contain'
+                                        }}
+                                    />
+                                </Card>
                             </Box>
                         </Grid>
                     </Grid>
