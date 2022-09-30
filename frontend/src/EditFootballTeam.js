@@ -1,7 +1,7 @@
 import { EditSharp, FilterList, Search } from "@mui/icons-material";
 import { Card, CardMedia, IconButton, Grid, TextField, List, ListItemAvatar, 
     Avatar, ListItem, ListItemText, Typography, Modal,
-    Box, MenuItem, CardContent } from "@mui/material";
+    Box, MenuItem, CardContent, Button } from "@mui/material";
 import React from "react";
 
 import COUNTRIES from "./countries";
@@ -95,13 +95,17 @@ class EditComponent extends React.Component {
         this.state = {
             teamName: '',
             teamType: null,
-            clubCountry: null
+            clubCountry: null,
+            teamLogo: null,
+            teamLogoURL: null
         }
 
         this.handleClose = this.handleClose.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleFileUpload = this.handleFileUpload.bind(this);
         this.displayClubCountry = this.displayClubCountry.bind(this);
+        this.openFileUpload = this.openFileUpload.bind(this);
     }
 
     handleClose() {
@@ -126,6 +130,18 @@ class EditComponent extends React.Component {
             if (this.props.team.teamType == 'club') return true;
             return false
         }
+    }
+
+    openFileUpload(e) {
+        const parent = e.target.parentElement;
+        parent.querySelector('.invisible-file-upload').click();
+    }
+
+    handleFileUpload(e) {
+        this.setState({ 
+            teamLogo: e.target.files[0], 
+            teamLogoURL: URL.createObjectURL(e.target.files[0])
+        })
     }
 
     render() {
@@ -203,26 +219,59 @@ class EditComponent extends React.Component {
                                         ))}
                                     </TextField>
                                 }
-                                <Card>
-                                    <CardContent>
-                                        <Typography variant='body1' align="center" color='text.secondary'>
-                                            Current Logo
-                                        </Typography>
-                                    </CardContent>
-                                    <CardMedia
-                                        component='img'
-                                        height='180'
-                                        image={this.props.team.logoLink}
-                                        sx={{
-                                            objectFit: 'contain'
-                                        }}
-                                    />
-                                </Card>
+                                <Button variant="outlined" 
+                                    fullWidth
+                                    onClick={this.openFileUpload} 
+                                    sx={{ my: 2 }}
+                                >
+                                    Upload New Team Logo
+                                </Button>
+                                <input onChange={this.handleFileUpload} 
+                                    type='file' 
+                                    name={`${this.state.teamName}-logo`}
+                                    className="invisible-file-upload"/>
+
+                                {this.state.teamLogo && <DisplayImage src={this.state.teamLogoURL}/>}
+
                             </Box>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <Card>
+                                <CardContent>
+                                    <Typography variant='body1' align="center" color='text.secondary'>
+                                        Current Logo
+                                    </Typography>
+                                </CardContent>
+                                <CardMedia
+                                    component='img'
+                                    height='180'
+                                    image={this.props.team.logoLink}
+                                    sx={{
+                                        objectFit: 'contain'
+                                    }}
+                                />
+                                </Card>
+
                         </Grid>
                     </Grid>
                 </Card>
             </Modal>
         )
     }
+}
+
+function DisplayImage(props) {
+    return (
+        <Card>
+            <CardMedia
+                component='img'
+                height='180'
+                image={props.src}
+                sx={{
+                    objectFit: 'contain'
+                }}
+            />
+        </Card>
+    )
 }
