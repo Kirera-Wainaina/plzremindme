@@ -120,8 +120,20 @@ class EditComponent extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         this.setState({ showLinearProgress: true });
-        const formdata = new FormData(e.target);
+        const formdata = this.createFormdata();
         this.uploadData(formdata);
+    }
+
+    createFormdata() {
+        const formdata = new FormData();
+        formdata.append('teamName', this.state.teamName ? this.state.teamName : this.props.team.teamName);
+        formdata.append('teamType', this.state.teamType ? this.state.teamType : this.props.team.teamType);
+        if (formdata.get('teamType') == 'club') {
+            formdata.append('clubCountry', 
+                this.state.clubCountry ? this.state.clubCountry : this.props.team.clubCountry );
+        }
+        if (this.state.teamLogo) formdata.append(`${formdata.get('teamName')}-logo`, this.state.teamLogo);
+        return formdata;
     }
 
     uploadData(formdata) {
