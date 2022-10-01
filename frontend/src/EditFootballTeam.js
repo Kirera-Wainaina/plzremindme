@@ -99,7 +99,8 @@ class EditComponent extends React.Component {
             teamLogo: null,
             teamLogoURL: null,
             showLinearProgress: false,
-            statusCode: null
+            statusCode: null,
+            disableSubmit: false
         }
 
         this.handleClose = this.handleClose.bind(this);
@@ -120,7 +121,7 @@ class EditComponent extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.setState({ showLinearProgress: true });
+        this.setState({ showLinearProgress: true, disableSubmit: true });
         const formdata = this.createFormdata();
         this.uploadData(formdata);
     }
@@ -146,7 +147,8 @@ class EditComponent extends React.Component {
             headers: { 'content-encoding': 'multipart/form-data'}
         }).then(response => this.setState({
             showLinearProgress: false,
-            statusCode: response.status
+            statusCode: response.status,
+            disableSubmit: false
         }))
         
     }
@@ -273,7 +275,8 @@ class EditComponent extends React.Component {
                                 {this.state.teamLogo && <DisplayImage src={this.state.teamLogoURL}/>}
 
                                 <Button variant="contained" 
-                                    type="submit" 
+                                    type="submit"
+                                    disabled={this.state.disableSubmit}
                                     sx={{ m: 2 }} 
                                 >
                                     submit
