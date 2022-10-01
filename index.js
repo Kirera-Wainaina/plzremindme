@@ -191,7 +191,6 @@ class FormDataHandler extends RequestHandler {
             const busboy = Busboy({ headers: this.request.headers });
             busboy.on('field', (name, value) => this.fields[name] = value);
             busboy.on('file', async (name, file, info) => {
-                //await this.handleFile(name, file, info);
                 thereIsFile = true;
                 this.uploadedFilePath = await this.saveFileToDisk(name, file, info);
                 resolve()
