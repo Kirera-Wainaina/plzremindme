@@ -1,7 +1,7 @@
 import { EditSharp, FilterList, Search } from "@mui/icons-material";
 import { Card, CardMedia, IconButton, Grid, TextField, List, ListItemAvatar, 
     Avatar, ListItem, ListItemText, Typography, Modal,
-    Box, MenuItem, CardContent, Button, LinearProgress } from "@mui/material";
+    Box, MenuItem, CardContent, Button, LinearProgress, Alert } from "@mui/material";
 import React from "react";
 
 import COUNTRIES from "./countries";
@@ -98,7 +98,8 @@ class EditComponent extends React.Component {
             clubCountry: null,
             teamLogo: null,
             teamLogoURL: null,
-            showLinearProgress: false
+            showLinearProgress: false,
+            statusCode: null
         }
 
         this.handleClose = this.handleClose.bind(this);
@@ -143,7 +144,10 @@ class EditComponent extends React.Component {
             method: 'POST',
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}
-        }).then(response => console.log(response))
+        }).then(response => this.setState({
+            showLinearProgress: false,
+            statusCode: response.status
+        }))
         
     }
 
@@ -189,6 +193,10 @@ class EditComponent extends React.Component {
                             <Typography variant='h5' align="center">Edit {this.props.team.teamName}</Typography>
                         </Grid>
 
+                        <Grid item xs={12} sm={12}>
+                            {this.state.showLinearProgress && <LinearProgress />}
+                        </Grid>
+
                         <Grid item xs={12} sm={6}>
                             <Box component='form' 
                                 onSubmit={this.handleSubmit}
@@ -198,7 +206,10 @@ class EditComponent extends React.Component {
                                     // border: '1px solid black',
                                     px: 5
                             }}>
-                                {this.showLinearProgress && <LinearProgress />}
+                                {
+                                    this.state.statusCode == 200 && 
+                                    <Alert severity="success">The upload was successful!</Alert>
+                                }
                                 <TextField 
                                     label='Team Name'
                                     variant="outlined"
