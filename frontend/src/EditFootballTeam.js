@@ -128,6 +128,8 @@ class EditComponent extends React.Component {
         const formdata = new FormData();
         formdata.append('teamName', this.state.teamName ? this.state.teamName : this.props.team.teamName);
         formdata.append('teamType', this.state.teamType ? this.state.teamType : this.props.team.teamType);
+        formdata.append('logoName', this.props.team.logoName);
+        formdata.append('docId', this.props.team.docId);
         if (formdata.get('teamType') == 'club') {
             formdata.append('clubCountry', 
                 this.state.clubCountry ? this.state.clubCountry : this.props.team.clubCountry );
