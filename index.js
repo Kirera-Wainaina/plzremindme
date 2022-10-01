@@ -182,32 +182,35 @@ class FormDataHandler extends RequestHandler {
         this.request = request;
         this.fields = {};
         this.logoMetadata = null;
+        this.uploadedFilePath = null;
     }
 
     retrieveData() {
         return new Promise((resolve, reject) => {
+            let thereIsFile = false;
             const busboy = Busboy({ headers: this.request.headers });
             busboy.on('field', (name, value) => this.fields[name] = value);
             busboy.on('file', async (name, file, info) => {
-                await this.handleFile(name, file, info);
+                //await this.handleFile(name, file, info);
+                thereIsFile = true;
+                this.uploadedFilePath = await this.saveFileToDisk(name, file, info);
                 resolve()
             });
-            busboy.on('close', () => console.log('All file uploaded data is received'))
+            busboy.on('close', () => {
+                console.log('All file uploaded data is received');
+                if (!thereIsFile) resolve();
+            })
             this.request.pipe(busboy);
         })
     }
 
-    handleFile(name, file, info) {
+    saveFileToDisk(name, file, info) {
         return new Promise((resolve, reject) => {
             const extension = mimes.findExtensionFromMIMEType(info.mimeType);
             const filePath = path.join(__dirname, 'uploads', `${name}${extension}`)
             file.pipe(fs.createWriteStream(filePath))
             .on('close', () => console.log(`${name}${extension}`, 'Written to disk'))
-            .on('close', async () => {
-                    const cloudUploader =  new CloudUploader(filePath);
-                    this.logoMetadata = await cloudUploader.run();
-                    resolve()
-                })
+            .on('close', () => resolve(filePath))
         })
     }
 
