@@ -1,4 +1,5 @@
 const { FormDataHandler } = require("../../index");
+const CloudUploader = require('../../handlers/CloudUploader')
 
 class AddFootballTeam extends FormDataHandler {
     constructor(props) {
@@ -12,11 +13,14 @@ class AddFootballTeam extends FormDataHandler {
     }
 
     async run(response) {
-        await this.retrieveData()
-            .then(() => this.createTeamObject());
+        await this.retrieveData();
+        const cloudUploader =  new CloudUploader(this.uploadedFilePath);
+        this.logoMetadata = await cloudUploader.run();
+        this.createTeamObject();
         await this.getCollection('football-teams').add(this.fields);
         console.log('team has been uploaded')
         this.respond(response, 'success')
+
     }
 }
 
