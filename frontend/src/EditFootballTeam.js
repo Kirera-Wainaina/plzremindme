@@ -52,10 +52,11 @@ class Filter extends React.Component {
             clubCountry: null
         }
         this.runFilter = this.runFilter.bind(this);
+        this.handleFilters = this.handleFilters.bind(this);
     }
 
     runFilter() {
-        let filtered;
+        let filtered = [];
         if (this.state.teamType) {
             filtered = this.props.teams.filter(team => team.teamType == this.state.teamType);
         } 
@@ -71,12 +72,19 @@ class Filter extends React.Component {
         this.props.setFilteredTeams(filtered);
     }
 
+    handleFilters(field, value) {
+        this.setState({ [field]: value });
+        if (field == 'teamType' && value == 'country') {
+            this.setState({ clubCountry: null })
+        }
+    }
+
     render() {
         return (
             <Card>
                 <FilterModal isOpen={this.state.showFilterModal}
                     close={() => this.setState({ showFilterModal: false })}
-                    handleFilters={(field, value) => this.setState({ [field]: value })}
+                    handleFilters={(field, value) => this.handleFilters(field, value)}
                     teamType={this.state.teamType}
                     clubCountry={this.state.clubCountry}
                     runFilter={this.runFilter}
