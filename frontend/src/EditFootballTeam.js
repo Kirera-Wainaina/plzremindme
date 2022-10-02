@@ -25,12 +25,27 @@ export default class EditFootballTeam extends React.Component {
 }
 
 class Filter extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showFilterModal: false
+        }
+    }
+
     render() {
         return (
             <Card>
+                <FilterModal isOpen={this.state.showFilterModal}
+                    close={() => this.setState({ showFilterModal: false })}
+                />
                 <Grid container direction='row'>
                     <Grid item xs={2} sm={1}>
-                        <IconButton size='large'><FilterList color="primary"/></IconButton>
+                        <IconButton size='large' 
+                            onClick={() => this.setState({ showFilterModal: true })}
+                        >
+                            <FilterList color="primary"/>
+                        </IconButton>
                     </Grid>
                     <Grid item xs={8} sm={10}>
                         <TextField variant="filled" placeholder="Enter team name..." sx={{ width: '100%'}}/>
@@ -43,6 +58,22 @@ class Filter extends React.Component {
 
         )
     }
+}
+
+function FilterModal(props) {
+    return (
+        <Modal 
+            open={props.isOpen}
+            onClose={props.close}
+        >
+            <Card sx={{
+                width: '80%',
+                ml: '10%'
+            }}>
+                <p>Hellow</p>
+            </Card>
+        </Modal>
+    )
 }
 
 function FootballTeams() {
