@@ -13,7 +13,8 @@ export default class EditFootballTeam extends React.Component {
         super(props);
 
         this.state = {
-            teams: []
+            teams: [],
+            filteredTeams: []
         }
     }
 
@@ -24,12 +25,14 @@ export default class EditFootballTeam extends React.Component {
                 <Grid item xs={12} sm={8} sx={{ mt: '1%'}}>
                     <Filter 
                         teams={this.state.teams}
+                        setFilteredTeams={teams => this.setState({ filteredTeams: teams })}
                     />
                 </Grid>
 
                 <Grid item xs={12} sm={8}>
                     <FootballTeams 
                         teams={this.state.teams}
+                        filteredTeams={this.state.filteredTeams}
                         setTeams={(data) => this.setState({ teams: data })}
                     />
                 </Grid>
@@ -48,6 +51,24 @@ class Filter extends React.Component {
             teamType: null,
             clubCountry: null
         }
+        this.runFilter = this.runFilter.bind(this);
+    }
+
+    runFilter() {
+        let filtered;
+        if (this.state.teamType) {
+            filtered = this.props.teams.filter(team => team.teamType == this.state.teamType);
+        } 
+        
+        if (this.state.clubCountry) {
+            if (filtered.length) {
+                filtered = filtered.filter(team => team.clubCountry == this.state.clubCountry);
+            } else {
+                filtered = this.props.teams.filter(team => team.clubCountry == this.state.clubCountry)
+            }
+        }
+        console.log(filtered)
+        this.props.setFilteredTeams(filtered);
     }
 
     render() {
@@ -58,6 +79,7 @@ class Filter extends React.Component {
                     handleFilters={(field, value) => this.setState({ [field]: value })}
                     teamType={this.state.teamType}
                     clubCountry={this.state.clubCountry}
+                    runFilter={this.runFilter}
                 />
                 <Grid container direction='row'>
                     <Grid item xs={2} sm={1}>
@@ -109,20 +131,23 @@ function FilterModal(props) {
                     {
                         props.teamType == 'club' &&
                         <Grid item xs={12} sx={{ mx: 5 }}>
-                        <Typography variant='subtitle1'>Club Country: </Typography>
-                        <ToggleButtonGroup
-                            value={props.clubCountry}
-                            exclusive
-                            onChange={(event, value) => props.handleFilters('clubCountry', value)}
-                            color='primary'
-                            sx={{ m: 3}}
-                        >
-                           {COUNTRIES.map(country => (
-                                <ToggleButton value={country} key={country}>{country}</ToggleButton>
-                            ))} 
-                        </ToggleButtonGroup>
+                            <Typography variant='subtitle1'>Club Country: </Typography>
+                            <ToggleButtonGroup
+                                value={props.clubCountry}
+                                exclusive
+                                onChange={(event, value) => props.handleFilters('clubCountry', value)}
+                                color='primary'
+                                sx={{ m: 3}}
+                            >
+                               {COUNTRIES.map(country => (
+                                    <ToggleButton value={country} key={country}>{country}</ToggleButton>
+                                ))} 
+                            </ToggleButtonGroup>
                         </Grid>
                     }
+                    <Grid item xs={12} sx={{ m: 3 }}>
+                        <Button variant='contained' onClick={props.runFilter}>Run Filter</Button>
+                    </Grid>
                 </Grid>
             </Card>
         </Modal>
