@@ -1,7 +1,7 @@
 import { EditSharp, FilterList, Search } from "@mui/icons-material";
 import { Card, CardMedia, IconButton, Grid, TextField, List, ListItemAvatar, 
     Avatar, ListItem, ListItemText, Typography, Modal,
-    Box, MenuItem, CardContent, Button, LinearProgress, Alert } from "@mui/material";
+    Box, MenuItem, CardContent, Button, LinearProgress, Alert, ButtonGroup } from "@mui/material";
 import React from "react";
 
 import COUNTRIES from "./countries";
@@ -70,7 +70,20 @@ function FilterModal(props) {
                 width: '80%',
                 ml: '10%'
             }}>
-                <p>Hellow</p>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Typography variant='h6' align='center'>Filter Teams By:</Typography>
+                    </Grid>
+                    <Grid item xs={12} sx={{ m: 5 }}>
+                        <Typography variant='body2'>Type: </Typography>
+                        <ButtonGroup variant="outlined" sx={{
+                            margin: 3
+                        }}>
+                            <Button>Country</Button>
+                            <Button>Club</Button>
+                        </ButtonGroup>
+                    </Grid>
+                </Grid>
             </Card>
         </Modal>
     )
