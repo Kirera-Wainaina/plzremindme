@@ -52,9 +52,6 @@ class Filter extends React.Component {
                     <Grid item xs={8} sm={10}>
                         <TextField variant="filled" placeholder="Enter team name..." sx={{ width: '100%'}}/>
                     </Grid>
-                    <Grid item xs={12} sm={12}>
-                        <p>Filtered Items</p>
-                    </Grid>
                 </Grid>
             </Card>
 
@@ -94,7 +91,9 @@ function FilterModal(props) {
                         </ToggleButtonGroup>
                     </Grid>
 
-                    <Grid item xs={12} sx={{ mx: 5 }}>
+                    {
+                        type == 'club' &&
+                        <Grid item xs={12} sx={{ mx: 5 }}>
                         <Typography variant='subtitle1'>Club Country: </Typography>
                         <ToggleButtonGroup
                             value={clubCountry}
@@ -104,10 +103,11 @@ function FilterModal(props) {
                             sx={{ m: 3}}
                         >
                            {COUNTRIES.map(country => (
-                                <ToggleButton value={country}>{country}</ToggleButton>
+                                <ToggleButton value={country} key={country}>{country}</ToggleButton>
                             ))} 
                         </ToggleButtonGroup>
-                    </Grid>
+                        </Grid>
+                    }
                 </Grid>
             </Card>
         </Modal>
