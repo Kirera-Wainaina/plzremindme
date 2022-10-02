@@ -32,7 +32,7 @@ export default class EditFootballTeam extends React.Component {
                 <Grid item xs={12} sm={8}>
                     <FootballTeams 
                         teams={this.state.teams}
-                        filteredTeams={this.state.filteredTeams}
+                        currentTeams={this.state.filteredTeams.length ? this.state.filteredTeams : this.state.teams}
                         setTeams={(data) => this.setState({ teams: data })}
                     />
                 </Grid>
@@ -179,7 +179,8 @@ function FootballTeams(props) {
         }}>
             <Typography variant='h5' align="center">Teams</Typography>
             <List>
-                {props.teams.map(team => (
+                {
+                props.currentTeams.map(team => (
                     <ListItem 
                         key={team.docId}
                         divider={true}
