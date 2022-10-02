@@ -9,6 +9,14 @@ import React from "react";
 import COUNTRIES from "./countries";
 
 export default class EditFootballTeam extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            teams: []
+        }
+    }
+
     render() {
         return (
             <Grid container justifyContent='center' spacing={2}>
@@ -18,7 +26,10 @@ export default class EditFootballTeam extends React.Component {
                 </Grid>
 
                 <Grid item xs={12} sm={8}>
-                    <FootballTeams />
+                    <FootballTeams 
+                        teams={this.state.teams}
+                        setTeams={(data) => this.setState({ teams: data })}
+                    />
                 </Grid>
 
             </Grid>
@@ -114,15 +125,14 @@ function FilterModal(props) {
     )
 }
 
-function FootballTeams() {
-    const [teams, setTeams] = React.useState([]);
+function FootballTeams(props) {
     const [teamId, setTeamId] = React.useState(null);
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
         fetch('/api/admin/GetFootballTeams')
             .then(response => response.json())
-            .then(data => setTeams(data))
+            .then(data => props.setTeams(data))
     }, [])
 
     function openEditModal(team) {
@@ -140,7 +150,7 @@ function FootballTeams() {
         }}>
             <Typography variant='h5' align="center">Teams</Typography>
             <List>
-                {teams.map(team => (
+                {props.teams.map(team => (
                     <ListItem 
                         key={team.docId}
                         divider={true}
