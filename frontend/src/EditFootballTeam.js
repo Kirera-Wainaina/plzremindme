@@ -68,7 +68,6 @@ class Filter extends React.Component {
                 filtered = this.props.teams.filter(team => team.clubCountry == this.state.clubCountry)
             }
         }
-        console.log(filtered)
         this.props.setFilteredTeams(filtered);
     }
 
