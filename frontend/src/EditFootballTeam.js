@@ -22,7 +22,9 @@ export default class EditFootballTeam extends React.Component {
             <Grid container justifyContent='center' spacing={2}>
 
                 <Grid item xs={12} sm={8} sx={{ mt: '1%'}}>
-                    <Filter />
+                    <Filter 
+                        teams={this.state.teams}
+                    />
                 </Grid>
 
                 <Grid item xs={12} sm={8}>
@@ -42,7 +44,9 @@ class Filter extends React.Component {
         super(props);
 
         this.state = {
-            showFilterModal: false
+            showFilterModal: false,
+            teamType: null,
+            clubCountry: null
         }
     }
 
@@ -51,6 +55,9 @@ class Filter extends React.Component {
             <Card>
                 <FilterModal isOpen={this.state.showFilterModal}
                     close={() => this.setState({ showFilterModal: false })}
+                    handleFilters={(field, value) => this.setState({ [field]: value })}
+                    teamType={this.state.teamType}
+                    clubCountry={this.state.clubCountry}
                 />
                 <Grid container direction='row'>
                     <Grid item xs={2} sm={1}>
@@ -71,9 +78,6 @@ class Filter extends React.Component {
 }
 
 function FilterModal(props) {
-    const [type, setType] = React.useState(null);
-    const [clubCountry, setClubCountry] = React.useState(null);
-
     return (
         <Modal 
             open={props.isOpen}
@@ -91,9 +95,9 @@ function FilterModal(props) {
                     <Grid item xs={12} sx={{ mx: 5 }}>
                         <Typography variant='subtitle1'>Type: </Typography>
                         <ToggleButtonGroup
-                            value={type}
+                            value={props.teamType}
                             exclusive
-                            onChange={(event, value) => setType(value)}
+                            onChange={(event, value) => props.handleFilters('teamType', value)}
                             color='primary'
                             sx={{ m: 3}}
                         >
@@ -103,13 +107,13 @@ function FilterModal(props) {
                     </Grid>
 
                     {
-                        type == 'club' &&
+                        props.teamType == 'club' &&
                         <Grid item xs={12} sx={{ mx: 5 }}>
                         <Typography variant='subtitle1'>Club Country: </Typography>
                         <ToggleButtonGroup
-                            value={clubCountry}
+                            value={props.clubCountry}
                             exclusive
-                            onChange={(event, value) => setClubCountry(value)}
+                            onChange={(event, value) => props.handleFilters('clubCountry', value)}
                             color='primary'
                             sx={{ m: 3}}
                         >
