@@ -1,7 +1,9 @@
 import { EditSharp, FilterList, Search } from "@mui/icons-material";
 import { Card, CardMedia, IconButton, Grid, TextField, List, ListItemAvatar, 
     Avatar, ListItem, ListItemText, Typography, Modal,
-    Box, MenuItem, CardContent, Button, LinearProgress, Alert, ButtonGroup } from "@mui/material";
+    Box, MenuItem, CardContent, Button, LinearProgress, Alert, ButtonGroup, 
+    ToggleButtonGroup, 
+    ToggleButton} from "@mui/material";
 import React from "react";
 
 import COUNTRIES from "./countries";
@@ -61,6 +63,9 @@ class Filter extends React.Component {
 }
 
 function FilterModal(props) {
+    const [type, setType] = React.useState(null);
+    const [clubCountry, setClubCountry] = React.useState(null);
+
     return (
         <Modal 
             open={props.isOpen}
@@ -77,23 +82,31 @@ function FilterModal(props) {
                     </Grid>
                     <Grid item xs={12} sx={{ mx: 5 }}>
                         <Typography variant='subtitle1'>Type: </Typography>
-                        <ButtonGroup variant="outlined" sx={{
-                            margin: 3
-                        }}>
-                            <Button>Country</Button>
-                            <Button>Club</Button>
-                        </ButtonGroup>
+                        <ToggleButtonGroup
+                            value={type}
+                            exclusive
+                            onChange={(event, value) => setType(value)}
+                            color='primary'
+                            sx={{ m: 3}}
+                        >
+                            <ToggleButton value='country'>Country</ToggleButton>
+                            <ToggleButton value='club'>Club</ToggleButton>
+                        </ToggleButtonGroup>
                     </Grid>
 
                     <Grid item xs={12} sx={{ mx: 5 }}>
                         <Typography variant='subtitle1'>Club Country: </Typography>
-                        <ButtonGroup variant="outlined" sx={{
-                            margin: 3
-                        }}>
-                            {COUNTRIES.map(country => (
-                                <Button>{country}</Button>
-                            ))}
-                        </ButtonGroup>
+                        <ToggleButtonGroup
+                            value={clubCountry}
+                            exclusive
+                            onChange={(event, value) => setClubCountry(value)}
+                            color='primary'
+                            sx={{ m: 3}}
+                        >
+                           {COUNTRIES.map(country => (
+                                <ToggleButton value={country}>{country}</ToggleButton>
+                            ))} 
+                        </ToggleButtonGroup>
                     </Grid>
                 </Grid>
             </Card>
