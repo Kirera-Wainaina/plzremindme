@@ -68,19 +68,31 @@ function FilterModal(props) {
         >
             <Card sx={{
                 width: '80%',
-                ml: '10%'
+                ml: '10%',
+                mt: '3%'
             }}>
                 <Grid container>
                     <Grid item xs={12}>
-                        <Typography variant='h6' align='center'>Filter Teams By:</Typography>
+                        <Typography variant='h6' align='center' sx={{ mt: 5}}>Filter Teams By:</Typography>
                     </Grid>
-                    <Grid item xs={12} sx={{ m: 5 }}>
-                        <Typography variant='body2'>Type: </Typography>
+                    <Grid item xs={12} sx={{ mx: 5 }}>
+                        <Typography variant='subtitle1'>Type: </Typography>
                         <ButtonGroup variant="outlined" sx={{
                             margin: 3
                         }}>
                             <Button>Country</Button>
                             <Button>Club</Button>
+                        </ButtonGroup>
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ mx: 5 }}>
+                        <Typography variant='subtitle1'>Club Country: </Typography>
+                        <ButtonGroup variant="outlined" sx={{
+                            margin: 3
+                        }}>
+                            {COUNTRIES.map(country => (
+                                <Button>{country}</Button>
+                            ))}
                         </ButtonGroup>
                     </Grid>
                 </Grid>
