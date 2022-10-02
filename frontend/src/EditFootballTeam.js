@@ -146,7 +146,14 @@ function FilterModal(props) {
                         </Grid>
                     }
                     <Grid item xs={12} sx={{ m: 3 }}>
-                        <Button variant='contained' onClick={props.runFilter}>Run Filter</Button>
+                        <Button variant='contained' 
+                            onClick={() => {
+                                props.runFilter();
+                                props.close()
+                            }}
+                        >
+                            Run Filter
+                        </Button>
                     </Grid>
                 </Grid>
             </Card>
