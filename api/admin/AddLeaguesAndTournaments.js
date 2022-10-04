@@ -13,14 +13,21 @@ class AddLeaguesAndTournaments extends FormDataHandler {
     }
 
     async run(response) {
-        await this.retrieveData();
+        try {
+            await this.retrieveData();
 
-        const cloudUploader = new CloudUploader(this.uploadedFilePath);
-        this.logoMetadata = await cloudUploader.run();
+            const cloudUploader = new CloudUploader(this.uploadedFilePath);
+            this.logoMetadata = await cloudUploader.run();
 
-        this.createTeamObject();
-        console.log(this.fields);
-        
+            this.createTeamObject();
+
+            await this.getCollection('leagues-tournaments').add(this.fields);
+            console.log('Tournament/League has been uploaded');
+            this.respond(response, 'success');
+        } catch (error) {
+            console.error('Error occurred while uploading tournament/league:', error);
+            this.respond(response, 'error');
+        }
     }
 }
 
