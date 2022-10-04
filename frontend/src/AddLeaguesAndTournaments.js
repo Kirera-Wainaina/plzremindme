@@ -28,6 +28,23 @@ export default class AddLeaguesAndTournaments extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({ showLinearProgress: true });
+
+        const formdata = new FormData(e.target);
+        this.uploadData(formdata);
+    }
+
+    uploadData(formdata) {
+        fetch('/api/admin/AddLeaguesAndTournaments', {
+            method: 'POST',
+            body: formdata,
+            headers: { 'content-encoding': 'multipart/form-data'}
+        }).then(response => this.setState({
+            statusCode: response.status,
+            showLinearProgress: false,
+            name: '',
+            logo: null
+        }))
     }
 
     handleChange(e) {
@@ -192,6 +209,7 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                 variant="contained"
                                 type='submit'
                                 sx={{ mt: 3 }}
+                                disabled={this.state.showLinearProgress}
                                 fullWidth
                             >
                                 Submit
