@@ -11,7 +11,8 @@ export default class AddLeaguesAndTournaments extends React.Component {
             statusCode: null,
             category: 'league',
             level: 'international',
-            country: 'England'
+            country: 'England',
+            teamType: 'country'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -111,6 +112,27 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                     {['National', 'International'].map((level, index) => (
                                         <MenuItem key={index} value={level.toLowerCase()}>
                                             {level}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            }
+
+                            {
+                                (this.state.category == 'tournament' && this.state.level == 'international') &&
+                                <TextField
+                                    label='Played By(Team Type)'
+                                    variant="filled"
+                                    onChange={this.handleChange}
+                                    name='teamType'
+                                    value={this.state.teamType}
+                                    margin='normal'
+                                    select
+                                    required
+                                    fullWidth
+                                >
+                                    {['Country', 'Club'].map((type, index) => (
+                                        <MenuItem key={index} value={type.toLowerCase()}>
+                                            {type}
                                         </MenuItem>
                                     ))}
                                 </TextField>
