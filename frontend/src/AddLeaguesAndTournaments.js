@@ -71,6 +71,17 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                 fullWidth
                             />
 
+                            {
+                                this.state.category == 'league' &&
+                                <TextField 
+                                    label='League Country'
+                                    variant="filled"
+                                    name='leagueCountry'
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                />
+                            }
                         </Box>
                     </Card>
                 </Grid>
