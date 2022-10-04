@@ -25,6 +25,7 @@ export default class EditFootballTeam extends React.Component {
                 <Grid item xs={12} sm={8} sx={{ mt: '1%'}}>
                     <Filter 
                         teams={this.state.teams}
+                        filteredTeams={this.state.filteredTeams}
                         setFilteredTeams={teams => this.setState({ filteredTeams: teams })}
                     />
                 </Grid>
@@ -53,6 +54,7 @@ class Filter extends React.Component {
         }
         this.runFilter = this.runFilter.bind(this);
         this.handleFilters = this.handleFilters.bind(this);
+        this.searchTeamThroughInput = this.searchTeamThroughInput.bind(this);
     }
 
     runFilter() {
@@ -76,6 +78,19 @@ class Filter extends React.Component {
         if (field == 'teamType' && value == 'country') {
             this.setState({ clubCountry: null })
         }
+    }
+
+    searchTeamThroughInput(e) {
+        const teams = this.props.filteredTeams.length ? this.props.filteredTeams : this.props.teams;
+        const searchTerm = e.target.value.toLowerCase();
+
+        if (!searchTerm) {
+            this.props.setFilteredTeams([]);
+            return ;
+        }
+
+        const filtered = teams.filter(team => team.teamName.toLowerCase().includes(searchTerm))
+        this.props.setFilteredTeams(filtered);
     }
 
     render() {
@@ -105,6 +120,7 @@ class Filter extends React.Component {
                             placeholder="Enter team name..." 
                             size="small"
                             margin="normal"
+                            onChange={this.searchTeamThroughInput}
                             fullWidth
                             />
                     </Grid>
