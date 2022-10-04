@@ -187,6 +187,15 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                     />
                                 </Card>
                             }
+
+                            <Button
+                                variant="contained"
+                                type='submit'
+                                sx={{ mt: 3 }}
+                                fullWidth
+                            >
+                                Submit
+                            </Button>
                         </Box>
                     </Card>
                 </Grid>
