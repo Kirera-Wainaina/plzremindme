@@ -10,7 +10,7 @@ export default class AddLeaguesAndTournaments extends React.Component {
         this.state = {
             showLinearProgress: false,
             statusCode: null,
-            name: null,
+            name: '',
             category: 'league',
             level: 'international',
             country: 'England',
@@ -43,7 +43,7 @@ export default class AddLeaguesAndTournaments extends React.Component {
             statusCode: response.status,
             showLinearProgress: false,
             name: '',
-            logo: null
+            logo: ''
         }))
     }
 
@@ -126,7 +126,7 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                     fullWidth
                                 >
                                     {COUNTRIES.map((country, index) => (
-                                        <MenuItem key={index} value={country.toLowerCase()}>
+                                        <MenuItem key={index} value={country}>
                                             {country}
                                         </MenuItem>
                                     ))}
