@@ -91,13 +91,22 @@ class Filter extends React.Component {
                 <Grid container direction='row'>
                     <Grid item xs={2} sm={1}>
                         <IconButton size='large' 
+                            sx={{
+                                mt: '25%',
+                                ml: '20%'
+                            }}
                             onClick={() => this.setState({ showFilterModal: true })}
                         >
                             <FilterList color="primary"/>
                         </IconButton>
                     </Grid>
                     <Grid item xs={8} sm={10}>
-                        <TextField variant="filled" placeholder="Enter team name..." sx={{ width: '100%'}}/>
+                        <TextField variant="filled" 
+                            placeholder="Enter team name..." 
+                            size="small"
+                            margin="normal"
+                            fullWidth
+                            />
                     </Grid>
                 </Grid>
             </Card>
