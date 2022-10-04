@@ -9,15 +9,19 @@ export default class AddLeaguesAndTournaments extends React.Component {
         this.state = {
             showLinearProgress: false,
             statusCode: null,
+            name: null,
             category: 'league',
             level: 'international',
             country: 'England',
-            teamType: 'country'
+            teamType: 'country',
+            logo: null,
+            logoURL: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.openFileUpload = this.openFileUpload.bind(this);
+        this.handleFileUpload = this.handleFileUpload.bind(this);
 
     }
 
@@ -32,6 +36,13 @@ export default class AddLeaguesAndTournaments extends React.Component {
     openFileUpload() {
         const parent = e.target.parentElement;
         parent.querySelector('.invisible-file-upload').click();
+    }
+
+    handleFileUpload(e) {
+        this.setState({ 
+            logo: e.target.files[0], 
+            logoURL: URL.createObjectURL(e.target.files[0])
+        })
     }
 
     render() {
@@ -77,6 +88,8 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                 variant='filled'
                                 name='name'
                                 margin="normal"
+                                value={this.state.name}
+                                onChange={this.handleChange}
                                 required
                                 fullWidth
                             />
@@ -153,6 +166,12 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                 Upload {this.state.category} Logo
                             </Button>
 
+                            <input 
+                                type='file'
+                                className='invisible-file-upload'
+                                name={`${this.state.name}-logo`}
+                                onChange={this.handleFileUpload}
+                            />
                         </Box>
                     </Card>
                 </Grid>
