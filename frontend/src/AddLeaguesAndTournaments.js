@@ -62,6 +62,15 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                 ))}
                             </TextField>
 
+                            <TextField
+                                label='Name'
+                                variant='filled'
+                                name='name'
+                                margin="normal"
+                                required
+                                fullWidth
+                            />
+
                         </Box>
                     </Card>
                 </Grid>
