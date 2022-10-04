@@ -8,7 +8,8 @@ export default class AddLeaguesAndTournaments extends React.Component {
         this.state = {
             showLinearProgress: false,
             statusCode: null,
-            category: 'league'
+            category: 'league',
+            level: 'international'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,7 +73,7 @@ export default class AddLeaguesAndTournaments extends React.Component {
                             />
 
                             {
-                                this.state.category == 'league' &&
+                                (this.state.category == 'league' || this.state.level == 'national') &&
                                 <TextField 
                                     label='League Country'
                                     variant="filled"
@@ -81,6 +82,27 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                     required
                                     fullWidth
                                 />
+                            }
+
+                            {
+                                this.state.category == 'tournament' &&
+                                <TextField
+                                    label='Level'
+                                    variant="filled"
+                                    onChange={this.handleChange}
+                                    name='level'
+                                    value={this.state.level}
+                                    margin='normal'
+                                    select
+                                    required
+                                    fullWidth
+                                >
+                                    {['National', 'International'].map((level, index) => (
+                                        <MenuItem key={index} value={level.toLowerCase()}>
+                                            {level}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
                             }
                         </Box>
                     </Card>
