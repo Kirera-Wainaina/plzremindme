@@ -1,5 +1,6 @@
 import { Grid, Box, Card, Typography, LinearProgress, Alert, TextField, MenuItem } from "@mui/material";
 import React from "react";
+import COUNTRIES from "./countries";
 
 export default class AddLeaguesAndTournaments extends React.Component {
     constructor(props) {
@@ -9,7 +10,8 @@ export default class AddLeaguesAndTournaments extends React.Component {
             showLinearProgress: false,
             statusCode: null,
             category: 'league',
-            level: 'international'
+            level: 'international',
+            country: 'England'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -74,14 +76,23 @@ export default class AddLeaguesAndTournaments extends React.Component {
 
                             {
                                 (this.state.category == 'league' || this.state.level == 'national') &&
-                                <TextField 
-                                    label='League Country'
+                                <TextField
+                                    label='Country'
                                     variant="filled"
-                                    name='leagueCountry'
-                                    margin="normal"
+                                    onChange={this.handleChange}
+                                    name='country'
+                                    value={this.state.country}
+                                    margin='normal'
+                                    select
                                     required
                                     fullWidth
-                                />
+                                >
+                                    {COUNTRIES.map((country, index) => (
+                                        <MenuItem key={index} value={country.toLowerCase()}>
+                                            {country}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
                             }
 
                             {
@@ -104,6 +115,7 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                     ))}
                                 </TextField>
                             }
+
                         </Box>
                     </Card>
                 </Grid>
