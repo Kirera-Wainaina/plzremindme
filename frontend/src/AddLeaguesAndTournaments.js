@@ -1,4 +1,5 @@
-import { Grid, Box, Card, Typography, LinearProgress, Alert, TextField, MenuItem, Button } from "@mui/material";
+import { Grid, Box, Card, CardMedia, Typography, LinearProgress, Alert, TextField, 
+    MenuItem, Button } from "@mui/material";
 import React from "react";
 import COUNTRIES from "./countries";
 
@@ -33,7 +34,7 @@ export default class AddLeaguesAndTournaments extends React.Component {
         this.setState({ [e.target.name]: e.target.value, statusCode: null })
     }
 
-    openFileUpload() {
+    openFileUpload(e) {
         const parent = e.target.parentElement;
         parent.querySelector('.invisible-file-upload').click();
     }
@@ -172,6 +173,20 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                 name={`${this.state.name}-logo`}
                                 onChange={this.handleFileUpload}
                             />
+
+                            {
+                                this.state.logo &&
+                                <Card>
+                                    <CardMedia
+                                        component='img'
+                                        height='180'
+                                        image={this.state.logoURL}
+                                        sx={{
+                                            objectFit: 'contain'
+                                        }}
+                                    />
+                                </Card>
+                            }
                         </Box>
                     </Card>
                 </Grid>
