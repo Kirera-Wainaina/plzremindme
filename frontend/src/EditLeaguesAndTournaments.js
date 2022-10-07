@@ -187,8 +187,8 @@ class EditComponent extends React.Component {
 
     handleFileUpload(e) {
         this.setState({ 
-            teamLogo: e.target.files[0], 
-            teamLogoURL: URL.createObjectURL(e.target.files[0])
+            logo: e.target.files[0], 
+            logoURL: URL.createObjectURL(e.target.files[0])
         })
     }
 
@@ -339,6 +339,21 @@ class EditComponent extends React.Component {
                                     type='file' 
                                     name={`${this.state.category}-logo`}
                                     className="invisible-file-upload"/>
+
+                                {
+                                    this.state.logo &&
+                                    <Card>
+                                        <CardMedia
+                                            component='img'
+                                            height='180'
+                                            image={this.state.logoURL}
+                                            sx={{
+                                                objectFit: 'contain'
+                                            }}
+                                        />
+                                    </Card>
+                        
+                                }
 
                             </Box>
 
