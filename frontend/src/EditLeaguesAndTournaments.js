@@ -79,7 +79,7 @@ function LeaguesAndTournaments(props) {
     
                             { 
                                 categoryId == category.docId &&
-                                <EditComponent isOpen={modalIsOpen} close={closeEditModal} category={category}/>
+                                <EditComponent isOpen={modalIsOpen} close={closeEditModal} competition={category}/>
 
                             }
     
@@ -111,7 +111,8 @@ class EditComponent extends React.Component {
             showLinearProgress: false,
             disableSubmit: false,
             statusCode: null,
-            category: ''
+            category: '',
+            name: ''
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -155,7 +156,7 @@ class EditComponent extends React.Component {
                     <Grid container>
 
                         <Grid item xs={12} sm={12}>
-                            <Typography variant='h5' align="center">Edit {this.props.category.name}</Typography>
+                            <Typography variant='h5' align="center">Edit {this.props.competition.name}</Typography>
                         </Grid>
 
                         <Grid item xs={12} sm={12}>
@@ -184,7 +185,7 @@ class EditComponent extends React.Component {
                                 <TextField
                                     label='Category'
                                     variant='outlined'
-                                    defaultValue={this.props.category.category}
+                                    defaultValue={this.props.competition.category}
                                     onChange={this.handleChange}
                                     margin="normal"
                                     name="category"
@@ -204,11 +205,15 @@ class EditComponent extends React.Component {
                                     variant='outlined'
                                     name='name'
                                     margin="normal"
-                                    defaultValue={this.props.category.name}
+                                    defaultValue={this.props.competition.name}
                                     onChange={this.handleChange}
                                     required
                                     fullWidth
                                 />
+
+                                {
+                                    
+                                }
 
                             </Box>
 
