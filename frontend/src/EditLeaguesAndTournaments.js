@@ -112,8 +112,21 @@ class EditComponent extends React.Component {
                 open={this.props.isOpen}
                 onClose={this.props.close}
             >
-                <Card>
-                    <p>Hellow</p>
+                <Card
+                    sx={{ 
+                        width: '80%',
+                        ml: '10%',
+                        mt: 5,
+                        padding: 5
+                    }}
+                >
+                    <Grid container>
+
+                        <Grid item xs={12} sm={12}>
+                            <Typography variant='h5' align="center">Edit {this.props.category.name}</Typography>
+                        </Grid>
+                        
+                    </Grid>
                 </Card>
             </Modal>
         )
