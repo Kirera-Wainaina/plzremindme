@@ -362,7 +362,6 @@ class EditComponent extends React.Component {
                                 sx={{
                                     display: 'form',
                                     flexDirection: 'column',
-                                    // border: '1px solid black',
                                     px: 5
                             }}>
                                 {

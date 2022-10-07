@@ -201,7 +201,7 @@ class EditComponent extends React.Component {
                             {this.state.showLinearProgress && <LinearProgress />}
                         </Grid>
 
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={6} sx={{ px: 5 }}>
 
                             <Box
                                 component='form'
