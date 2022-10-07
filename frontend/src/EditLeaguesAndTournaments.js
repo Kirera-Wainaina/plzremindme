@@ -115,13 +115,15 @@ class EditComponent extends React.Component {
             category: '',
             name: '',
             country: null,
-            level: null
+            level: null,
+            teamType: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.displayLeagueExtras = this.displayLeagueExtras.bind(this);
         this.checkNationalTournament = this.checkNationalTournament.bind(this);
+        this.checkInternationalTournament = this.checkInternationalTournament.bind(this);
     }
 
     handleSubmit(e) {
@@ -160,6 +162,17 @@ class EditComponent extends React.Component {
             if (this.state.level == 'national') return true;
             return false
         }
+
+        return false
+    }
+
+    checkInternationalTournament() {
+        if (!this.displayLeagueExtras()) { // not league therefore tournament
+            if (this.props.competition.level == 'international') return true;
+            if (this.state.level == 'international') return true;
+            return false
+        }
+
         return false
     }
 
@@ -273,6 +286,27 @@ class EditComponent extends React.Component {
                                         {['National', 'International'].map((level, index) => (
                                             <MenuItem key={index} value={level.toLowerCase()}>
                                                 {level}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                }
+
+                                {
+                                    this.checkInternationalTournament() &&
+                                    <TextField
+                                        label='Played By(Team Type)'
+                                        variant="outlined"
+                                        onChange={this.handleChange}
+                                        name='teamType'
+                                        defaultValue={this.props.competition.teamType}
+                                        margin='normal'
+                                        select
+                                        required
+                                        fullWidth
+                                    >
+                                        {['Country', 'Club'].map((type, index) => (
+                                            <MenuItem key={index} value={type.toLowerCase()}>
+                                                {type}
                                             </MenuItem>
                                         ))}
                                     </TextField>
