@@ -199,6 +199,17 @@ class EditComponent extends React.Component {
                                     ))}
                                 </TextField>
 
+                                <TextField
+                                    label='Name'
+                                    variant='outlined'
+                                    name='name'
+                                    margin="normal"
+                                    defaultValue={this.props.category.name}
+                                    onChange={this.handleChange}
+                                    required
+                                    fullWidth
+                                />
+
                             </Box>
 
                         </Grid>
