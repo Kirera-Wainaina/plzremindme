@@ -1,5 +1,5 @@
 import { EditSharp } from "@mui/icons-material";
-import { Card, CardContent, CardMedia, Grid, IconButton, List, ListItem, 
+import { Button, Card, CardContent, CardMedia, Grid, IconButton, List, ListItem, 
     ListItemText, MenuItem, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
@@ -116,7 +116,9 @@ class EditComponent extends React.Component {
             name: '',
             country: null,
             level: null,
-            teamType: null
+            teamType: null,
+            logo: null,
+            logoURL: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -124,6 +126,8 @@ class EditComponent extends React.Component {
         this.displayLeagueExtras = this.displayLeagueExtras.bind(this);
         this.checkNationalTournament = this.checkNationalTournament.bind(this);
         this.checkInternationalTournament = this.checkInternationalTournament.bind(this);
+        this.openFileUpload = this.openFileUpload.bind(this);
+        this.handleFileUpload = this.handleFileUpload.bind(this);
     }
 
     handleSubmit(e) {
@@ -174,6 +178,18 @@ class EditComponent extends React.Component {
         }
 
         return false
+    }
+
+    openFileUpload(e) {
+        const parent = e.target.parentElement;
+        parent.querySelector('.invisible-file-upload').click();
+    }
+
+    handleFileUpload(e) {
+        this.setState({ 
+            teamLogo: e.target.files[0], 
+            teamLogoURL: URL.createObjectURL(e.target.files[0])
+        })
     }
 
     render() {
@@ -311,6 +327,18 @@ class EditComponent extends React.Component {
                                         ))}
                                     </TextField>
                                 }
+
+                                <Button variant="outlined" 
+                                    fullWidth
+                                    onClick={this.openFileUpload} 
+                                    sx={{ my: 2 }}
+                                >
+                                    Upload New {this.state.category || this.props.competition.category} Logo
+                                </Button>
+                                <input onChange={this.handleFileUpload} 
+                                    type='file' 
+                                    name={`${this.state.category}-logo`}
+                                    className="invisible-file-upload"/>
 
                             </Box>
 
