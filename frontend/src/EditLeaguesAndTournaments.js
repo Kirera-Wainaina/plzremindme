@@ -1,5 +1,5 @@
 import { EditSharp } from "@mui/icons-material";
-import { Card, CardMedia, Grid, IconButton, List, ListItem, 
+import { Card, CardContent, CardMedia, Grid, IconButton, List, ListItem, 
     ListItemText, MenuItem, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
@@ -315,6 +315,26 @@ class EditComponent extends React.Component {
                             </Box>
 
                         </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <Card>
+                                <CardContent>
+                                    <Typography variant='body1' align="center" color='text.secondary'>
+                                        Current Logo
+                                    </Typography>
+                                </CardContent>
+                                <CardMedia
+                                    component='img'
+                                    height='180'
+                                    image={this.props.competition.logoLink}
+                                    sx={{
+                                        objectFit: 'contain'
+                                    }}
+                                />
+                                </Card>
+
+                        </Grid>
+
 
                     </Grid>
                 </Card>
