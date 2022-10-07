@@ -1,5 +1,5 @@
 import { EditSharp } from "@mui/icons-material";
-import { Card, Grid, IconButton, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Avatar, Card, CardMedia, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditLeaguesAndTournaments extends React.Component {
@@ -73,6 +73,16 @@ function LeaguesAndTournaments(props) {
                                 </IconButton>
                             }
                         >
+                            <Card sx={{ mr: '10px', padding: '5px'}}>
+                                <CardMedia 
+                                    component='img'
+                                    image={category.logoLink}
+                                    alt={category.name}
+                                    height='70px'
+                                    sx={{ width: '70px', objectFit: 'contain' }}
+                                />
+                            </Card>
+                            
                             <ListItemText primary={category.name} />
                         </ListItem>
                     ))
