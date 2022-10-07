@@ -3,6 +3,7 @@ import { Card, CardMedia, Grid, IconButton, List, ListItem,
     ListItemText, MenuItem, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import COUNTRIES from "./countries";
 
 export default class EditLeaguesAndTournaments extends React.Component {
     constructor(props) {
@@ -112,11 +113,13 @@ class EditComponent extends React.Component {
             disableSubmit: false,
             statusCode: null,
             category: '',
-            name: ''
+            name: '',
+            country: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.displayLeagueExtras = this.displayLeagueExtras.bind(this);
     }
 
     handleSubmit(e) {
@@ -138,8 +141,19 @@ class EditComponent extends React.Component {
 
     }
 
+    displayLeagueExtras() {
+        if (this.state.category == 'league') {
+             return true
+        } else if (this.state.category == 'tournament') {
+             return false;
+        } else {
+            if (this.props.competition.category == 'league') return true;
+            return false
+        }
+    }
+
     render() {
-        console.log(this.props.category)
+        console.log(this.props.competition)
         return (
             <Modal
                 open={this.props.isOpen}
@@ -212,8 +226,27 @@ class EditComponent extends React.Component {
                                 />
 
                                 {
-                                    
+                                    this.displayLeagueExtras() &&
+                                    <TextField
+                                    label='Country'
+                                    variant="outlined"
+                                    onChange={this.handleChange}
+                                    name='country'
+                                    defaultValue={this.props.competition.country}
+                                    margin='normal'
+                                    select
+                                    required
+                                    fullWidth
+                                    >
+                                        {COUNTRIES.map((country, index) => (
+                                            <MenuItem key={index} value={country}>
+                                                {country}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
                                 }
+
+                                
 
                             </Box>
 
