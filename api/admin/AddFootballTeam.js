@@ -13,14 +13,22 @@ class AddFootballTeam extends FormDataHandler {
     }
 
     async run(response) {
-        await this.retrieveData();
-        const cloudUploader =  new CloudUploader(this.uploadedFilePath);
-        this.logoMetadata = await cloudUploader.run();
-        this.createTeamObject();
-        await this.getCollection('football-teams').add(this.fields);
-        console.log('team has been uploaded')
-        this.respond(response, 'success')
+        try {
+            await this.retrieveData();
 
+            const cloudUploader =  new CloudUploader(this.uploadedFilePath);
+            this.logoMetadata = await cloudUploader.run();
+
+            this.createTeamObject();
+
+            await this.getCollection('football-teams').add(this.fields);
+
+            console.log('team has been uploaded')
+            this.respond(response, 'success');
+        } catch(error) {
+            console.log('An error occurred while trying to add football team: ', error);
+            this.respond(response, 'error')
+        }
     }
 }
 
