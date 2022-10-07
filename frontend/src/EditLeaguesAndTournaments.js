@@ -114,7 +114,8 @@ class EditComponent extends React.Component {
             statusCode: null,
             category: '',
             name: '',
-            country: null
+            country: null,
+            level: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -246,7 +247,26 @@ class EditComponent extends React.Component {
                                     </TextField>
                                 }
 
-                                
+                                {
+                                    !this.displayLeagueExtras() &&
+                                    <TextField
+                                        label='Level'
+                                        variant="outlined"
+                                        onChange={this.handleChange}
+                                        name='level'
+                                        defaultValue={this.props.competition.level}
+                                        margin='normal'
+                                        select
+                                        required
+                                        fullWidth
+                                    >
+                                        {['National', 'International'].map((level, index) => (
+                                            <MenuItem key={index} value={level.toLowerCase()}>
+                                                {level}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                }
 
                             </Box>
 
