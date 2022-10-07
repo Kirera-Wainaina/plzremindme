@@ -352,8 +352,16 @@ class EditComponent extends React.Component {
                                             }}
                                         />
                                     </Card>
-                        
                                 }
+
+                                <Button variant="contained" 
+                                    type="submit"
+                                    disabled={this.state.disableSubmit}
+                                    sx={{ m: 2 }} 
+                                >
+                                    Submit
+                                </Button>
+
 
                             </Box>
 
