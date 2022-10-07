@@ -79,6 +79,13 @@ export default class AddLeaguesAndTournaments extends React.Component {
                                 <Alert severity="success">The upload was successful</Alert>
                             }
 
+                            {
+                                this.state.statusCode == 500 &&
+                                <Alert severity="error">
+                                    An error occurred while adding the league/tournament. Please try again.
+                                </Alert>
+                            }
+
                             <Typography variant="h6" align="center">
                                 Add Leagues & Tournaments
                             </Typography>

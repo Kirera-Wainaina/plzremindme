@@ -369,6 +369,14 @@ class EditComponent extends React.Component {
                                     this.state.statusCode == 200 && 
                                     <Alert severity="success">The upload was successful!</Alert>
                                 }
+
+                                {
+                                    this.state.statusCode == 500 &&
+                                    <Alert severity="error">
+                                        An error occurred while editing team. Please try again
+                                    </Alert>
+                                }
+
                                 <TextField 
                                     label='Team Name'
                                     variant="outlined"

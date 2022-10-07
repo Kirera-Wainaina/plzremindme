@@ -78,10 +78,17 @@ export default class AddFootballTeam extends React.Component {
                             }}
                         >
                             {this.state.showLinearProgress && <LinearProgress />}
+
                             {
                                 this.state.statusCode == 200 && 
                                 <Alert severity="success">The upload was successful!</Alert>
                             }
+
+                            {
+                                this.state.statusCode == 500 &&
+                                <Alert severity="error">An error occurred while adding team. Please try again.</Alert>
+                            }
+
                             <Typography variant='h6' align='center'>Add Team(s)</Typography>
                             <TextField 
                                 label='Team Name'
