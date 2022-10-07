@@ -1,6 +1,6 @@
 import { EditSharp } from "@mui/icons-material";
 import { Button, Card, CardContent, CardMedia, Grid, IconButton, List, ListItem, 
-    ListItemText, MenuItem, Modal, TextField, Typography } from "@mui/material";
+    ListItemText, MenuItem, Modal, TextField, Typography, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import COUNTRIES from "./countries";
@@ -130,23 +130,46 @@ class EditComponent extends React.Component {
         this.handleFileUpload = this.handleFileUpload.bind(this);
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        this.setState({ showLinearProgress: true, disableSubmit: true });
-        const formdata = this.createFormdata();
-        this.uploadData(formdata);
-    }
-
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    createFormdata() {
+    handleSubmit(e) {
+        e.preventDefault();
+        this.setState({ showLinearProgress: true, disableSubmit: true });
+        const formdata = this.createFormdata();
+        // const formdata = new FormData(e.target);
+        this.uploadData(formdata);
+    }
 
+    createFormdata() {
+        const formdata = new FormData();
+        formdata.append('name', this.state.name ? this.state.name : this.props.competition.name);
+        formdata.append('category', this.state.category ? this.state.category : this.props.competition.category);
+        formdata.append('docId', this.props.competition.docId);
+        if (this.displayLeagueExtras() || this.checkNationalTournament()) {
+            formdata.append('country', this.state.country ? this.state.country : this.props.competition.country);
+        }
+        if (!this.displayLeagueExtras()) {
+            formdata.append('level', this.state.level ? this.state.level : this.props.competition.level);
+        }
+        if (this.checkInternationalTournament()) {
+            formdata.append('teamType', this.state.teamType ? this.state.teamType : this.props.competition.teamType);
+        }
+        if (this.state.logo) formdata.append(`${formdata.get('name')}-logo`, this.state.logo);
+        return formdata;
     }
 
     uploadData(formdata) {
-
+        fetch('/api/admin/EditLeaguesAndTournaments', {
+            method: 'POST',
+            body: formdata,
+            headers: { 'content-encoding': 'multipart/form-data'}
+        }).then(response => this.setState({
+            showLinearProgress: false,
+            statusCode: response.status,
+            disableSubmit: false
+        }))
     }
 
     displayLeagueExtras() {
@@ -337,7 +360,7 @@ class EditComponent extends React.Component {
                                 </Button>
                                 <input onChange={this.handleFileUpload} 
                                     type='file' 
-                                    name={`${this.state.category}-logo`}
+                                    name={`${this.state.name || this.props.competition.name}-logo`}
                                     className="invisible-file-upload"/>
 
                                 {
