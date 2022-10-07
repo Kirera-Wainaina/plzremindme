@@ -1,6 +1,6 @@
 import { EditSharp } from "@mui/icons-material";
 import { Button, Card, CardContent, CardMedia, Grid, IconButton, List, ListItem, 
-    ListItemText, MenuItem, Modal, TextField, Typography, LinearProgress } from "@mui/material";
+    ListItemText, MenuItem, Modal, TextField, Typography, LinearProgress, Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import COUNTRIES from "./countries";
@@ -147,6 +147,7 @@ class EditComponent extends React.Component {
         formdata.append('name', this.state.name ? this.state.name : this.props.competition.name);
         formdata.append('category', this.state.category ? this.state.category : this.props.competition.category);
         formdata.append('docId', this.props.competition.docId);
+        formdata.append('logoName', this.props.competition.logoName)
         if (this.displayLeagueExtras() || this.checkNationalTournament()) {
             formdata.append('country', this.state.country ? this.state.country : this.props.competition.country);
         }
