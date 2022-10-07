@@ -121,6 +121,7 @@ class EditComponent extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.displayLeagueExtras = this.displayLeagueExtras.bind(this);
+        this.checkNationalTournament = this.checkNationalTournament.bind(this);
     }
 
     handleSubmit(e) {
@@ -151,6 +152,15 @@ class EditComponent extends React.Component {
             if (this.props.competition.category == 'league') return true;
             return false
         }
+    }
+
+    checkNationalTournament() {
+        if (!this.displayLeagueExtras()) { // not league therefore tournament
+            if (this.props.competition.level == 'national') return true;
+            if (this.state.level == 'national') return true;
+            return false
+        }
+        return false
     }
 
     render() {
@@ -227,7 +237,7 @@ class EditComponent extends React.Component {
                                 />
 
                                 {
-                                    this.displayLeagueExtras() &&
+                                    (this.displayLeagueExtras() || this.checkNationalTournament()) &&
                                     <TextField
                                     label='Country'
                                     variant="outlined"
