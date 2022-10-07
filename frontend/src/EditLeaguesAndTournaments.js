@@ -106,8 +106,27 @@ class EditComponent extends React.Component {
         super(props);
 
         this.state = {
-            showLinearProgress: false
+            showLinearProgress: false,
+            disableSubmit: false,
+            statusCode: null
         }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        this.setState({ showLinearProgress: true, disableSubmit: true });
+        const formdata = this.createFormdata();
+        this.uploadData(formdata);
+    }
+
+    createFormdata() {
+
+    }
+
+    uploadData(formdata) {
+
     }
 
     render() {
@@ -132,6 +151,27 @@ class EditComponent extends React.Component {
 
                         <Grid item xs={12} sm={12}>
                             {this.state.showLinearProgress && <LinearProgress />}
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+
+                            <Box
+                                component='form'
+                                onSubmit={this.handleSubmit}
+                            >
+                                {
+                                    this.state.statusCode == 200 && 
+                                    <Alert severity="success">The upload was successful!</Alert>
+                                }
+
+                                {
+                                    this.state.statusCode == 500 &&
+                                    <Alert severity="error">
+                                        An error occurred while editing team. Please try again
+                                    </Alert>
+                                }
+                            </Box>
+
                         </Grid>
 
                     </Grid>
