@@ -1,5 +1,7 @@
 import { EditSharp } from "@mui/icons-material";
-import { Avatar, Card, CardMedia, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemText, Modal, Typography } from "@mui/material";
+import { Card, CardMedia, Grid, IconButton, List, ListItem, 
+    ListItemText, MenuItem, Modal, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
 
 export default class EditLeaguesAndTournaments extends React.Component {
@@ -108,10 +110,12 @@ class EditComponent extends React.Component {
         this.state = {
             showLinearProgress: false,
             disableSubmit: false,
-            statusCode: null
+            statusCode: null,
+            category: ''
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleSubmit(e) {
@@ -119,6 +123,10 @@ class EditComponent extends React.Component {
         this.setState({ showLinearProgress: true, disableSubmit: true });
         const formdata = this.createFormdata();
         this.uploadData(formdata);
+    }
+
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     createFormdata() {
@@ -130,6 +138,7 @@ class EditComponent extends React.Component {
     }
 
     render() {
+        console.log(this.props.category)
         return (
             <Modal
                 open={this.props.isOpen}
@@ -170,6 +179,26 @@ class EditComponent extends React.Component {
                                         An error occurred while editing team. Please try again
                                     </Alert>
                                 }
+
+
+                                <TextField
+                                    label='Category'
+                                    variant='outlined'
+                                    defaultValue={this.props.category.category}
+                                    onChange={this.handleChange}
+                                    margin="normal"
+                                    name="category"
+                                    fullWidth={true}
+                                    select
+                                    required
+                                >
+                                    {['League', 'Tournament'].map((type, index) => (
+                                        <MenuItem key={index} value={type.toLowerCase()}>
+                                            {type}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+
                             </Box>
 
                         </Grid>
