@@ -1,4 +1,5 @@
-import { Grid } from "@mui/material";
+import { EditSharp } from "@mui/icons-material";
+import { Card, Grid, IconButton, List, ListItem, ListItemText, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditLeaguesAndTournaments extends React.Component {
@@ -46,4 +47,38 @@ function LeaguesAndTournaments(props) {
             .then(response => response.json())
             .then(data => props.setCategories(data))
     }, [])
+
+    function openEditModal() {
+
+    }
+
+    function closeEditModal() {
+
+    }
+
+    return (
+        <Card>
+
+            <Typography variant='h5' align="center">Leagues And Tournaments</Typography>
+
+            <List>
+                {
+                    props.categories.map(category => (
+                        <ListItem
+                            key={category.docId}
+                            divider
+                            secondaryAction={
+                                <IconButton onClick={() => openEditModal(team)}>
+                                    <EditSharp color="primary"/>
+                                </IconButton>
+                            }
+                        >
+                            <ListItemText primary={category.name} />
+                        </ListItem>
+                    ))
+                }
+            </List>
+
+        </Card>
+    )
 }
