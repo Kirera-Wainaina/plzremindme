@@ -104,6 +104,10 @@ function LeaguesAndTournaments(props) {
 class EditComponent extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            showLinearProgress: false
+        }
     }
 
     render() {
@@ -125,7 +129,11 @@ class EditComponent extends React.Component {
                         <Grid item xs={12} sm={12}>
                             <Typography variant='h5' align="center">Edit {this.props.category.name}</Typography>
                         </Grid>
-                        
+
+                        <Grid item xs={12} sm={12}>
+                            {this.state.showLinearProgress && <LinearProgress />}
+                        </Grid>
+
                     </Grid>
                 </Card>
             </Modal>
