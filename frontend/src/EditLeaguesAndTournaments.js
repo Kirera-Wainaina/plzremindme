@@ -1,5 +1,5 @@
 import { EditSharp } from "@mui/icons-material";
-import { Avatar, Card, CardMedia, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
+import { Avatar, Card, CardMedia, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemText, Modal, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditLeaguesAndTournaments extends React.Component {
@@ -39,7 +39,7 @@ class Filter extends React.Component {
 }
 
 function LeaguesAndTournaments(props) {
-    const [contentId, setContentId] = React.useState(null);
+    const [categoryId, setCategoryId] = React.useState(null);
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -48,12 +48,13 @@ function LeaguesAndTournaments(props) {
             .then(data => props.setCategories(data))
     }, [])
 
-    function openEditModal() {
-
+    function openEditModal(category) {
+        setCategoryId(category.docId);
+        setModalIsOpen(true);
     }
 
     function closeEditModal() {
-
+        setModalIsOpen(false)
     }
 
     return (
@@ -68,11 +69,18 @@ function LeaguesAndTournaments(props) {
                             key={category.docId}
                             divider
                             secondaryAction={
-                                <IconButton onClick={() => openEditModal(team)}>
+                                <IconButton onClick={() => openEditModal(category)}>
                                     <EditSharp color="primary"/>
                                 </IconButton>
                             }
                         >
+    
+                            { 
+                                categoryId == category.docId &&
+                                <EditComponent isOpen={modalIsOpen} close={closeEditModal} category={category}/>
+
+                            }
+    
                             <Card sx={{ mr: '10px', padding: '5px'}}>
                                 <CardMedia 
                                     component='img'
@@ -82,7 +90,7 @@ function LeaguesAndTournaments(props) {
                                     sx={{ width: '70px', objectFit: 'contain' }}
                                 />
                             </Card>
-                            
+
                             <ListItemText primary={category.name} />
                         </ListItem>
                     ))
@@ -91,4 +99,23 @@ function LeaguesAndTournaments(props) {
 
         </Card>
     )
+}
+
+class EditComponent extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <Modal
+                open={this.props.isOpen}
+                onClose={this.props.close}
+            >
+                <Card>
+                    <p>Hellow</p>
+                </Card>
+            </Modal>
+        )
+    }
 }
