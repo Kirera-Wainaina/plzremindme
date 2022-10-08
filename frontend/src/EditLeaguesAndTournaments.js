@@ -1,6 +1,6 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
 import { Button, Card, CardContent, CardMedia, Grid, IconButton, List, ListItem, 
-    ListItemText, MenuItem, Modal, TextField, Typography, LinearProgress, Alert } from "@mui/material";
+    ListItemText, MenuItem, Modal, TextField, Typography, LinearProgress, Alert, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import COUNTRIES from "./countries";
@@ -44,14 +44,20 @@ class Filter extends React.Component {
         super(props);
 
         this.state = {
-            showFilterModal: false
+            showFilterModal: false,
+            category: null
         }
 
         this.searchThroughInput = this.searchThroughInput.bind(this);
+        this.handleFilters = this.handleFilters.bind(this);
     }
 
     searchThroughInput(e) {
 
+    }
+
+    handleFilters(field, value) {
+        this.setState({ [field]: value });
     }
 
     render() {
@@ -61,6 +67,8 @@ class Filter extends React.Component {
                 <FilterModal 
                     isOpen={this.state.showFilterModal}
                     close={() => this.setState({ showFilterModal: false })}
+                    handleFilters={(field, value) => this.handleFilters(field, value)}
+                    category={this.state.category}
                 />
 
                 <Grid container direction='row'>
@@ -115,6 +123,21 @@ function FilterModal(props) {
                         <Typography variant='h6' align='center' sx={{ mt: 5}}>
                             Filter Leagues and Tournaments By:
                         </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ mx: 5}}>
+                        <Typography variant='subtitle1'>Category: </Typography>
+                        <ToggleButtonGroup
+                            value={props.category}
+                            exclusive
+                            onChange={(event, value) => props.handleFilters('category', value)}
+                            color='primary'
+                            sx={{ m: 3}}
+                        >
+                            <ToggleButton value='league'>League</ToggleButton>
+                            <ToggleButton value='tournament'>Tournament</ToggleButton>
+                        </ToggleButtonGroup>
+
                     </Grid>
 
                 </Grid>
