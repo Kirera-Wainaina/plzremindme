@@ -59,8 +59,19 @@ class Filter extends React.Component {
 
     }
 
+    runFilter() {
+
+    }
+
     handleFilters(field, value) {
+        // clear filters that don't match category to avoid
+        // filtering through categories that don't matter
         this.setState({ [field]: value });
+        if (this.state.category == 'tournament') {
+            this.setState({ country: null })
+        } else if (this.state.category == 'league') {
+            this.setState({ level: null, teamType: null })
+        }
     }
 
     render() {
@@ -75,6 +86,7 @@ class Filter extends React.Component {
                     country={this.state.country}
                     level={this.state.level}
                     teamType={this.state.teamType}
+                    runFilter={this.runFilter}
                 />
 
                 <Grid container direction='row'>
@@ -199,6 +211,18 @@ function FilterModal(props) {
                             </ToggleButtonGroup>
                         </Grid>
                     }
+
+                    <Grid item xs={12} sx={{ m: 3 }}>
+                        <Button 
+                            variant='contained' 
+                            onClick={() => {
+                                props.runFilter();
+                                props.close()
+                            }}
+                        >
+                            Run Filter
+                        </Button>
+                    </Grid>
 
                 </Grid>
             </Card>
