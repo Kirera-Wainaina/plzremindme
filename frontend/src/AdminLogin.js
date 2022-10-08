@@ -69,7 +69,7 @@ export default class AdminLogin extends React.Component {
                             <Typography variant='h6' align='center'>Login</Typography>
 
                             <TextField
-                                label='email'
+                                label='Email'
                                 variant="outlined"
                                 margin="normal"
                                 name="email"
