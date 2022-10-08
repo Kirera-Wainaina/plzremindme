@@ -1,3 +1,4 @@
+import { Alert, Button, Grid, LinearProgress, TextField, Card, Box, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -7,7 +8,9 @@ export default class AdminLogin extends React.Component {
         this.state = {
             email: null,
             password: null,
-            status: null
+            status: null,
+            showLinearProgress: false,
+            disableSubmit: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,6 +22,7 @@ export default class AdminLogin extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({ showLinearProgress: true, disableSubmit: true })
         fetch('/api/admin/Login', {
             method: 'POST',
             body: JSON.stringify(this.state),
@@ -28,7 +32,7 @@ export default class AdminLogin extends React.Component {
 
     handleResponse(response) {
         if (response.status == 200) sessionStorage.setItem('isLoggedIn', true);
-        this.setState({ status: response.status })
+        this.setState({ status: response.status, showLinearProgress: false, disableSubmit: false })
     }
 
     componentDidUpdate() {
@@ -39,30 +43,76 @@ export default class AdminLogin extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
-                <form className="card" onSubmit={this.handleSubmit}>
-                    {this.state.status == 401 && <LoginError />}
-                    <h2>Login</h2>
-                    <label>Email 
-                        <input required className='input' type='email' name='email' onChange={this.handleChange}/>
-                    </label>
-                    <label>Password 
-                        <input required className='input' type='password' name='password' onChange={this.handleChange}/>
-                    </label>
-                    <input type='submit' value='Submit' className="button" />
-                </form>
-                <Link to='../signup' className="card admin-link">
-                    Please talk to the admin to sign you up if you don't have an account
-                </Link>
-            </React.Fragment>
+            <Grid container justifyContent='center'>
+
+                <Grid item xs={12} sm={6} sx={{ m: 5 }}>
+                    <Card>
+                        <Box
+                            component='form'
+                            onSubmit={this.handleSubmit}
+                            sx={{ p: 5 }}
+                        >
+                            {
+                                this.state.showLinearProgress && <LinearProgress />
+                            }
+
+                            {
+                                this.state.status == 401 &&
+                                <Alert severity="error">The email or password you entered is incorrect</Alert>
+                            }
+
+                            {
+                                this.state.status == 200 &&
+                                <Alert severity="success">Successful Login</Alert>
+                            }
+
+                            <Typography variant='h6' align='center'>Login</Typography>
+
+                            <TextField
+                                label='email'
+                                variant="outlined"
+                                margin="normal"
+                                name="email"
+                                type='email'
+                                onChange={this.handleChange}
+                                required
+                                fullWidth
+                            />
+
+                            <TextField
+                                label='Password'
+                                variant="outlined"
+                                margin="normal"
+                                name="password"
+                                type='password'
+                                onChange={this.handleChange}
+                                required
+                                fullWidth
+                            />
+
+                            <Button variant="contained" 
+                                type="submit" 
+                                sx={{ mt: 2 }} 
+                                disabled={this.state.disableSubmit}
+                                fullWidth
+                            >
+                                Login
+                            </Button>
+
+                        </Box>
+                    </Card>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                    <Card sx={{ p: 5 }}>
+                        <Link to='../admin-signup' className="card admin-link">
+                        Please talk to the admin to sign you up if you don't have an account
+                        </Link>
+
+                    </Card>
+                </Grid>
+
+            </Grid>
         )
     }
 }
-
-function LoginError() {
-    return (
-        <div className="error">
-            <p>The email or password you entered is incorrect</p>
-        </div>
-    )
-} 
