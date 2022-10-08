@@ -45,7 +45,8 @@ class Filter extends React.Component {
 
         this.state = {
             showFilterModal: false,
-            category: null
+            category: null,
+            country: null
         }
 
         this.searchThroughInput = this.searchThroughInput.bind(this);
@@ -69,6 +70,7 @@ class Filter extends React.Component {
                     close={() => this.setState({ showFilterModal: false })}
                     handleFilters={(field, value) => this.handleFilters(field, value)}
                     category={this.state.category}
+                    country={this.state.country}
                 />
 
                 <Grid container direction='row'>
@@ -125,20 +127,39 @@ function FilterModal(props) {
                         </Typography>
                     </Grid>
 
-                    <Grid item xs={12} sx={{ mx: 5}}>
+                    <Grid item xs={12} sx={{ mx: 5 }}>
                         <Typography variant='subtitle1'>Category: </Typography>
                         <ToggleButtonGroup
                             value={props.category}
                             exclusive
                             onChange={(event, value) => props.handleFilters('category', value)}
                             color='primary'
-                            sx={{ m: 3}}
+                            sx={{ m: 3 }}
                         >
                             <ToggleButton value='league'>League</ToggleButton>
                             <ToggleButton value='tournament'>Tournament</ToggleButton>
                         </ToggleButtonGroup>
-
                     </Grid>
+
+                    {
+                        props.category == 'league' &&
+                        <Grid item xs={12} sx={{ mx: 5 }}>
+                            <Typography variant='subtitle1'>Country: </Typography>
+                            <ToggleButtonGroup
+                                value={props.country}
+                                exclusive
+                                onChange={(event, value) => props.handleFilters('country', value)}
+                                color='primary'
+                                sx={{ m: 3 }}
+                            >
+                                {
+                                    COUNTRIES.map(country => (
+                                        <ToggleButton value={country} key={country}>{country}</ToggleButton>
+                                    ))
+                                }
+                            </ToggleButtonGroup>
+                        </Grid>
+                    }
 
                 </Grid>
             </Card>
