@@ -29,6 +29,7 @@ export default class EditLeaguesAndTournaments extends React.Component {
 
                 <Grid item xs={12} sm={8}>
                     <LeaguesAndTournaments
+                        currentCategories={this.state.filteredCategories.length ? this.state.filteredCategories : this.state.categories}
                         categories={this.state.categories}
                         setCategories={categories => this.setState({ categories })}
                     />
@@ -53,6 +54,7 @@ class Filter extends React.Component {
 
         this.searchThroughInput = this.searchThroughInput.bind(this);
         this.handleFilters = this.handleFilters.bind(this);
+        this.runFilter = this.runFilter.bind(this);
     }
 
     searchThroughInput(e) {
@@ -60,18 +62,25 @@ class Filter extends React.Component {
     }
 
     runFilter() {
+        let filtered = [];
+        
+        if (this.state.category) {
+            filtered = this.props.categories
+                .filter(competition => competition.category == this.state.category);
+        }
 
+        this.props.setFilteredCategories(filtered)
     }
 
     handleFilters(field, value) {
         // clear filters that don't match category to avoid
         // filtering through categories that don't matter
+        
         this.setState({ [field]: value });
-        if (this.state.category == 'tournament') {
-            this.setState({ country: null })
-        } else if (this.state.category == 'league') {
-            this.setState({ level: null, teamType: null })
-        }
+        
+        // if (this.state.category == 'league') {
+            // this.setState({ level: null, teamType: null })
+        // }
     }
 
     render() {
@@ -256,7 +265,7 @@ function LeaguesAndTournaments(props) {
 
             <List>
                 {
-                    props.categories.map(category => (
+                    props.currentCategories.map(category => (
                         <ListItem
                             key={category.docId}
                             divider
