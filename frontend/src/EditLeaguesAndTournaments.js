@@ -46,7 +46,8 @@ class Filter extends React.Component {
         this.state = {
             showFilterModal: false,
             category: null,
-            country: null
+            country: null,
+            level: null
         }
 
         this.searchThroughInput = this.searchThroughInput.bind(this);
@@ -71,6 +72,7 @@ class Filter extends React.Component {
                     handleFilters={(field, value) => this.handleFilters(field, value)}
                     category={this.state.category}
                     country={this.state.country}
+                    level={this.state.level}
                 />
 
                 <Grid container direction='row'>
@@ -157,6 +159,23 @@ function FilterModal(props) {
                                         <ToggleButton value={country} key={country}>{country}</ToggleButton>
                                     ))
                                 }
+                            </ToggleButtonGroup>
+                        </Grid>
+                    }
+
+                    {
+                        props.category == 'tournament' &&
+                        <Grid item xs={12} sx={{ mx: 5 }}>
+                            <Typography variant='subtitle1'>Level: </Typography>
+                            <ToggleButtonGroup
+                                value={props.level}
+                                exclusive
+                                onChange={(event, value) => props.handleFilters('level', value)}
+                                color='primary'
+                                sx={{ m: 3 }}
+                            >
+                                <ToggleButton value='national'>National</ToggleButton>
+                                <ToggleButton value='international'>International</ToggleButton>
                             </ToggleButtonGroup>
                         </Grid>
                     }
