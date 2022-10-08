@@ -58,6 +58,11 @@ class Filter extends React.Component {
         return (
             <Card>
 
+                <FilterModal 
+                    isOpen={this.state.showFilterModal}
+                    close={() => this.setState({ showFilterModal: false })}
+                />
+
                 <Grid container direction='row'>
 
                     <Grid item xs={2} sm={1}>
@@ -89,6 +94,33 @@ class Filter extends React.Component {
             </Card>
         )
     }
+}
+
+function FilterModal(props) {
+    return (
+        <Modal
+            open={props.isOpen}
+            onClose={props.close}
+        >
+            <Card
+                sx={{
+                    width: '80%',
+                    ml: '10%',
+                    mt: '3%'
+                }}
+            >
+                <Grid container>
+
+                    <Grid item xs={12}>
+                        <Typography variant='h6' align='center' sx={{ mt: 5}}>
+                            Filter Leagues and Tournaments By:
+                        </Typography>
+                    </Grid>
+
+                </Grid>
+            </Card>
+        </Modal>
+    )
 }
 
 function LeaguesAndTournaments(props) {
