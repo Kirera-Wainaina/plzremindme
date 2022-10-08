@@ -146,7 +146,8 @@ function FilterModal(props) {
                     </Grid>
 
                     {
-                        props.category == 'league' &&
+                        (props.category == 'league' || // league
+                        (props.level == 'national' && props.category == 'tournament')) && // national tournament
                         <Grid item xs={12} sx={{ mx: 5 }}>
                             <Typography variant='subtitle1'>Country: </Typography>
                             <ToggleButtonGroup
