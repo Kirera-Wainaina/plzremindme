@@ -63,44 +63,40 @@ class Filter extends React.Component {
     }
 
     runFilter() {
-        let filtered = [];
+        let filtered = [...this.props.competitions];
         
         if (this.state.category) {
-            filtered = this.props.competitions
-                .filter(competition => competition.category == this.state.category);
+            filtered = filtered.filter(competition => competition.category == this.state.category);
         }
 
         if (this.state.country) { // league or national tournament
 
             if (this.state.category == 'league' || 
             (this.state.level == 'national' && this.state.category == 'tournament')) {
-            
+        
                 const filterFunction = (competition) => competition.country == this.state.country;
-                filtered = filtered.length ? filtered.filter(filterFunction) 
-                    : this.props.competitions.filter(filterFunction);
-            
+                filtered = filtered.filter(filterFunction)
             }
         }
 
         if (this.state.level && this.state.category == 'tournament') {
+        
             const filterFunction = (competition) => competition.level == this.state.level;
+            filtered = filtered.filter(filterFunction);
+        }
+
+        if (this.state.teamType && 
+            (this.state.category == 'tournament' && this.state.level == 'international')) {
             
-            filtered = filtered.length ? filtered.filter(filterFunction) 
-            : this.props.competitions.filter(filterFunction);
+            const filterFunction = (competition) => competition.teamType == this.state.teamType;
+            filtered = filtered.filter(filterFunction)
         }
 
         this.props.setFilteredCompetitions(filtered)
     }
 
     handleFilters(field, value) {
-        // clear filters that don't match category to avoid
-        // filtering through categories that don't matter
-        
         this.setState({ [field]: value });
-        
-        // if (this.state.category == 'league') {
-            // this.setState({ level: null, teamType: null })
-        // }
     }
 
     render() {
