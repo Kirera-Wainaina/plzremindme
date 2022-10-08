@@ -1,4 +1,4 @@
-import { EditSharp } from "@mui/icons-material";
+import { EditSharp, FilterList } from "@mui/icons-material";
 import { Button, Card, CardContent, CardMedia, Grid, IconButton, List, ListItem, 
     ListItemText, MenuItem, Modal, TextField, Typography, LinearProgress, Alert } from "@mui/material";
 import { Box } from "@mui/system";
@@ -10,7 +10,8 @@ export default class EditLeaguesAndTournaments extends React.Component {
         super(props);
 
         this.state = {
-            categories: []
+            categories: [],
+            filteredCategories: []
         }
     }
 
@@ -19,7 +20,10 @@ export default class EditLeaguesAndTournaments extends React.Component {
             <Grid container justifyContent='center' spacing={2}>
 
                 <Grid item xs={12} sm={8} sx={{ mt: '1%'}}>
-                    <Filter 
+                    <Filter
+                        categories={this.state.categories}
+                        filteredCategories={this.state.filteredCategories}
+                        setFilteredCategories={categories => this.setState({ filteredCategories: categories })}
                     />
                 </Grid>
 
@@ -36,8 +40,54 @@ export default class EditLeaguesAndTournaments extends React.Component {
 }
 
 class Filter extends React.Component {
-    render() {
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            showFilterModal: false
+        }
+
+        this.searchThroughInput = this.searchThroughInput.bind(this);
+    }
+
+    searchThroughInput(e) {
+
+    }
+
+    render() {
+        return (
+            <Card>
+
+                <Grid container direction='row'>
+
+                    <Grid item xs={2} sm={1}>
+                        <IconButton
+                            size="large"
+                            sx={{
+                                mt: '25%',
+                                ml: '20%'
+                            }}
+                            onClick={() => this.setState({ showFilterModal: true })}
+                        >
+                            <FilterList color="primary" />
+                        </IconButton>
+                    </Grid>
+
+                    <Grid item xs={8} sm={10}>
+                        <TextField 
+                            variant="filled"
+                            placeholder="Enter league/tournament name..." 
+                            size="small"
+                            margin="normal"
+                            onChange={this.searchThroughInput}
+                            fullWidth
+                        />
+                    </Grid>
+
+                </Grid>
+
+            </Card>
+        )
     }
 }
 
