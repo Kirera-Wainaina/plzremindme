@@ -81,6 +81,13 @@ class Filter extends React.Component {
             }
         }
 
+        if (this.state.level && this.state.category == 'tournament') {
+            const filterFunction = (competition) => competition.level == this.state.level;
+            
+            filtered = filtered.length ? filtered.filter(filterFunction) 
+            : this.props.categories.filter(filterFunction);
+        }
+
         this.props.setFilteredCategories(filtered)
     }
 
