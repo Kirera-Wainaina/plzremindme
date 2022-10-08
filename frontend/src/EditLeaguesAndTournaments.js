@@ -10,8 +10,8 @@ export default class EditLeaguesAndTournaments extends React.Component {
         super(props);
 
         this.state = {
-            categories: [],
-            filteredCategories: []
+            competitions: [],
+            filteredCompetitions: []
         }
     }
 
@@ -21,17 +21,18 @@ export default class EditLeaguesAndTournaments extends React.Component {
 
                 <Grid item xs={12} sm={8} sx={{ mt: '1%'}}>
                     <Filter
-                        categories={this.state.categories}
-                        filteredCategories={this.state.filteredCategories}
-                        setFilteredCategories={categories => this.setState({ filteredCategories: categories })}
+                        competitions={this.state.competitions}
+                        filteredCompetitions={this.state.filteredCompetitions}
+                        setFilteredCompetitions={competitions => this.setState({ filteredCompetitions: competitions })}
                     />
                 </Grid>
 
                 <Grid item xs={12} sm={8}>
                     <LeaguesAndTournaments
-                        currentCategories={this.state.filteredCategories.length ? this.state.filteredCategories : this.state.categories}
-                        categories={this.state.categories}
-                        setCategories={categories => this.setState({ categories })}
+                        currentCompetitions={this.state.filteredCompetitions.length 
+                            ? this.state.filteredCompetitions : this.state.competitions}
+                        competitions={this.state.competitions}
+                        setCompetitions={competitions => this.setState({ competitions })}
                     />
                 </Grid>
 
@@ -65,7 +66,7 @@ class Filter extends React.Component {
         let filtered = [];
         
         if (this.state.category) {
-            filtered = this.props.categories
+            filtered = this.props.competitions
                 .filter(competition => competition.category == this.state.category);
         }
 
@@ -76,7 +77,7 @@ class Filter extends React.Component {
             
                 const filterFunction = (competition) => competition.country == this.state.country;
                 filtered = filtered.length ? filtered.filter(filterFunction) 
-                    : this.props.categories.filter(filterFunction);
+                    : this.props.competitions.filter(filterFunction);
             
             }
         }
@@ -85,10 +86,10 @@ class Filter extends React.Component {
             const filterFunction = (competition) => competition.level == this.state.level;
             
             filtered = filtered.length ? filtered.filter(filterFunction) 
-            : this.props.categories.filter(filterFunction);
+            : this.props.competitions.filter(filterFunction);
         }
 
-        this.props.setFilteredCategories(filtered)
+        this.props.setFilteredCompetitions(filtered)
     }
 
     handleFilters(field, value) {
@@ -259,17 +260,17 @@ function FilterModal(props) {
 }
 
 function LeaguesAndTournaments(props) {
-    const [categoryId, setCategoryId] = React.useState(null);
+    const [competitionId, setCompetitionId] = React.useState(null);
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
         fetch('/api/admin/GetLeaguesAndTournaments')
             .then(response => response.json())
-            .then(data => props.setCategories(data))
+            .then(data => props.setCompetitions(data))
     }, [])
 
-    function openEditModal(category) {
-        setCategoryId(category.docId);
+    function openEditModal(competition) {
+        setCompetitionId(competition.docId);
         setModalIsOpen(true);
     }
 
@@ -284,34 +285,34 @@ function LeaguesAndTournaments(props) {
 
             <List>
                 {
-                    props.currentCategories.map(category => (
+                    props.currentCompetitions.map(competition => (
                         <ListItem
-                            key={category.docId}
+                            key={competition.docId}
                             divider
                             secondaryAction={
-                                <IconButton onClick={() => openEditModal(category)}>
+                                <IconButton onClick={() => openEditModal(competition)}>
                                     <EditSharp color="primary"/>
                                 </IconButton>
                             }
                         >
     
                             { 
-                                categoryId == category.docId &&
-                                <EditComponent isOpen={modalIsOpen} close={closeEditModal} competition={category}/>
+                                competitionId == competition.docId &&
+                                <EditComponent isOpen={modalIsOpen} close={closeEditModal} competition={competition}/>
 
                             }
     
                             <Card sx={{ mr: '10px', padding: '5px'}}>
                                 <CardMedia 
                                     component='img'
-                                    image={category.logoLink}
-                                    alt={category.name}
+                                    image={competition.logoLink}
+                                    alt={competition.name}
                                     height='70px'
                                     sx={{ width: '70px', objectFit: 'contain' }}
                                 />
                             </Card>
 
-                            <ListItemText primary={category.name} />
+                            <ListItemText primary={competition.name} />
                         </ListItem>
                     ))
                 }
@@ -434,7 +435,6 @@ class EditComponent extends React.Component {
     }
 
     render() {
-        console.log(this.props.competition)
         return (
             <Modal
                 open={this.props.isOpen}
