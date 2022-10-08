@@ -59,7 +59,17 @@ class Filter extends React.Component {
     }
 
     searchThroughInput(e) {
+        const competitions = this.props.filteredCompetitions.length ? 
+            this.props.filteredCompetitions : this.props.competitions;
+        const searchTerm = e.target.value.toLowerCase();
 
+        if (!searchTerm) {
+            this.props.setFilteredCompetitions([]);
+            return ;
+        }
+        
+        const filtered = competitions.filter(competition => competition.name.toLowerCase().includes(searchTerm));
+        this.props.setFilteredCompetitions(filtered);
     }
 
     runFilter() {
