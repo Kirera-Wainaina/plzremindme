@@ -3,7 +3,7 @@ import React from "react";
 import AddFootballTeam from "./AddFootballTeam";
 import EditFootballTeam from "./EditFootballTeam";
 import AddCompetitions from "./AddCompetitions";
-import EditLeaguesAndTournaments from "./EditLeaguesAndTournaments";
+import EditCompetitions from "./EditCompetitions";
 
 export default function AdminFootball() {
     const [value, setValue] = React.useState(0);
@@ -40,7 +40,7 @@ export default function AdminFootball() {
                     <AddCompetitions />
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    <EditLeaguesAndTournaments />
+                    <EditCompetitions />
                 </TabPanel>
 
                 <TabPanel value={value} index={4} >Upload Matches</TabPanel>

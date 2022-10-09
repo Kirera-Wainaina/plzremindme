@@ -3,7 +3,7 @@ const CloudFileEditor = require("../../handlers/CloudFileEditor");
 const { FieldPath } = require("@google-cloud/firestore");
 
 
-class EditLeaguesAndTournaments extends FormDataHandler {
+class EditCompetitions extends FormDataHandler {
     constructor(props) {
         super(props);
     }
@@ -43,4 +43,4 @@ class EditLeaguesAndTournaments extends FormDataHandler {
     }
 }
 
-module.exports = EditLeaguesAndTournaments;
+module.exports = EditCompetitions;

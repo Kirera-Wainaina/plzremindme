@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import COUNTRIES from "./countries";
 
-export default class EditLeaguesAndTournaments extends React.Component {
+export default class EditCompetitions extends React.Component {
     constructor(props) {
         super(props);
 
@@ -270,7 +270,7 @@ function LeaguesAndTournaments(props) {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
-        fetch('/api/admin/GetLeaguesAndTournaments')
+        fetch('/api/admin/GetCompetitions')
             .then(response => response.json())
             .then(data => props.setCompetitions(data))
     }, [])
