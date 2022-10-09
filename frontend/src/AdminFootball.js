@@ -20,10 +20,10 @@ export default function AdminFootball() {
                     value={value}
                     orientation='vertical'
                 >
-                    <Tab label='Edit Teams' value={0}/>
-                    <Tab label='Add Teams' value={1}/>
-                    <Tab label='Add Leagues & Tournaments' value={2}/>
-                    <Tab label='Edit Leagues & Tournaments' value={3}/>
+                    <Tab label='Add Teams' value={0}/>
+                    <Tab label='Edit Teams' value={1}/>
+                    <Tab label='Add Competitions' value={2}/>
+                    <Tab label='Edit Competitions' value={3}/>
                     <Tab label='Upload Matches' value={4}/>
                     <Tab label='Edit Matches' value={5}/>
                 </Tabs>
@@ -31,10 +31,10 @@ export default function AdminFootball() {
             </Grid>
             <Grid item xs={12} sm={10}>
                 <TabPanel value={value} index={0}>
-                    <EditFootballTeam />
+                    <AddFootballTeam />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <AddFootballTeam />
+                    <EditFootballTeam />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     <AddLeaguesAndTournaments />
