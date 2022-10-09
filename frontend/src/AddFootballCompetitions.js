@@ -3,7 +3,7 @@ import { Grid, Box, Card, CardMedia, Typography, LinearProgress, Alert, TextFiel
 import React from "react";
 import COUNTRIES from "./countries";
 
-export default class AddCompetitions extends React.Component {
+export default class AddFootballCompetitions extends React.Component {
     constructor(props) {
         super(props);
 
@@ -35,7 +35,7 @@ export default class AddCompetitions extends React.Component {
     }
 
     uploadData(formdata) {
-        fetch('/api/admin/AddCompetitions', {
+        fetch('/api/admin/AddFootballCompetitions', {
             method: 'POST',
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}

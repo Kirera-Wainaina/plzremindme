@@ -1,7 +1,7 @@
 const { FormDataHandler } = require("../..");
 const CloudUploader = require("../../handlers/CloudUploader");
 
-class AddCompetitions extends FormDataHandler {
+class AddFootballCompetitions extends FormDataHandler {
     constructor(props) {
         super(props);
     }
@@ -31,4 +31,4 @@ class AddCompetitions extends FormDataHandler {
     }
 }
 
-module.exports = AddCompetitions;
+module.exports = AddFootballCompetitions;
