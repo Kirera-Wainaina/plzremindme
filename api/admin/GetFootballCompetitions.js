@@ -1,6 +1,6 @@
 const { GETHandler } = require("../..");
 
-class GetCompetitions extends GETHandler {
+class GetFootballCompetitions extends GETHandler {
     constructor(props) {
         super(props);
 
@@ -17,4 +17,4 @@ class GetCompetitions extends GETHandler {
 
 }
 
-module.exports = GetCompetitions;
+module.exports = GetFootballCompetitions;

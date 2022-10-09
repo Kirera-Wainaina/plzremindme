@@ -2,8 +2,8 @@ import { Grid, Tab, Tabs } from "@mui/material";
 import React from "react";
 import AddFootballTeam from "./AddFootballTeam";
 import EditFootballTeam from "./EditFootballTeam";
-import AddFootballCompetitions from "./AddFootballCompetitions";
-import EditCompetitions from "./EditCompetitions";
+import AddFootballCompetition from "./AddFootballCompetition";
+import EditFootballCompetition from "./EditFootballCompetition";
 
 export default function AdminFootball() {
     const [value, setValue] = React.useState(0);
@@ -37,10 +37,10 @@ export default function AdminFootball() {
                     <EditFootballTeam />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    <AddFootballCompetitions />
+                    <AddFootballCompetition />
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    <EditCompetitions />
+                    <EditFootballCompetition />
                 </TabPanel>
 
                 <TabPanel value={value} index={4} >Upload Matches</TabPanel>
