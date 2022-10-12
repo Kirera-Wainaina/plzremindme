@@ -1,4 +1,4 @@
-import { Alert, Card, Grid, LinearProgress, MenuItem, TextField, Typography } from "@mui/material"
+import { Alert, Avatar, Card, CardMedia, Grid, LinearProgress, ListItemIcon, ListItemText, MenuItem, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import React from "react"
 
@@ -33,8 +33,8 @@ export default class AddFootballMatch extends React.Component {
     render() {
         return (
             <Grid container justifyContent='center'>
-                <Grid item xs={12} sm={6}>
-                    <Card sx={{ mt: 5 }}>
+                <Grid item xs={12} sm={8}>
+                    <Card sx={{ mt: 5, padding: 5 }}>
                         <Box
                             component='form'
                             onSubmit={this.handleSubmit}
@@ -62,7 +62,7 @@ export default class AddFootballMatch extends React.Component {
                                 label='Competition'
                                 variant="filled"
                                 onChange={this.handleChange}
-                                name='competitionId'
+                                name='competition'
                                 value={this.state.competition}
                                 margin='normal'
                                 select
@@ -72,7 +72,18 @@ export default class AddFootballMatch extends React.Component {
                                 {
                                     this.state.competitions.map(competition => (
                                         <MenuItem key={competition.docId} value={competition.docId}>
-                                            {competition.name}
+                                            <ListItemIcon>
+                                                <Card sx={{ mr: '10px', padding: '5px'}}>
+                                                    <CardMedia
+                                                        component='img'
+                                                        image={competition.logoLink}
+                                                        alt={competition.name}
+                                                        height='50px'
+                                                        sx={{ width: '50px', objectFit: 'contain' }}
+                                                    />
+                                                </Card>
+                                            </ListItemIcon>
+                                            <ListItemText>{competition.name}</ListItemText>
                                         </MenuItem>
                                     ))
                                 }
