@@ -1,4 +1,5 @@
-import { Alert, Avatar, Card, CardMedia, Grid, LinearProgress, ListItem, ListItemIcon, ListItemText, MenuItem, TextField, Typography } from "@mui/material"
+import { Alert, Card, CardMedia, Grid, LinearProgress, ListItemIcon, 
+    ListItemText, MenuItem, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import React from "react"
 import GROUPS from "./groups";
@@ -10,12 +11,15 @@ export default class AddFootballMatch extends React.Component {
         this.state = {
             showLinearProgress: false,
             statusCode: null,
-            competition: '',
+            competitionId: '',
             competitions: [],
             competitionData: {},
             stage: '',
             group: 'Group A',
-            matchDay: ''
+            matchDay: '',
+            teams: [],
+            teamA: '',
+            teamB: ''
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,17 +31,41 @@ export default class AddFootballMatch extends React.Component {
     }
 
     handleChange(e) {
-        this.setState({ [e.target.name]: e.target.value, statusCode: null })
+        let data, teams;
 
-        if (e.target.name == 'competition') {
-            this.setCompetitionData(e.target.value);
-        } 
+        if (e.target.name == 'competitionId') {
+            data = this.setCompetitionData(e.target.value);
+            teams = this.setEligibleTeams(data)
+        }
+
+        this.setState({
+            [e.target.name]: e.target.value, 
+            statusCode: null,
+            competitionData: data ? data : {},
+            teams: teams.length ? teams: []
+        })
     }
 
     setCompetitionData(competitionId) {
         const data = this.state.competitions
             .filter(competition => competition.docId == competitionId)[0];
-        this.setState({ competitionData: data });
+        return data
+    }
+
+    setEligibleTeams(competitionData) {
+        let teams = JSON.parse(sessionStorage.getItem('football-teams'));
+
+        if (competitionData.teamType == 'country') { // only international tournaments fall here
+            teams = teams.filter(team => team.teamType == 'country')
+        } else {
+            teams = teams.filter(team => team.teamType == 'club');
+        }
+
+        if (competitionData.country) { // national tournament or league
+            teams = teams.filter(team => team.clubCountry == competitionData.country);
+        }
+
+        return teams
     }
 
     componentDidMount() {
@@ -77,8 +105,8 @@ export default class AddFootballMatch extends React.Component {
                                 label='Competition'
                                 variant="filled"
                                 onChange={this.handleChange}
-                                name='competition'
-                                value={this.state.competition}
+                                name='competitionId'
+                                value={this.state.competitionId}
                                 margin='normal'
                                 select
                                 required
@@ -162,6 +190,26 @@ export default class AddFootballMatch extends React.Component {
                                 required
                                 fullWidth
                             />
+
+                            <TextField
+                              label='Team A'
+                              variant="filled"
+                              onChange={this.handleChange}
+                              name='teamA'
+                              value={this.state.teamA}
+                              margin='normal'
+                              select
+                              required
+                              fullWidth  
+                            >
+                                {
+                                    this.state.teams.map(team => (
+                                        <MenuItem key={team.docId} value={team.docId}>
+                                            {team.teamName}
+                                        </MenuItem>
+                                    ))
+                                }
+                            </TextField>
                         </Box>
                     </Card>
                 </Grid>
