@@ -198,14 +198,14 @@ function FootballTeams(props) {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
-        let teams = sessionStorage.getItem('teams');
+        let teams = sessionStorage.getItem('football-teams');
         if (teams) {
             props.setTeams(JSON.parse(teams));
         } else {
             fetch('/api/admin/GetFootballTeams')
                 .then(response => response.json())
                 .then(data => {
-                    sessionStorage.setItem('teams', JSON.stringify(data))
+                    sessionStorage.setItem('football-teams', JSON.stringify(data))
                     props.setTeams(data)
                 })
         }
@@ -306,7 +306,7 @@ class EditComponent extends React.Component {
     }
 
     uploadData(formdata) {
-        sessionStorage.removeItem('teams');
+        sessionStorage.removeItem('football-teams');
         fetch('/api/admin/EditFootballTeam', {
             method: 'POST',
             body: formdata,
