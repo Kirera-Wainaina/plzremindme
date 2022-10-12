@@ -13,6 +13,7 @@ export default class AddFootballMatch extends React.Component {
             competition: '',
             competitions: [],
             competitionData: {},
+            stage: '',
             group: 'Group A',
             matchDay: ''
         }
@@ -105,6 +106,30 @@ export default class AddFootballMatch extends React.Component {
 
                             {
                                 this.state.competitionData.category == 'tournament' &&
+                                <TextField
+                                    label='Stage'
+                                    variant="filled"
+                                    onChange={this.handleChange}
+                                    name='stage'
+                                    value={this.state.stage}
+                                    margin='normal'
+                                    select
+                                    required
+                                    fullWidth
+                                >
+                                    {['Group', 'Round of 16', 'Quarter Finals', 'Semi Finals', 'Finals']
+                                        .map((stage, index) => (
+                                            <MenuItem key={index} value={stage}>
+                                                {stage}
+                                            </MenuItem>
+                                        )
+                                    )}
+                                </TextField>
+
+                            }
+
+                            {
+                                this.state.stage == 'Group' &&
                                 <TextField
                                     label='Group'
                                     variant="filled"
