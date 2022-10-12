@@ -270,9 +270,17 @@ function LeaguesAndTournaments(props) {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
-        fetch('/api/admin/GetFootballCompetitions')
-            .then(response => response.json())
-            .then(data => props.setCompetitions(data))
+        let competitions = sessionStorage.getItem('competitions');
+        if (competitions) {
+            props.setCompetitions(JSON.parse(competitions));
+        } else {
+            fetch('/api/admin/GetFootballCompetitions')
+                .then(response => response.json())
+                .then(data => {
+                    sessionStorage.setItem('competitions', JSON.stringify(data));
+                    props.setCompetitions(data);
+                })
+        }
     }, [])
 
     function openEditModal(competition) {
