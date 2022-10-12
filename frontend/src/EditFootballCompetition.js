@@ -379,7 +379,8 @@ class EditComponent extends React.Component {
         formdata.append('name', this.state.name ? this.state.name : this.props.competition.name);
         formdata.append('category', this.state.category ? this.state.category : this.props.competition.category);
         formdata.append('docId', this.props.competition.docId);
-        formdata.append('logoName', this.props.competition.logoName)
+        formdata.append('logoName', this.props.competition.logoName);
+        formdata.append('sport', 'football');
         if (this.displayLeagueExtras() || this.checkNationalTournament()) {
             formdata.append('country', this.state.country ? this.state.country : this.props.competition.country);
         }
