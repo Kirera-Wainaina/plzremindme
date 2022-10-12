@@ -197,6 +197,12 @@ export default class AddFootballCompetition extends React.Component {
                                 name={`${this.state.name}-logo`}
                                 onChange={this.handleFileUpload}
                             />
+                            
+                            <input 
+                                type='hidden'
+                                value='football'
+                                name='sport'
+                            />
 
                             {
                                 this.state.logo &&
