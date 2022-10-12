@@ -1,4 +1,4 @@
-import { Alert, Card, Grid, LinearProgress, Typography } from "@mui/material"
+import { Alert, Card, Grid, LinearProgress, MenuItem, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import React from "react"
 
@@ -8,15 +8,27 @@ export default class AddFootballMatch extends React.Component {
 
         this.state = {
             showLinearProgress: false,
-            statusCode: null
+            statusCode: null,
+            competition: '',
+            competitions: []
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleSubmit(e) {
         e.preventDefault();
-    } 
+    }
+
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value, statusCode: null })
+    }
+
+    componentDidMount() {
+        let competitions = JSON.parse(sessionStorage.getItem('competitions'));
+        this.setState({ competitions: competitions })
+    }
 
     render() {
         return (
@@ -45,6 +57,26 @@ export default class AddFootballMatch extends React.Component {
                             <Typography variant='h6' align="center">
                                 Add Matches
                             </Typography>
+
+                            <TextField
+                                label='Competition'
+                                variant="filled"
+                                onChange={this.handleChange}
+                                name='competitionId'
+                                value={this.state.competition}
+                                margin='normal'
+                                select
+                                required
+                                fullWidth
+                            >
+                                {
+                                    this.state.competitions.map(competition => (
+                                        <MenuItem key={competition.docId} value={competition.docId}>
+                                            {competition.name}
+                                        </MenuItem>
+                                    ))
+                                }
+                            </TextField>
 
                         </Box>
                     </Card>
