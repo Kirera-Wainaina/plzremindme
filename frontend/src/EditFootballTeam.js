@@ -200,7 +200,10 @@ function FootballTeams(props) {
     React.useEffect(() => {
         fetch('/api/admin/GetFootballTeams')
             .then(response => response.json())
-            .then(data => props.setTeams(data))
+            .then(data => {
+                sessionStorage.setItem('teams', JSON.stringify(data))
+                props.setTeams(data)
+            })
     }, [])
 
     function openEditModal(team) {
