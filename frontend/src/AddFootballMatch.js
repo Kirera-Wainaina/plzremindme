@@ -13,7 +13,8 @@ export default class AddFootballMatch extends React.Component {
             competition: '',
             competitions: [],
             competitionData: {},
-            group: null
+            group: 'Group A',
+            matchDay: ''
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -125,6 +126,17 @@ export default class AddFootballMatch extends React.Component {
                                 </TextField>
                             }
 
+                            <TextField 
+                                label='Match Day'
+                                variant="filled"
+                                onChange={this.handleChange}
+                                name='matchDay'
+                                value={this.state.matchDay}
+                                margin='normal'
+                                type='number'
+                                required
+                                fullWidth
+                            />
                         </Box>
                     </Card>
                 </Grid>
