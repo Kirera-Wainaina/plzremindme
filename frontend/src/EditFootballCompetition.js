@@ -396,7 +396,7 @@ class EditComponent extends React.Component {
 
     uploadData(formdata) {
         sessionStorage.removeItem('competitions');
-        fetch('/api/admin/EditLeaguesAndTournaments', {
+        fetch('/api/admin/EditFootballCompetition', {
             method: 'POST',
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}
