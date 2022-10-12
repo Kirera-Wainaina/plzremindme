@@ -198,12 +198,17 @@ function FootballTeams(props) {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
-        fetch('/api/admin/GetFootballTeams')
-            .then(response => response.json())
-            .then(data => {
-                sessionStorage.setItem('teams', JSON.stringify(data))
-                props.setTeams(data)
-            })
+        let teams = sessionStorage.getItem('teams');
+        if (teams) {
+            props.setTeams(JSON.parse(teams));
+        } else {
+            fetch('/api/admin/GetFootballTeams')
+                .then(response => response.json())
+                .then(data => {
+                    sessionStorage.setItem('teams', JSON.stringify(data))
+                    props.setTeams(data)
+                })
+        }
     }, [])
 
     function openEditModal(team) {
