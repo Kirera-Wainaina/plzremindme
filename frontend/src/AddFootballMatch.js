@@ -1,6 +1,7 @@
-import { Alert, Avatar, Card, CardMedia, Grid, LinearProgress, ListItemIcon, ListItemText, MenuItem, TextField, Typography } from "@mui/material"
+import { Alert, Avatar, Card, CardMedia, Grid, LinearProgress, ListItem, ListItemIcon, ListItemText, MenuItem, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import React from "react"
+import GROUPS from "./groups";
 
 export default class AddFootballMatch extends React.Component {
     constructor(props) {
@@ -10,7 +11,9 @@ export default class AddFootballMatch extends React.Component {
             showLinearProgress: false,
             statusCode: null,
             competition: '',
-            competitions: []
+            competitions: [],
+            competitionData: {},
+            group: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,6 +26,16 @@ export default class AddFootballMatch extends React.Component {
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value, statusCode: null })
+
+        if (e.target.name == 'competition') {
+            this.setCompetitionData(e.target.value);
+        } 
+    }
+
+    setCompetitionData(competitionId) {
+        const data = this.state.competitions
+            .filter(competition => competition.docId == competitionId)[0];
+        this.setState({ competitionData: data });
     }
 
     componentDidMount() {
@@ -73,7 +86,7 @@ export default class AddFootballMatch extends React.Component {
                                     this.state.competitions.map(competition => (
                                         <MenuItem key={competition.docId} value={competition.docId}>
                                             <ListItemIcon>
-                                                <Card sx={{ mr: '10px', padding: '5px'}}>
+                                                <Card sx={{ mr: '10px', padding: '5px' }}>
                                                     <CardMedia
                                                         component='img'
                                                         image={competition.logoLink}
@@ -88,6 +101,29 @@ export default class AddFootballMatch extends React.Component {
                                     ))
                                 }
                             </TextField>
+
+                            {
+                                this.state.competitionData.category == 'tournament' &&
+                                <TextField
+                                    label='Group'
+                                    variant="filled"
+                                    onChange={this.handleChange}
+                                    name='group'
+                                    value={this.state.group}
+                                    margin='normal'
+                                    select
+                                    required
+                                    fullWidth
+                                >
+                                    {
+                                        GROUPS.map((group, index) => (
+                                            <MenuItem key={index} value={group}>
+                                                {group}
+                                            </MenuItem>
+                                        ))
+                                    }
+                                </TextField>
+                            }
 
                         </Box>
                     </Card>
