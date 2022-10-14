@@ -243,7 +243,18 @@ export default class AddFootballMatch extends React.Component {
                                 {
                                     this.state.teams.map(team => (
                                         <MenuItem key={team.docId} value={team.docId}>
-                                            {team.teamName}
+                                            <ListItemIcon>
+                                                <Card sx={{ mr: '10px', padding: '5px' }}>
+                                                    <CardMedia
+                                                        component='img'
+                                                        image={team.logoLink}
+                                                        alt={team.teamName}
+                                                        height='50px'
+                                                        sx={{ width: '50px', objectFit: 'contain' }}
+                                                    />
+                                                </Card>
+                                            </ListItemIcon>
+                                            <ListItemText>{team.teamName}</ListItemText>
                                         </MenuItem>
                                     ))
                                 }
