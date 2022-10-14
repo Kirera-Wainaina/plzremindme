@@ -16,10 +16,11 @@ export default class AddFootballMatch extends React.Component {
             competitionData: {},
             stage: '',
             group: 'Group A',
-            matchDay: undefined,
+            matchDay: '',
             teams: [],
             teamA: '',
-            teamB: ''
+            teamB: '',
+            sameTeam: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,6 +29,7 @@ export default class AddFootballMatch extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        if (this.handleSameTeams) return ;
     }
 
     handleChange(e) {
@@ -68,6 +70,14 @@ export default class AddFootballMatch extends React.Component {
         }
 
         return teams
+    }
+
+    handleSameTeams() {
+        if (this.state.teamA == this.state.teamB) {
+            this.setState({ sameTeam: true});
+            return true
+        }
+        return false
     }
 
     componentDidMount() {
@@ -113,6 +123,7 @@ export default class AddFootballMatch extends React.Component {
                                 select
                                 required
                                 fullWidth
+                                sx={{ display: 'flex', flexDirection: 'row'}}
                             >
                                 {
                                     this.state.competitions.map(competition => (
@@ -193,6 +204,11 @@ export default class AddFootballMatch extends React.Component {
                                 fullWidth
                             />
 
+                            {
+                                this.state.sameTeam &&
+                                <Alert severity="info">Team A and Team B have to be different teams</Alert>
+                            }
+
                             <TextField
                               label='Team A'
                               variant="filled"
@@ -212,6 +228,27 @@ export default class AddFootballMatch extends React.Component {
                                     ))
                                 }
                             </TextField>
+
+                            <TextField
+                              label='Team B'
+                              variant="filled"
+                              onChange={this.handleChange}
+                              name='teamB'
+                              value={this.state.teamB}
+                              margin='normal'
+                              select
+                              required
+                              fullWidth  
+                            >
+                                {
+                                    this.state.teams.map(team => (
+                                        <MenuItem key={team.docId} value={team.docId}>
+                                            {team.teamName}
+                                        </MenuItem>
+                                    ))
+                                }
+                            </TextField>
+
                         </Box>
                     </Card>
                 </Grid>
