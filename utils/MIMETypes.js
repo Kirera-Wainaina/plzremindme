@@ -22,7 +22,8 @@ const MIMETypes = {
     '.eot': 'application/vnd.ms-fontobject',
     '.otf': 'application/font-otf',
     '.wasm': 'application/wasm',
-    '.xml': 'application/xml'
+    '.xml': 'application/xml',
+    '.gz': 'application/gzip'
 };
 
 exports.findMIMETypeFromExtension = function (extension) {
