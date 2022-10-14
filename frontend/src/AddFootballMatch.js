@@ -16,7 +16,7 @@ export default class AddFootballMatch extends React.Component {
             competitionData: {},
             stage: '',
             group: 'Group A',
-            matchDay: '',
+            matchDay: undefined,
             teams: [],
             teamA: '',
             teamB: ''
@@ -35,15 +35,17 @@ export default class AddFootballMatch extends React.Component {
 
         if (e.target.name == 'competitionId') {
             data = this.setCompetitionData(e.target.value);
-            teams = this.setEligibleTeams(data)
+            teams = this.setEligibleTeams(data);
+            this.setState({
+                [e.target.name]: e.target.value, 
+                statusCode: null,
+                competitionData: data ? data : {},
+                teams: teams.length ? teams: []
+            })
+        } else {
+            this.setState({ [e.target.name]: e.target.value, statusCode: null })
         }
 
-        this.setState({
-            [e.target.name]: e.target.value, 
-            statusCode: null,
-            competitionData: data ? data : {},
-            teams: teams.length ? teams: []
-        })
     }
 
     setCompetitionData(competitionId) {
