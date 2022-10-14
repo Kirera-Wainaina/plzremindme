@@ -23,7 +23,8 @@ export default class AddFootballMatch extends React.Component {
             teamA: '',
             teamB: '',
             sameTeam: false,
-            dateTime: new Date()
+            dateTime: new Date(),
+            gmt: 3
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -83,6 +84,14 @@ export default class AddFootballMatch extends React.Component {
             return true
         }
         return false
+    }
+
+    createGMTSpectrum() {
+        const times = [];
+        for (let i = -12; i < 13; i++) {
+            times.push(i);
+        }
+        return times
     }
 
     componentDidMount() {
@@ -280,16 +289,45 @@ export default class AddFootballMatch extends React.Component {
                                 }
                             </TextField>
 
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DateTimePicker
-                                    renderInput={(props) => <TextField {...props} />}
-                                    label='Date & Time'
-                                    name='dateTime'
-                                    value={this.state.dateTime}
-                                    onChange={(newValue) => this.setState({ dateTime: newValue })}
-                                    required
-                                />
-                            </LocalizationProvider>
+                            <Box component='div'>
+                                <Grid container>
+                                    <Grid item xs={12} sm={6} sx={{ mt: '10px' }}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                            <DateTimePicker
+                                                renderInput={(props) => <TextField {...props} />}
+                                                label='Date & Time'
+                                                name='dateTime'
+                                                value={this.state.dateTime}
+                                                onChange={(newValue) => this.setState({ dateTime: newValue })}
+                                                required
+                                            />
+                                        </LocalizationProvider>
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            label='GMT'
+                                            variant="filled"
+                                            onChange={this.handleChange}
+                                            name='gmt'
+                                            value={this.state.gmt}
+                                            sx={{ mt: '10px'}}
+                                            select
+                                            required
+                                            fullWidth  
+                                        >
+                                            {
+                                                this.createGMTSpectrum().map(value => (
+                                                    <MenuItem key={value} value={value}>
+                                                        GMT {value > 0 ? `+ ${value}` : `- ${Math.abs(value)}`}
+                                                    </MenuItem>
+                                                ))
+                                            }
+                                        </TextField>
+                                    </Grid>
+
+                                </Grid>
+                            </Box>
 
                         </Box>
                     </Card>
