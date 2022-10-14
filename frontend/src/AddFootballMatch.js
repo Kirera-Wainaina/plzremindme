@@ -34,12 +34,14 @@ export default class AddFootballMatch extends React.Component {
 
     handleChange(e) {
         let data, teams;
+        const value = e.target.value;
+        const name = e.target.name;
 
-        if (e.target.name == 'competitionId') {
-            data = this.setCompetitionData(e.target.value);
+        if (name == 'competitionId') {
+            data = this.setCompetitionData(value);
             teams = this.setEligibleTeams(data);
             this.setState({
-                [e.target.name]: e.target.value, 
+                [name]: value, 
                 statusCode: null,
                 competitionData: data ? data : {},
                 teams: teams.length ? teams: []
@@ -192,19 +194,19 @@ export default class AddFootballMatch extends React.Component {
                                 </TextField>
                             }
 
-                            {   // display match day if its a league or group stage in tournament
+                            {   // display match day if its a league or group stage tournament
                                 (this.state.competitionData.category == 'league' || 
                                 (this.state.competitionData.category == 'tournament' && this.state.stage == 'Group')) &&
                                 <TextField 
-                                label='Match Day'
-                                variant="filled"
-                                onChange={this.handleChange}
-                                name='matchDay'
-                                value={this.state.matchDay}
-                                margin='normal'
-                                type='number'
-                                required
-                                fullWidth
+                                    label='Match Day'
+                                    variant="filled"
+                                    onChange={this.handleChange}
+                                    name='matchDay'
+                                    value={this.state.matchDay}
+                                    margin='normal'
+                                    type='number'
+                                    required
+                                    fullWidth
                                 />
                             }
 
