@@ -1,4 +1,4 @@
-import { Alert, Card, CardMedia, Grid, LinearProgress, ListItemIcon, 
+import { Alert, Button, Card, CardMedia, Grid, LinearProgress, ListItemIcon, 
     ListItemText, MenuItem, TextField, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -329,6 +329,16 @@ export default class AddFootballMatch extends React.Component {
                                 </Grid>
                             </Box>
 
+                            <Button
+                                variant="contained"
+                                type='submit'
+                                sx={{ mt: 3 }}
+                                disabled={this.state.showLinearProgress}
+                                fullWidth
+                            >
+                                Submit
+                            </Button>
+                        
                         </Box>
                     </Card>
                 </Grid>
