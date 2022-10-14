@@ -192,7 +192,10 @@ export default class AddFootballMatch extends React.Component {
                                 </TextField>
                             }
 
-                            <TextField 
+                            {   // display match day if its a league or group stage in tournament
+                                (this.state.competitionData.category == 'league' || 
+                                (this.state.competitionData.category == 'tournament' && this.state.stage == 'Group')) &&
+                                <TextField 
                                 label='Match Day'
                                 variant="filled"
                                 onChange={this.handleChange}
@@ -202,7 +205,8 @@ export default class AddFootballMatch extends React.Component {
                                 type='number'
                                 required
                                 fullWidth
-                            />
+                                />
+                            }
 
                             {
                                 this.state.sameTeam &&
