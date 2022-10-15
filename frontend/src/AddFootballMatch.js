@@ -14,7 +14,7 @@ export default class AddFootballMatch extends React.Component {
             showLinearProgress: false,
             statusCode: null,
             competitionId: '',
-            competitions: [],
+            competitions: ['loading...'],
             competitionData: {},
             stage: '',
             group: 'Group A',
@@ -34,6 +34,25 @@ export default class AddFootballMatch extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         if (this.handleSameTeams) return ;
+        const formdata = this.createFormData()
+    }
+
+    createFormData() {
+        const competitionCategory = this.state.competitionData.category;
+        const formdata = new FormData();
+        formdata.append('teamA', this.state.teamA);
+        formdata.append('teamB', this.state.teamB);
+        formdata.append('competitionId', this.state.competitionId);
+
+        if (competitionCategory == 'league' || 
+            (competitionCategory == 'tournament' && this.state.stage == 'Group')) {
+                formdata.append('matchDay', this.state.matchDay);
+        }
+
+        if (competitionCategory == 'tournament') {
+            formdata.append('stage', this.state.stage);
+        }
+        return formdata
     }
 
     handleChange(e) {
