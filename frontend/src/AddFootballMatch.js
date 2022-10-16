@@ -14,7 +14,7 @@ export default class AddFootballMatch extends React.Component {
             showLinearProgress: false,
             statusCode: null,
             competitionId: '',
-            competitions: ['loading...'],
+            competitions: [],
             competitionData: {},
             stage: '',
             group: 'Group A',
@@ -115,7 +115,7 @@ export default class AddFootballMatch extends React.Component {
 
     componentDidMount() {
         let competitions = JSON.parse(sessionStorage.getItem('competitions'));
-        this.setState({ competitions: competitions })
+        if (competitions) this.setState({ competitions: competitions })
     }
 
     render() {
@@ -159,6 +159,7 @@ export default class AddFootballMatch extends React.Component {
                                 sx={{ display: 'flex', flexDirection: 'row'}}
                             >
                                 {
+                                    this.state.competitions.length &&
                                     this.state.competitions.map(competition => (
                                         <MenuItem key={competition.docId} value={competition.docId}>
                                             <ListItemIcon>
@@ -177,6 +178,7 @@ export default class AddFootballMatch extends React.Component {
                                     ))
                                 }
                             </TextField>
+                            
 
                             {
                                 this.state.competitionData.category == 'tournament' &&
