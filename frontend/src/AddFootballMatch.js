@@ -34,8 +34,22 @@ export default class AddFootballMatch extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         if (this.handleSameTeams()) return ;
-        this.getMatchDateInISO();
-        //const formdata = this.createFormData()
+        const formdata = this.createFormData();
+        this.uploadData(formdata)
+    }
+
+    uploadData(formdata) {
+        fetch('/api/admin/AddFootballMatch', {
+            method: 'POST',
+            body: formdata,
+            headers: { 'content-encoding': 'multipart/form-data'}
+        })
+        .then(response => this.setState({
+            statusCode: response.status,
+            showLinearProgress: false,
+            competitionId: '',
+            dateTime: ''
+        }))
     }
 
     getMatchDateInISO() {
@@ -64,6 +78,7 @@ export default class AddFootballMatch extends React.Component {
         formdata.append('teamA', this.state.teamA);
         formdata.append('teamB', this.state.teamB);
         formdata.append('competitionId', this.state.competitionId);
+        formdata.append('dateTime', this.getMatchDateInISO());
 
         if (competitionCategory == 'league' || 
             (competitionCategory == 'tournament' && this.state.stage == 'Group')) {
