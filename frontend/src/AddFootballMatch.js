@@ -23,7 +23,7 @@ export default class AddFootballMatch extends React.Component {
             teamA: '',
             teamB: '',
             sameTeam: false,
-            dateTime: new Date(),
+            dateTime: '',
             gmt: 3
         }
 
@@ -33,8 +33,29 @@ export default class AddFootballMatch extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        if (this.handleSameTeams) return ;
-        const formdata = this.createFormData()
+        if (this.handleSameTeams()) return ;
+        this.getMatchDateInISO();
+        //const formdata = this.createFormData()
+    }
+
+    getMatchDateInISO() {
+        // create utc time
+        const dateTime = this.state.dateTime;
+        const SECONDS_IN_HOUR = 3600;
+        const MILLISECONDS_IN_HOUR = SECONDS_IN_HOUR * 1000;
+
+        const year = dateTime['$y'];
+        const month = dateTime['$M'] < 9 ? `0${dateTime['$M'] + 1}` : dateTime['$M'] + 1;
+        const day = dateTime['$D'] < 10 ? `0${dateTime['$D']}` : dateTime['$D'];
+        const hour = dateTime['$H'] < 10 ? `0${dateTime['$H']}` : dateTime['$H'];
+        const minute = dateTime['$m'] < 10 ? `0${dateTime['$m']}` : dateTime['$m'];
+
+        const dateRef = new Date(`${year}-${month}-${day}T${hour}:${minute}Z`);
+        const matchDateInMilliseconds = dateRef.getTime();
+        const matchDateInISO = new Date(matchDateInMilliseconds - (this.state.gmt * MILLISECONDS_IN_HOUR))
+            .toISOString();
+
+        return matchDateInISO;
     }
 
     createFormData() {
@@ -159,7 +180,6 @@ export default class AddFootballMatch extends React.Component {
                                 sx={{ display: 'flex', flexDirection: 'row'}}
                             >
                                 {
-                                    this.state.competitions.length &&
                                     this.state.competitions.map(competition => (
                                         <MenuItem key={competition.docId} value={competition.docId}>
                                             <ListItemIcon>
