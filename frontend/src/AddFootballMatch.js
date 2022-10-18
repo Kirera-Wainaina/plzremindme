@@ -33,6 +33,7 @@ export default class AddFootballMatch extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({ showLinearProgress: true })
         if (this.handleSameTeams()) return ;
         const formdata = this.createFormData();
         this.uploadData(formdata)
