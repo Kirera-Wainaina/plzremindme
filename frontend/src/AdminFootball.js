@@ -5,6 +5,7 @@ import EditFootballTeam from "./EditFootballTeam";
 import AddFootballCompetition from "./AddFootballCompetition";
 import EditFootballCompetition from "./EditFootballCompetition";
 import AddFootballMatch from "./AddFootballMatch";
+import EditFootballMatch from "./EditFootballMatch";
 
 export default function AdminFootball() {
     const [value, setValue] = React.useState(0);
@@ -47,7 +48,9 @@ export default function AdminFootball() {
                 <TabPanel value={value} index={4} >
                     <AddFootballMatch />
                 </TabPanel>
-                <TabPanel value={value} index={5} >Edit Matches</TabPanel>
+                <TabPanel value={value} index={5} >
+                    <EditFootballMatch />
+                </TabPanel>
 
             </Grid>
             
