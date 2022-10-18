@@ -1,5 +1,5 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
-import { Card, Grid, IconButton, List, ListItem, TextField, Typography } from "@mui/material";
+import { Avatar, Card, Grid, IconButton, List, ListItem, ListItemAvatar, TextField, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditFootballMatch extends React.Component {
@@ -153,8 +153,33 @@ function FootballMatches(props) {
                                     </Grid>
                                 </Grid>
 
-                                <Grid item xs={12}>
-                                    <Typography>{getTeamA(match).teamName}</Typography>
+                                <Grid container item xs={12}>
+
+                                    <Grid item>
+                                        <Typography variant="body1">{getTeamA(match).teamName}</Typography>
+                                    </Grid>
+
+                                    <Grid item>
+                                        <ListItemAvatar>
+                                            <Avatar src={getTeamA(match).logoLink} alt='team logo'/>
+                                        </ListItemAvatar>
+                                    </Grid>
+
+                                    <Grid item>
+                                        <Typography variant="body2">
+                                            {new Date(match.dateTime).toLocaleTimeString()}
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item>
+                                        <ListItemAvatar>
+                                            <Avatar src={getTeamB(match).logoLink} alt='team logo' />
+                                        </ListItemAvatar>
+                                    </Grid>
+
+                                    <Grid item>
+                                        <Typography variant="body1">{getTeamB(match).teamName}</Typography>
+                                    </Grid>
                                 </Grid>
                             </Grid>
 
