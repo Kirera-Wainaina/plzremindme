@@ -1,5 +1,5 @@
-import { FilterList } from "@mui/icons-material";
-import { Card, Grid, IconButton, List, TextField, Typography } from "@mui/material";
+import { EditSharp, FilterList } from "@mui/icons-material";
+import { Card, Grid, IconButton, List, ListItem, TextField, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditFootballMatch extends React.Component {
@@ -106,7 +106,17 @@ function FootballMatches(props) {
             <List>
                 {
                     props.currentMatches.map(match => (
-                        <p>to be played</p>
+                        <ListItem
+                            key={match.docId}
+                            divider={true}
+                            secondaryAction={
+                                <IconButton onClick={() => openEditModal(match)}>
+                                    <EditSharp color='primary' />
+                                </IconButton>
+                            }
+                        >
+                            {match.matchDay}
+                        </ListItem>
                     ))
                 }
             </List>
