@@ -155,6 +155,7 @@ export default class AddFootballTeam extends React.Component {
                             <Button variant="contained" 
                                 type="submit" 
                                 sx={{ m: 2 }} 
+                                disabled={this.state.showLinearProgress}
                             >
                                 submit
                             </Button>
