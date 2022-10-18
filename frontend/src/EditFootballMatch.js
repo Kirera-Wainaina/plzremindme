@@ -153,7 +153,7 @@ function FootballMatches(props) {
                                     </Grid>
                                 </Grid>
 
-                                <Grid container item xs={12}>
+                                <Grid container item xs={12} spacing={1} justifyContent='center'>
 
                                     <Grid item>
                                         <Typography variant="body1">{getTeamA(match).teamName}</Typography>
