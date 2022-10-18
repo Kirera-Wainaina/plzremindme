@@ -355,6 +355,8 @@ export default class AddFootballMatch extends React.Component {
                                                 label='Date & Time'
                                                 name='dateTime'
                                                 value={this.state.dateTime}
+                                                inputFormat='DD/MM/YYYY hh:mm a'
+                                                ampm={false}
                                                 onChange={(newValue) => this.setState({ dateTime: newValue })}
                                                 required
                                             />
