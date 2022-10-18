@@ -21,8 +21,8 @@ class AddFootballCompetition extends FormDataHandler {
 
             this.createTeamObject();
 
-            await this.getCollection('leagues-tournaments').add(this.fields);
-            console.log('Tournament/League has been uploaded');
+            await this.getCollection('football-competitions').add(this.fields);
+            console.log('Football competition has been uploaded');
             this.respond(response, 'success');
         } catch (error) {
             console.error('Error occurred while uploading tournament/league:', error);

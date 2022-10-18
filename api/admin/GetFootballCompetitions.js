@@ -8,7 +8,7 @@ class GetFootballCompetitions extends GETHandler {
     }
 
     async run() {
-        const snapshot = await this.getCollection('leagues-tournaments').get();
+        const snapshot = await this.getCollection('football-competitions').get();
         snapshot.forEach(doc => {
             this.data.push({...doc.data(), docId: doc.id})
         });

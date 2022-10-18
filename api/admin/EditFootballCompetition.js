@@ -24,7 +24,7 @@ class EditFootballCompetition extends FormDataHandler {
                 this.createUpdateObject()
             }
 
-            const updateResult = await this.getCollection('leagues-tournaments')
+            const updateResult = await this.getCollection('football-competitions')
             .where(FieldPath.documentId(), '==', this.fields.docId)
             .get().then(querySnapshot => {
                 const ref = querySnapshot.docs[0].ref;
