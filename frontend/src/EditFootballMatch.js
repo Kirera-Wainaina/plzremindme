@@ -86,6 +86,7 @@ class Filter extends React.Component {
 function FootballMatches(props) {
     const [matchId, setMatchId] = React.useState(null);
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
+    const teams = JSON.parse(sessionStorage.getItem('football-teams'));
 
     React.useEffect(() => {
         const matches = sessionStorage.getItem('football-matches');
@@ -111,6 +112,14 @@ function FootballMatches(props) {
         setModalIsOpen(false);
     }
 
+    function getTeamA(match) {
+        return teams.filter(team => team.docId == match.teamA)[0];
+    }
+
+    function getTeamB(match) {
+        return teams.filter(team => team.docId == match.teamB)[0];
+    }
+
     return (
         <Card>
             <Typography variant='h5' align="center">Football Matches</Typography>
@@ -131,6 +140,24 @@ function FootballMatches(props) {
                                 matchId == match.docId &&
                                 <EditComponent isOpen={modalIsOpen} close={closeEditModal} match={match}/>
                             }
+
+                            <Grid container>
+                                <Grid container item xs={12}>
+
+                                    <Grid item xs={3}>
+                                        <Typography variant='body2'>{new Date(match.dateTime).toDateString()}</Typography>
+                                    </Grid>
+
+                                    <Grid item xs={3}>
+                                        <Typography variant="body2">Match Day {match.matchDay}</Typography>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <Typography>{getTeamA(match).teamName}</Typography>
+                                </Grid>
+                            </Grid>
+
                         </ListItem>
                     ))
                 }
