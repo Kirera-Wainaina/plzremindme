@@ -54,12 +54,17 @@ export default class AddFootballTeam extends React.Component {
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}
         })
-        .then(response => this.setState({ 
-            statusCode: response.status,
-            showLinearProgress: false,
-            teamName: '',
-            teamLogo: null
-        }))
+        .then(response => {
+            this.setState({ 
+                statusCode: response.status,
+                showLinearProgress: false,
+                teamName: '',
+                teamLogo: null
+            });
+            if (sessionStorage.getItem('football-teams')) {
+                sessionStorage.removeItem('football-teams');
+            }
+        })
     }
 
     render() {
