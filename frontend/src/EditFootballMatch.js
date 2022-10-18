@@ -142,7 +142,7 @@ function FootballMatches(props) {
                             }
 
                             <Grid container>
-                                <Grid container item xs={12}>
+                                <Grid container item xs={12} sx={{ mt: 3}}>
 
                                     <Grid item xs={5} sm={3}>
                                         <Typography variant='body2'>{new Date(match.dateTime).toDateString()}</Typography>
@@ -153,7 +153,7 @@ function FootballMatches(props) {
                                     </Grid>
                                 </Grid>
 
-                                <Grid container item xs={12} spacing={1} justifyContent='center'>
+                                <Grid container item xs={12} spacing={1} justifyContent='center' sx={{ mt: 2 }}>
 
                                     <Grid item xs={4}>
                                         <ListItemAvatar>
@@ -168,7 +168,7 @@ function FootballMatches(props) {
                                         </Typography>
                                     </Grid>
 
-                                    <Grid item xs={4}>
+                                    <Grid item xs={4} sx={{ ml: '4%'}}>
                                         <ListItemAvatar>
                                             <Avatar src={getTeamB(match).logoLink} alt='team logo' />
                                         </ListItemAvatar>
