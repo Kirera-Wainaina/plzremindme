@@ -144,40 +144,34 @@ function FootballMatches(props) {
                             <Grid container>
                                 <Grid container item xs={12}>
 
-                                    <Grid item xs={3}>
+                                    <Grid item xs={5} sm={3}>
                                         <Typography variant='body2'>{new Date(match.dateTime).toDateString()}</Typography>
                                     </Grid>
 
-                                    <Grid item xs={3}>
+                                    <Grid item xs={5} sm={3}>
                                         <Typography variant="body2">Match Day {match.matchDay}</Typography>
                                     </Grid>
                                 </Grid>
 
                                 <Grid container item xs={12} spacing={1} justifyContent='center'>
 
-                                    <Grid item>
-                                        <Typography variant="body1">{getTeamA(match).teamName}</Typography>
-                                    </Grid>
-
-                                    <Grid item>
+                                    <Grid item xs={4}>
                                         <ListItemAvatar>
                                             <Avatar src={getTeamA(match).logoLink} alt='team logo'/>
                                         </ListItemAvatar>
+                                        <Typography variant="body1">{getTeamA(match).teamName}</Typography>
                                     </Grid>
 
-                                    <Grid item>
+                                    <Grid item xs={2}>
                                         <Typography variant="body2">
                                             {new Date(match.dateTime).toLocaleTimeString()}
                                         </Typography>
                                     </Grid>
 
-                                    <Grid item>
+                                    <Grid item xs={4}>
                                         <ListItemAvatar>
                                             <Avatar src={getTeamB(match).logoLink} alt='team logo' />
                                         </ListItemAvatar>
-                                    </Grid>
-
-                                    <Grid item>
                                         <Typography variant="body1">{getTeamB(match).teamName}</Typography>
                                     </Grid>
                                 </Grid>
