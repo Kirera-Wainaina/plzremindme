@@ -39,12 +39,17 @@ export default class AddFootballCompetition extends React.Component {
             method: 'POST',
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}
-        }).then(response => this.setState({
-            statusCode: response.status,
-            showLinearProgress: false,
-            name: '',
-            logo: ''
-        }))
+        }).then(response => {
+            this.setState({
+                statusCode: response.status,
+                showLinearProgress: false,
+                name: '',
+                logo: ''
+            });
+            if (sessionStorage.getItem('competitions')) {
+                sessionStorage.removeItem('competitions');
+            }
+        })
     }
 
     handleChange(e) {
