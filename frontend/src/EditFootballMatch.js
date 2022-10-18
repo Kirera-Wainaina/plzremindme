@@ -84,6 +84,21 @@ class Filter extends React.Component {
 }
 
 function FootballMatches(props) {
+    React.useEffect(() => {
+        const matches = sessionStorage.getItem('football-matches');
+        
+        if (matches) {
+            props.setMatches(JSON.parse(matches));
+        } else {
+            fetch('/api/admin/GetFootballMatches')
+                .then(response => response.json())
+                .then(data => {
+                    sessionStorage.setItem('football-matches', JSON.stringify(data));
+                    props.setMatches(data);
+                })
+        }
+    }, [])
+
     return (
         <Card>
             <Typography variant='h5' align="center">Football Matches</Typography>
