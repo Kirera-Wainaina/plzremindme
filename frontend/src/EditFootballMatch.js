@@ -1,19 +1,35 @@
 import { FilterList } from "@mui/icons-material";
-import { Card, Grid, IconButton, TextField } from "@mui/material";
+import { Card, Grid, IconButton, List, TextField, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditFootballMatch extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            filteredMatches: [],
+            matches: []
+        }
     }
 
     render() {
+        const filteredMatches = this.state.filteredMatches;
+        const matches = this.state.matches;
+
         return (
             <Grid container justifyContent='center' spacing={2}>
 
                 <Grid item xs={12} sm={8} sx={{ mt: '1%' }}>
                     <Filter />
                 </Grid>
+
+                <Grid item xs={12} sm={8}>
+                    <FootballMatches
+                        currentMatches={filteredMatches.length ? filteredMatches : matches}
+                        setMatches={matchData => this.setState({ matches: matchData })}
+                    />
+                </Grid>
+
             </Grid>
         )
     }
@@ -65,4 +81,20 @@ class Filter extends React.Component {
             </Card>
         )
     }
+}
+
+function FootballMatches(props) {
+    return (
+        <Card>
+            <Typography variant='h5' align="center">Football Matches</Typography>
+
+            <List>
+                {
+                    props.currentMatches.map(match => (
+                        <p>to be played</p>
+                    ))
+                }
+            </List>
+        </Card>
+    )
 }
