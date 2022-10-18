@@ -8,7 +8,7 @@ class AddFootballMatch extends FormDataHandler {
     async run(response) {
         try {
             await this.retrieveData();
-            //console.log(this.fields);
+            this.fields['matchDay'] = parseInt(this.fields['matchDay']);
             
             await this.getCollection('football-matches').add(this.fields);
             console.log('Match has been added successfully');
