@@ -46,8 +46,8 @@ export default class AddFootballCompetition extends React.Component {
                 name: '',
                 logo: ''
             });
-            if (sessionStorage.getItem('competitions')) {
-                sessionStorage.removeItem('competitions');
+            if (sessionStorage.getItem('football-competitions')) {
+                sessionStorage.removeItem('football-competitions');
             }
         })
     }

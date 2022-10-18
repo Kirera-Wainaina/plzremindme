@@ -270,14 +270,14 @@ function LeaguesAndTournaments(props) {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     React.useEffect(() => {
-        let competitions = sessionStorage.getItem('competitions');
+        let competitions = sessionStorage.getItem('football-competitions');
         if (competitions) {
             props.setCompetitions(JSON.parse(competitions));
         } else {
             fetch('/api/admin/GetFootballCompetitions')
                 .then(response => response.json())
                 .then(data => {
-                    sessionStorage.setItem('competitions', JSON.stringify(data));
+                    sessionStorage.setItem('football-competitions', JSON.stringify(data));
                     props.setCompetitions(data);
                 })
         }
@@ -395,7 +395,7 @@ class EditComponent extends React.Component {
     }
 
     uploadData(formdata) {
-        sessionStorage.removeItem('competitions');
+        sessionStorage.removeItem('football-competitions');
         fetch('/api/admin/EditFootballCompetition', {
             method: 'POST',
             body: formdata,
