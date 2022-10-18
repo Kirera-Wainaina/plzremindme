@@ -84,6 +84,9 @@ class Filter extends React.Component {
 }
 
 function FootballMatches(props) {
+    const [matchId, setMatchId] = React.useState(null);
+    const [modalIsOpen, setModalIsOpen] = React.useState(false);
+
     React.useEffect(() => {
         const matches = sessionStorage.getItem('football-matches');
         
@@ -98,6 +101,15 @@ function FootballMatches(props) {
                 })
         }
     }, [])
+
+    function openEditModal(match) {
+        setMatchId(match.docId);
+        setModalIsOpen(true);
+    }
+
+    function closeEditModal() {
+        setModalIsOpen(false);
+    }
 
     return (
         <Card>
@@ -115,11 +127,22 @@ function FootballMatches(props) {
                                 </IconButton>
                             }
                         >
-                            {match.matchDay}
+                            {
+                                matchId == match.docId &&
+                                <EditComponent isOpen={modalIsOpen} close={closeEditModal} match={match}/>
+                            }
                         </ListItem>
                     ))
                 }
             </List>
         </Card>
     )
+}
+
+class EditComponent extends React.Component {
+    render() {
+        return (
+            <></>
+        )
+    }
 }
