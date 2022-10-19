@@ -112,14 +112,6 @@ function FootballMatches(props) {
         setModalIsOpen(false);
     }
 
-    function getTeamA(match) {
-        return teams.filter(team => team.docId == match.teamA)[0];
-    }
-
-    function getTeamB(match) {
-        return teams.filter(team => team.docId == match.teamB)[0];
-    }
-
     function getTeamFromId(teamId) {
         return teams.filter(team => team.docId == teamId)[0];
     }
@@ -146,6 +138,7 @@ function FootballMatches(props) {
                                     isOpen={modalIsOpen} 
                                     close={closeEditModal} 
                                     match={match}
+                                    getTeamFromId={getTeamFromId}
                                 />
                             }
 
@@ -199,6 +192,8 @@ class EditModal extends React.Component {
     }
 
     render() {
+        const match = this.props.match;
+
         return (
             <Modal
                 open={this.props.isOpen}
@@ -216,7 +211,8 @@ class EditModal extends React.Component {
 
                         <Grid item xs={12}>
                             <Typography variant="h5" align="center">
-                                Edit Match
+                                {`Edit ${this.props.getTeamFromId(match.teamA).teamName} vs
+                                ${this.props.getTeamFromId(match.teamB).teamName}`}
                             </Typography>
                         </Grid>
 
