@@ -312,7 +312,7 @@ function LeaguesAndTournaments(props) {
     
                             { 
                                 competitionId == competition.docId &&
-                                <EditComponent isOpen={modalIsOpen} close={closeEditModal} competition={competition}/>
+                                <EditModal isOpen={modalIsOpen} close={closeEditModal} competition={competition}/>
 
                             }
     
@@ -336,7 +336,7 @@ function LeaguesAndTournaments(props) {
     )
 }
 
-class EditComponent extends React.Component {
+class EditModal extends React.Component {
     constructor(props) {
         super(props);
 

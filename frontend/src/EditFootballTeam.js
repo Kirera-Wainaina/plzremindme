@@ -239,7 +239,7 @@ function FootballTeams(props) {
                     >
                         {
                             teamId == team.docId && 
-                            <EditComponent isOpen={modalIsOpen} close={closeEditModal} team={team}/>
+                            <EditModal isOpen={modalIsOpen} close={closeEditModal} team={team}/>
                         }
                         <ListItemAvatar>
                             <Avatar src={team.logoLink} alt={team.logoName}/>
@@ -253,7 +253,7 @@ function FootballTeams(props) {
     )
 }
 
-class EditComponent extends React.Component {
+class EditModal extends React.Component {
     constructor(props) {
         super(props);
 

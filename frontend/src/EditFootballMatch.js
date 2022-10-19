@@ -138,7 +138,7 @@ function FootballMatches(props) {
                         >
                             {
                                 matchId == match.docId &&
-                                <EditComponent isOpen={modalIsOpen} close={closeEditModal} match={match}/>
+                                <EditModal isOpen={modalIsOpen} close={closeEditModal} match={match}/>
                             }
 
                             <Grid container>
@@ -185,7 +185,7 @@ function FootballMatches(props) {
     )
 }
 
-class EditComponent extends React.Component {
+class EditModal extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -209,7 +209,7 @@ class EditComponent extends React.Component {
                         <Grid item xs={12}>
                             <Typography variant="h5" align="center">Edit Match</Typography>
                         </Grid>
-                        
+
                     </Grid>
                 </Card>
             </Modal>
