@@ -1,5 +1,5 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
-import { Avatar, Card, Grid, IconButton, List, ListItem, ListItemAvatar, Modal, TextField, Typography } from "@mui/material";
+import { Avatar, Card, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, Modal, TextField, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditFootballMatch extends React.Component {
@@ -189,6 +189,10 @@ function FootballMatches(props) {
 class EditModal extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            showLinearProgress: false
+        }
     }
 
     render() {
@@ -216,6 +220,9 @@ class EditModal extends React.Component {
                             </Typography>
                         </Grid>
 
+                        <Grid item xs={12} sm={12}>
+                            {this.state.showLinearProgress && <LinearProgress />}
+                        </Grid>
                     </Grid>
                 </Card>
             </Modal>
