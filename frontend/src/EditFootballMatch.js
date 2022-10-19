@@ -120,6 +120,10 @@ function FootballMatches(props) {
         return teams.filter(team => team.docId == match.teamB)[0];
     }
 
+    function getTeamFromId(teamId) {
+        return teams.filter(team => team.docId == teamId)[0];
+    }
+
     return (
         <Card>
             <Typography variant='h5' align="center">Football Matches</Typography>
@@ -138,7 +142,11 @@ function FootballMatches(props) {
                         >
                             {
                                 matchId == match.docId &&
-                                <EditModal isOpen={modalIsOpen} close={closeEditModal} match={match}/>
+                                <EditModal 
+                                    isOpen={modalIsOpen} 
+                                    close={closeEditModal} 
+                                    match={match}
+                                />
                             }
 
                             <Grid container>
@@ -157,9 +165,9 @@ function FootballMatches(props) {
 
                                     <Grid item xs={4} >
                                         <ListItemAvatar sx={{ pl: '7%' }}>
-                                            <Avatar src={getTeamA(match).logoLink} alt='team logo'/>
+                                            <Avatar src={getTeamFromId(match.teamA).logoLink} alt='team logo'/>
                                         </ListItemAvatar>
-                                        <Typography variant="body1">{getTeamA(match).teamName}</Typography>
+                                        <Typography variant="body1">{getTeamFromId(match.teamA).teamName}</Typography>
                                     </Grid>
 
                                     <Grid item xs={2}>
@@ -170,9 +178,9 @@ function FootballMatches(props) {
 
                                     <Grid item xs={4} sx={{ ml: '4%'}}>
                                         <ListItemAvatar sx={{ pl: '7%' }}>
-                                            <Avatar src={getTeamB(match).logoLink} alt='team logo' />
+                                            <Avatar src={getTeamFromId(match.teamB).logoLink} alt='team logo' />
                                         </ListItemAvatar>
-                                        <Typography variant="body1">{getTeamB(match).teamName}</Typography>
+                                        <Typography variant="body1">{getTeamFromId(match.teamB).teamName}</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -207,7 +215,9 @@ class EditModal extends React.Component {
                     <Grid container>
 
                         <Grid item xs={12}>
-                            <Typography variant="h5" align="center">Edit Match</Typography>
+                            <Typography variant="h5" align="center">
+                                Edit Match
+                            </Typography>
                         </Grid>
 
                     </Grid>
