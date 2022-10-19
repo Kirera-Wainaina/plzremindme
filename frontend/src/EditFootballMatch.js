@@ -155,8 +155,8 @@ function FootballMatches(props) {
 
                                 <Grid container item xs={12} spacing={1} justifyContent='center' sx={{ mt: 2 }}>
 
-                                    <Grid item xs={4}>
-                                        <ListItemAvatar>
+                                    <Grid item xs={4} >
+                                        <ListItemAvatar sx={{ pl: '7%' }}>
                                             <Avatar src={getTeamA(match).logoLink} alt='team logo'/>
                                         </ListItemAvatar>
                                         <Typography variant="body1">{getTeamA(match).teamName}</Typography>
@@ -169,7 +169,7 @@ function FootballMatches(props) {
                                     </Grid>
 
                                     <Grid item xs={4} sx={{ ml: '4%'}}>
-                                        <ListItemAvatar>
+                                        <ListItemAvatar sx={{ pl: '7%' }}>
                                             <Avatar src={getTeamB(match).logoLink} alt='team logo' />
                                         </ListItemAvatar>
                                         <Typography variant="body1">{getTeamB(match).teamName}</Typography>
