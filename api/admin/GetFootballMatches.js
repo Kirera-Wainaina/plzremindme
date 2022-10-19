@@ -7,7 +7,9 @@ class GetFootballMatches extends GETHandler {
     }
 
     async run() {
-        const snapshot = await this.getCollection('football-matches').get();
+        const snapshot = await this.getCollection('football-matches')
+            .orderBy('matchDay', 'asc')
+            .get();
         snapshot.forEach(doc => {
             this.matches.push({ ...doc.data(), docId: doc.id });
         })
