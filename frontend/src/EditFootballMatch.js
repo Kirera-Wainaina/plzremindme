@@ -1,5 +1,5 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
-import { Avatar, Card, Grid, IconButton, List, ListItem, ListItemAvatar, TextField, Typography } from "@mui/material";
+import { Avatar, Card, Grid, IconButton, List, ListItem, ListItemAvatar, Modal, TextField, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditFootballMatch extends React.Component {
@@ -186,9 +186,33 @@ function FootballMatches(props) {
 }
 
 class EditComponent extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
-            <></>
+            <Modal
+                open={this.props.isOpen}
+                onClose={this.props.close}
+            >
+                <Card
+                    sx={{ 
+                        width: '80%',
+                        ml: '10%',
+                        mt: 5,
+                        padding: 5
+                    }}
+                >
+                    <Grid container>
+
+                        <Grid item xs={12}>
+                            <Typography variant="h5" align="center">Edit Match</Typography>
+                        </Grid>
+                        
+                    </Grid>
+                </Card>
+            </Modal>
         )
     }
 }
