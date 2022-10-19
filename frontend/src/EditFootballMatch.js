@@ -1,5 +1,5 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
-import { Avatar, Card, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, Modal, TextField, Typography } from "@mui/material";
+import { Alert, Avatar, Card, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, Modal, TextField, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditFootballMatch extends React.Component {
@@ -191,8 +191,15 @@ class EditModal extends React.Component {
         super(props);
 
         this.state = {
-            showLinearProgress: false
+            showLinearProgress: false,
+            statusCode: null
         }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit() {
+
     }
 
     render() {
@@ -223,6 +230,27 @@ class EditModal extends React.Component {
                         <Grid item xs={12} sm={12}>
                             {this.state.showLinearProgress && <LinearProgress />}
                         </Grid>
+
+                        <Grid item xs={12} sm={6} sx={{ px: 5 }}>
+                            <Box
+                                component='form'
+                                onSubmit={this.handleSubmit}
+                            >
+
+                                {
+                                    this.state.statusCode == 200 &&
+                                    <Alert severity="success">Your changes were saved successfully!</Alert>
+                                }
+
+                                {
+                                    this.state.statusCode == 500 && 
+                                    <Alert severity="error">
+                                        An error occurred while editing the match. Please try again.
+                                    </Alert>
+                                }
+                            </Box>
+                        </Grid>
+
                     </Grid>
                 </Card>
             </Modal>
