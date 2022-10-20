@@ -198,7 +198,7 @@ class EditModal extends React.Component {
             showLinearProgress: false,
             statusCode: null,
             competitions: JSON.parse(sessionStorage.getItem('football-competitions')),
-            matchDay: this.props.matchDay,
+            matchDay: this.props.match.matchDay,
             stage: this.props.match.stage ? this.props.match.stage : null,
             group: null,
             dateTime: new Date(this.props.match.dateTime),
@@ -234,6 +234,8 @@ class EditModal extends React.Component {
         const matchDateInISO = this.getMatchDateInISO()
         const competition = this.state.competitions
             .filter(competition => competition.docId == match.competitionId)[0];
+
+        formdata.append('docId', match.docId);
 
         if (competition.category == 'tournament'){
             if (match.stage != this.state.stage) {
@@ -280,7 +282,7 @@ class EditModal extends React.Component {
     }
 
 
-    handleChange() {
+    handleChange(e) {
         this.setState({ [e.target.name]: e.target.value })
     }
 
