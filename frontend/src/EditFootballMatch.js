@@ -1,6 +1,8 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
 import { Alert, Avatar, Box, Card, CardContent, CardMedia, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, MenuItem, Modal, TextField, Typography } from "@mui/material";
 import { Container } from "@mui/system";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React from "react";
 import GROUPS from "./groups";
 
@@ -198,7 +200,9 @@ class EditModal extends React.Component {
             competitions: JSON.parse(sessionStorage.getItem('football-competitions')),
             matchDay: null,
             stage: this.props.match.stage ? this.props.match.stage : null,
-            group: null
+            group: null,
+            dateTime: new Date(this.props.match.dateTime),
+            gmt: 3
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -211,6 +215,14 @@ class EditModal extends React.Component {
 
     handleChange() {
         this.setState({ [e.target.name]: e.target.value })
+    }
+
+    createGMTSpectrum() {
+        const times = [];
+        for (let i = -12; i < 13; i++) {
+            times.push(i);
+        }
+        return times
     }
 
     render() {
@@ -396,6 +408,50 @@ class EditModal extends React.Component {
                                         fullWidth
                                     />
                                 }
+
+                                <Box component='div'>
+                                    <Grid container>
+
+                                        <Grid item xs={12} sm={6} sx={{ mt: '10px' }}>
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DateTimePicker 
+                                                    renderInput={(props) => <TextField {...props} />}
+                                                    label='Date & Time'
+                                                    name='dateTime'
+                                                    value={this.state.dateTime}
+                                                    inputFormat='DD/MM/YYYY hh:mm a'
+                                                    ampm={false}
+                                                    onChange={(newValue) => this.setState({ dateTime: newValue })}
+                                                    required
+                                                />
+                                            </LocalizationProvider>
+                                        </Grid>
+
+                                        <Grid item xs={12} sm={6}>
+                                            <TextField
+                                                label='GMT'
+                                                variant="filled"
+                                                onChange={this.handleChange}
+                                                name='gmt'
+                                                value={this.state.gmt}
+                                                sx={{ mt: '10px'}}
+                                                select
+                                                required
+                                                fullWidth  
+                                            >
+                                                {
+                                                    this.createGMTSpectrum().map(value => (
+                                                        <MenuItem key={value} value={value}>
+                                                            GMT {value > 0 ? `+ ${value}` : `- ${Math.abs(value)}`}
+                                                        </MenuItem>
+                                                    ))
+                                                }
+                                            </TextField>
+                                        </Grid>
+
+                                    </Grid>
+                                </Box>
+
                             </Box>
                         </Grid>
 
