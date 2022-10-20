@@ -196,7 +196,7 @@ class EditModal extends React.Component {
             statusCode: null,
             competitions: JSON.parse(sessionStorage.getItem('football-competitions')),
             matchDay: null,
-            stage: null
+            stage: this.props.match.stage ? this.props.match.stage : null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -358,7 +358,7 @@ class EditModal extends React.Component {
 
                                 {
                                     (competition.category == 'league' || 
-                                    (competition.category == 'tournament' && match.stage == 'Group')) &&
+                                    (competition.category == 'tournament' && this.state.stage == 'Group')) &&
                                     <TextField 
                                         label='Match Day'
                                         variant="filled"
