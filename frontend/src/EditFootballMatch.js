@@ -1,7 +1,9 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
-import { Alert, Avatar, Box, Button, Card, CardContent, CardMedia, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, MenuItem, Modal, TextField, Typography } from "@mui/material";
-import { Container } from "@mui/system";
+import { Alert, Avatar, Box, Button, Card, CardContent, CardMedia, Grid, 
+    IconButton, LinearProgress, List, ListItem, ListItemAvatar, 
+    MenuItem, Modal, TextField, Typography } from "@mui/material";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import Delete from '@mui/icons-material/Delete';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React from "react";
 import GROUPS from "./groups";
@@ -207,6 +209,7 @@ class EditModal extends React.Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.deleteMatch = this.deleteMatch.bind(this);
     }
 
     handleSubmit(e) {
@@ -301,6 +304,24 @@ class EditModal extends React.Component {
             times.push(i);
         }
         return times
+    }
+
+    deleteMatch() {
+        this.setState({ showLinearProgress: true })
+        const body = {'docId': this.props.match.docId};
+        fetch('/api/admin/DeleteFootballMatch', {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {'content-encoding': 'application/json'}
+        })
+        .then(response => {
+            this.setState({
+                showLinearProgress: false,
+                statusCode: response.status
+            });
+            sessionStorage.removeItem('football-matches');
+            this.props.close();
+        })
     }
 
     render() {
@@ -537,6 +558,16 @@ class EditModal extends React.Component {
                                     sx={{ m: 2 }} 
                                 >
                                     Submit
+                                </Button>
+
+                                <Button 
+                                    variant='contained'
+                                    type='button'
+                                    disabled={this.state.showLinearProgress}
+                                    onClick={this.deleteMatch}
+                                    sx={{ backgroundColor: 'gray' }}
+                                >
+                                    <Delete /> Delete
                                 </Button>
 
 
