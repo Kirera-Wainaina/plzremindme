@@ -297,6 +297,27 @@ class EditModal extends React.Component {
                                     </CardContent>
 
                                 </Card>
+
+                                <Card
+                                    sx={{
+                                        display: 'flex',
+                                        px: '10%',
+                                        alignItems: 'flex-end',
+                                        mt: '3%'
+                                    }}
+                                >
+                                    <CardMedia
+                                        component='img'
+                                        image={teamB.logoLink}
+                                        alt={teamB.teamName}
+                                        height='70px'
+                                        sx={{ objectFit: 'contain', width: '70px' }}
+                                    />
+
+                                    <CardContent>
+                                        <Typography variant="body1">{teamB.teamName}</Typography>
+                                    </CardContent>
+                                </Card>
                             </Box>
                         </Grid>
 
