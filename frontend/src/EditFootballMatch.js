@@ -90,8 +90,6 @@ class Filter extends React.Component {
 }
 
 function FootballMatches(props) {
-    const [matchId, setMatchId] = React.useState(null);
-    const [modalIsOpen, setModalIsOpen] = React.useState(false);
     const teams = JSON.parse(sessionStorage.getItem('football-teams'));
     const competitions = JSON.parse(sessionStorage.getItem('football-competitions'));
 
@@ -110,22 +108,6 @@ function FootballMatches(props) {
         }
     }, [sessionStorage.getItem('football-matches')]) // the fetch request is sent out if an update has been made
 
-    function openEditModal(match) {
-        setMatchId(match.docId);
-        setModalIsOpen(true);
-    }
-
-    function closeEditModal() {
-        setModalIsOpen(false);
-    }
-
-    function getTeamFromId(teamId) {
-        return teams.filter(team => team.docId == teamId)[0];
-    }
-
-    function getCompetitionFromId(competitionId) {
-        return competitions.filter(competition => competition.docId == competitionId)[0];
-    }
 
     return (
         <Card>
@@ -134,67 +116,105 @@ function FootballMatches(props) {
             <List>
                 {
                     props.currentMatches.map(match => (
-                        <ListItem
+                        <MatchItem 
+                            match={match}
                             key={match.docId}
-                            divider={true}
-                            secondaryAction={
-                                <IconButton onClick={() => openEditModal(match)}>
-                                    <EditSharp color='primary' />
-                                </IconButton>
-                            }
-                        >
-                            {
-                                matchId == match.docId &&
-                                <EditModal 
-                                    isOpen={modalIsOpen} 
-                                    close={closeEditModal} 
-                                    match={match}
-                                    getTeamFromId={getTeamFromId}
-                                    competition={getCompetitionFromId(match.competitionId)}
-                                />
-                            }
-
-                            <Grid container>
-                                <Grid container item xs={12} sx={{ mt: 3}}>
-
-                                    <Grid item xs={5} sm={3}>
-                                        <Typography variant='body2'>{new Date(match.dateTime).toDateString()}</Typography>
-                                    </Grid>
-
-                                    <Grid item xs={5} sm={3}>
-                                        <Typography variant="body2">Match Day {match.matchDay}</Typography>
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container item xs={12} spacing={1} justifyContent='center' sx={{ mt: 2 }}>
-
-                                    <Grid item xs={4} >
-                                        <ListItemAvatar sx={{ pl: '7%' }}>
-                                            <Avatar src={getTeamFromId(match.teamA).logoLink} alt='team logo'/>
-                                        </ListItemAvatar>
-                                        <Typography variant="body1">{getTeamFromId(match.teamA).teamName}</Typography>
-                                    </Grid>
-
-                                    <Grid item xs={2}>
-                                        <Typography variant="body2">
-                                            {new Date(match.dateTime).toLocaleTimeString()}
-                                        </Typography>
-                                    </Grid>
-
-                                    <Grid item xs={4} sx={{ ml: '4%'}}>
-                                        <ListItemAvatar sx={{ pl: '7%' }}>
-                                            <Avatar src={getTeamFromId(match.teamB).logoLink} alt='team logo' />
-                                        </ListItemAvatar>
-                                        <Typography variant="body1">{getTeamFromId(match.teamB).teamName}</Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-
-                        </ListItem>
+                            teams={teams}
+                            competitions={competitions}
+                        />
                     ))
                 }
             </List>
         </Card>
+    )
+}
+
+function MatchItem(props) {
+    const match = props.match;
+    const [matchId, setMatchId] = React.useState(null);
+    const [modalIsOpen, setModalIsOpen] = React.useState(false);
+    const teamA = props.teams.filter(team => team.docId == match.teamA)[0];
+    const teamB = props.teams.filter(team => team.docId == match.teamB)[0];
+
+    function openEditModal(id) {
+        setMatchId(id);
+        setModalIsOpen(true);
+    }
+
+    function closeEditModal() {
+        setModalIsOpen(false);
+    }
+
+    function getCompetitionFromId(competitionId) {
+        return competitions.filter(competition => competition.docId == competitionId)[0];
+    }
+
+    return (
+        <ListItem
+            divider={true}
+            secondaryAction={
+                <IconButton onClick={() => openEditModal(match.docId)}>
+                    <EditSharp color='primary' />
+                </IconButton>
+            }
+        >
+            {
+                matchId == match.docId &&
+                <EditModal 
+                    isOpen={modalIsOpen} 
+                    close={closeEditModal} 
+                    match={props.match}
+                    teamA={teamA}
+                    teamB={teamB}
+                    competition={getCompetitionFromId(match.competitionId)}
+                />
+            }
+
+            <Grid container>
+                <Grid container item xs={12} sx={{ mt: 3}}>
+
+                    <Grid item xs={5} sm={3}>
+                        <Typography variant='body2'>{new Date(match.dateTime).toDateString()}</Typography>
+                    </Grid>
+
+                    <Grid item xs={5} sm={3}>
+                        <Typography variant="body2">Match Day {match.matchDay}</Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sm={4}>
+                        <Card>
+                             <p>competition logo</p>
+                                
+                        </Card>
+                    </Grid>
+                </Grid>
+
+                <Grid container item xs={12} spacing={1} justifyContent='center' sx={{ mt: 2 }}>
+
+                    <Grid item xs={4} >
+                        <ListItemAvatar sx={{ pl: '7%' }}>
+                            <Avatar src={teamA.logoLink} alt='team logo'/>
+                        </ListItemAvatar>
+                        <Typography variant="body1">{teamA.teamName}</Typography>
+                    </Grid>
+
+                    <Grid item xs={2}>
+                        <Typography variant="body2">
+                            {new Date(match.dateTime).toLocaleTimeString()}
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={4} sx={{ ml: '4%'}}>
+                        <ListItemAvatar sx={{ pl: '7%' }}>
+                            <Avatar src={teamB.logoLink} alt='team logo' />
+                        </ListItemAvatar>
+                        <Typography variant="body1">{teamB.teamName}</Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+        </ListItem>
+
     )
 }
 
@@ -331,8 +351,8 @@ class EditModal extends React.Component {
     render() {
         const match = this.props.match;
         const competition = this.props.competition;    
-        const teamA = this.props.getTeamFromId(match.teamA);
-        const teamB = this.props.getTeamFromId(match.teamB);
+        const teamA = this.props.teamA;
+        const teamB = this.props.teamB;
 
         return (
             <Modal
