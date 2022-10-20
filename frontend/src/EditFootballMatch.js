@@ -400,9 +400,13 @@ class EditModal extends React.Component {
                 <Card
                     sx={{ 
                         width: '80vw',
-                        height: '75vh',
+                        height: {
+                            xs: '60vh',
+                            sm: '80vh'
+                        },
                         mt: 5,
-                        padding: 5,
+                        mx: 3,
+                        padding: 2,
                         overflowY: 'scroll'
                     }}
                 >
@@ -425,7 +429,7 @@ class EditModal extends React.Component {
                             {this.state.showLinearProgress && <LinearProgress />}
                         </Grid>
 
-                        <Grid item xs={12} sm={6} sx={{ px: 5 }}>
+                        <Grid item xs={12} sm={6} sx={{ px: 1 }}>
                             <Box
                                 component='form'
                                 onSubmit={this.handleSubmit}
