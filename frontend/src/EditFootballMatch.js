@@ -194,14 +194,20 @@ class EditModal extends React.Component {
         this.state = {
             showLinearProgress: false,
             statusCode: null,
-            competitions: JSON.parse(sessionStorage.getItem('football-competitions'))
+            competitions: JSON.parse(sessionStorage.getItem('football-competitions')),
+            matchDay: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleSubmit() {
 
+    }
+
+    handleChange() {
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     render() {
@@ -325,6 +331,22 @@ class EditModal extends React.Component {
                                         <Typography variant="body1">{teamB.teamName}</Typography>
                                     </CardContent>
                                 </Card>
+
+                                {
+                                    (competition.category == 'league' || 
+                                    (competition.category == 'tournament' && match.stage == 'Group')) &&
+                                    <TextField 
+                                        label='Match Day'
+                                        variant="filled"
+                                        onChange={this.handleChange}
+                                        name='matchDay'
+                                        defaultValue={match.matchDay}
+                                        margin='normal'
+                                        type='number'
+                                        required
+                                        fullWidth
+                                    />
+                                }
                             </Box>
                         </Grid>
 
