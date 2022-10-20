@@ -135,6 +135,8 @@ function MatchItem(props) {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
     const teamA = props.teams.filter(team => team.docId == match.teamA)[0];
     const teamB = props.teams.filter(team => team.docId == match.teamB)[0];
+    const competition = props.competitions
+        .filter(competition => competition.docId == match.competitionId)[0];
 
     function openEditModal(id) {
         setMatchId(id);
@@ -143,10 +145,6 @@ function MatchItem(props) {
 
     function closeEditModal() {
         setModalIsOpen(false);
-    }
-
-    function getCompetitionFromId(competitionId) {
-        return competitions.filter(competition => competition.docId == competitionId)[0];
     }
 
     return (
@@ -166,7 +164,7 @@ function MatchItem(props) {
                     match={props.match}
                     teamA={teamA}
                     teamB={teamB}
-                    competition={getCompetitionFromId(match.competitionId)}
+                    competition={competition}
                 />
             }
 
