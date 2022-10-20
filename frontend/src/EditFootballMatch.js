@@ -1,5 +1,6 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
 import { Alert, Avatar, Box, Card, CardContent, CardMedia, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, Modal, TextField, Typography } from "@mui/material";
+import { Container } from "@mui/system";
 import React from "react";
 
 export default class EditFootballMatch extends React.Component {
@@ -207,16 +208,19 @@ class EditModal extends React.Component {
         const match = this.props.match;
         const competition = this.state.competitions
             .filter(competition => competition.docId == match.competitionId)[0];
+        const teamA = this.props.getTeamFromId(match.teamA);
+        const teamB = this.props.getTeamFromId(match.teamB);
 
         return (
             <Modal
                 open={this.props.isOpen}
                 onClose={this.props.close}
+                sx={{ display: 'flex', justifyContent: 'center' }}
             >
                 <Card
                     sx={{ 
-                        width: '80%',
-                        ml: '10%',
+                        width: '80vw',
+                        height: '75vh',
                         mt: 5,
                         padding: 5
                     }}
@@ -225,8 +229,7 @@ class EditModal extends React.Component {
 
                         <Grid item xs={12}>
                             <Typography variant="h5" align="center">
-                                {`Edit ${this.props.getTeamFromId(match.teamA).teamName} vs
-                                ${this.props.getTeamFromId(match.teamB).teamName}`}
+                                {`Edit ${teamA.teamName} vs ${teamB.teamName}`}
                             </Typography>
                         </Grid>
 
@@ -269,6 +272,28 @@ class EditModal extends React.Component {
 
                                     <CardContent>
                                         <Typography variant="body1">{competition.name}</Typography>
+                                    </CardContent>
+
+                                </Card>
+
+                                <Card
+                                    sx={{
+                                        display: 'flex',
+                                        px: '10%',
+                                        alignItems: 'flex-end',
+                                        mt: '3%'
+                                    }}
+                                >
+                                    <CardMedia 
+                                        component='img'
+                                        image={teamA.logoLink}
+                                        alt={teamA.teamName}
+                                        height='70px'
+                                        sx={{ objectFit: 'contain', width: '70px' }}
+                                    />
+
+                                    <CardContent>
+                                        <Typography variant="body1">{teamA.teamName}</Typography>
                                     </CardContent>
 
                                 </Card>
