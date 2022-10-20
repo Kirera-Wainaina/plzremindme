@@ -93,6 +93,7 @@ function FootballMatches(props) {
     const [matchId, setMatchId] = React.useState(null);
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
     const teams = JSON.parse(sessionStorage.getItem('football-teams'));
+    const competitions = JSON.parse(sessionStorage.getItem('football-competitions'));
 
     React.useEffect(() => {
         const matches = sessionStorage.getItem('football-matches');
@@ -122,6 +123,10 @@ function FootballMatches(props) {
         return teams.filter(team => team.docId == teamId)[0];
     }
 
+    function getCompetitionFromId(competitionId) {
+        return competitions.filter(competition => competition.docId == competitionId)[0];
+    }
+
     return (
         <Card>
             <Typography variant='h5' align="center">Football Matches</Typography>
@@ -145,6 +150,7 @@ function FootballMatches(props) {
                                     close={closeEditModal} 
                                     match={match}
                                     getTeamFromId={getTeamFromId}
+                                    competition={getCompetitionFromId(match.competitionId)}
                                 />
                             }
 
@@ -199,7 +205,6 @@ class EditModal extends React.Component {
         this.state = {
             showLinearProgress: false,
             statusCode: null,
-            competitions: JSON.parse(sessionStorage.getItem('football-competitions')),
             matchDay: this.props.match.matchDay,
             stage: this.props.match.stage ? this.props.match.stage : null,
             group: null,
@@ -238,9 +243,8 @@ class EditModal extends React.Component {
         const formdata = new FormData();
         const match = this.props.match;
         const matchDateInISO = this.getMatchDateInISO()
-        const competition = this.state.competitions
-            .filter(competition => competition.docId == match.competitionId)[0];
-
+        
+        const competition = this.props.competition;
         formdata.append('docId', match.docId);
 
         if (competition.category == 'tournament'){
@@ -326,8 +330,7 @@ class EditModal extends React.Component {
 
     render() {
         const match = this.props.match;
-        const competition = this.state.competitions
-            .filter(competition => competition.docId == match.competitionId)[0];
+        const competition = this.props.competition;    
         const teamA = this.props.getTeamFromId(match.teamA);
         const teamB = this.props.getTeamFromId(match.teamB);
 
