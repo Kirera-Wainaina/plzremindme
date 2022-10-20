@@ -1,5 +1,5 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
-import { Alert, Avatar, Card, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, Modal, TextField, Typography } from "@mui/material";
+import { Alert, Avatar, Box, Card, CardContent, CardMedia, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, Modal, TextField, Typography } from "@mui/material";
 import React from "react";
 
 export default class EditFootballMatch extends React.Component {
@@ -192,7 +192,8 @@ class EditModal extends React.Component {
 
         this.state = {
             showLinearProgress: false,
-            statusCode: null
+            statusCode: null,
+            competitions: JSON.parse(sessionStorage.getItem('football-competitions'))
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -204,6 +205,8 @@ class EditModal extends React.Component {
 
     render() {
         const match = this.props.match;
+        const competition = this.state.competitions
+            .filter(competition => competition.docId == match.competitionId)[0];
 
         return (
             <Modal
@@ -248,6 +251,27 @@ class EditModal extends React.Component {
                                         An error occurred while editing the match. Please try again.
                                     </Alert>
                                 }
+
+                                <Card
+                                    sx={{
+                                        display: 'flex',
+                                        px: '10%',
+                                        alignItems: 'flex-end'
+                                    }}
+                                >
+                                    <CardMedia 
+                                        component='img'
+                                        image={competition.logoLink}
+                                        alt={competition.name}
+                                        height='70px'
+                                        sx={{ objectFit: 'contain', width: '70px' }}
+                                    />
+
+                                    <CardContent>
+                                        <Typography variant="body1">{competition.name}</Typography>
+                                    </CardContent>
+
+                                </Card>
                             </Box>
                         </Grid>
 
