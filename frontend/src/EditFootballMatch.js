@@ -222,10 +222,13 @@ class EditModal extends React.Component {
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}
         })
-        .then(response => this.setState({
-            showLinearProgress: false,
-            statusCode: response.status,
-        }))
+        .then(response => {
+            this.setState({
+                showLinearProgress: false,
+                statusCode: response.status,
+            })
+            sessionStorage.removeItem('football-matches')
+        })
     }
 
     createFormData() {
