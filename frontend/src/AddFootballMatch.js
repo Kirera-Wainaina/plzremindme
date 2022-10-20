@@ -45,12 +45,15 @@ export default class AddFootballMatch extends React.Component {
             body: formdata,
             headers: { 'content-encoding': 'multipart/form-data'}
         })
-        .then(response => this.setState({
-            statusCode: response.status,
-            showLinearProgress: false,
-            competitionId: '',
-            dateTime: ''
-        }))
+        .then(response => {
+            this.setState({
+                statusCode: response.status,
+                showLinearProgress: false,
+                competitionId: '',
+                dateTime: ''
+            })
+            sessionStorage.removeItem('football-matches')
+        })
     }
 
     getMatchDateInISO() {
@@ -151,7 +154,7 @@ export default class AddFootballMatch extends React.Component {
     }
 
     componentDidMount() {
-        let competitions = JSON.parse(sessionStorage.getItem('competitions'));
+        let competitions = JSON.parse(sessionStorage.getItem('football-competitions'));
         if (competitions) this.setState({ competitions: competitions })
     }
 
