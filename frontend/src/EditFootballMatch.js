@@ -170,21 +170,21 @@ function MatchItem(props) {
 
             <Grid container>
                 <Grid container item xs={12} sx={{ mt: 3}}>
-
-                    <Grid item xs={5} sm={3}>
-                        <Typography variant='body2'>{new Date(match.dateTime).toDateString()}</Typography>
-                    </Grid>
-
-                    <Grid item xs={5} sm={3}>
-                        <Typography variant="body2">Match Day {match.matchDay}</Typography>
-                    </Grid>
-
-                    <Grid item container xs={12} sm={6}>
-                        <Grid item xs={4}>
+                    
+                    <Grid item container xs={12} sm={6}
+                        sx={{
+                            mb: {
+                                xs: '5%',
+                                sm: 0
+                            }
+                        }}
+                    >
+                        <Grid item xs={4} >
                             <Card
                                 sx={{
                                     width: '100%' 
                                 }}
+                                elevation={0}
                             >
                                 <CardMedia 
                                     component='img'
@@ -196,11 +196,34 @@ function MatchItem(props) {
                             </Card>
                         </Grid>
                         
-                        <Grid item xs={8}>
-                            <Typography variant="body2">{competition.name}</Typography>
+                        <Grid item xs={8} 
+                            sx={{ 
+                                pl: {
+                                    xs: '10%',
+                                    sm: '5%'
+                                }
+                            }}
+                        >
+                            <Typography variant="body1">{competition.name}</Typography>
                         </Grid>
 
                     </Grid>
+
+                    <Grid item xs={5} sm={3}
+                        sx={{
+                            pl: {
+                                xs: '20%',
+                                sm: 0
+                            }
+                        }}
+                    >
+                        <Typography variant='body2'>{new Date(match.dateTime).toDateString()}</Typography>
+                    </Grid>
+
+                    <Grid item xs={5} sm={3}>
+                        <Typography variant="body2">Match Day {match.matchDay}</Typography>
+                    </Grid>
+
                 </Grid>
 
                 <Grid container item xs={12} spacing={1} justifyContent='center' sx={{ mt: 2 }}>
