@@ -1,7 +1,8 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
-import { Alert, Avatar, Box, Card, CardContent, CardMedia, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, Modal, TextField, Typography } from "@mui/material";
+import { Alert, Avatar, Box, Card, CardContent, CardMedia, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, MenuItem, Modal, TextField, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
+import GROUPS from "./groups";
 
 export default class EditFootballMatch extends React.Component {
     constructor(props) {
@@ -196,7 +197,8 @@ class EditModal extends React.Component {
             statusCode: null,
             competitions: JSON.parse(sessionStorage.getItem('football-competitions')),
             matchDay: null,
-            stage: this.props.match.stage ? this.props.match.stage : null
+            stage: this.props.match.stage ? this.props.match.stage : null,
+            group: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -353,6 +355,29 @@ class EditModal extends React.Component {
                                                 </MenuItem>
                                             )
                                         )}
+                                    </TextField>
+                                }
+
+                                {
+                                    this.state.stage == 'Group' &&
+                                    <TextField
+                                        label='Group'
+                                        variant="filled"
+                                        onChange={this.handleChange}
+                                        name='group'
+                                        defaultValue={match.group}
+                                        margin='normal'
+                                        select
+                                        required
+                                        fullWidth
+                                    >
+                                        {
+                                            GROUPS.map((group, index) => (
+                                                <MenuItem key={index} value={group}>
+                                                    {group}
+                                                </MenuItem>
+                                            ))
+                                        }
                                     </TextField>
                                 }
 
