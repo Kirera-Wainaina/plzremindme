@@ -233,6 +233,13 @@ class EditModal extends React.Component {
                             </Typography>
                         </Grid>
 
+                        <Grid item xs={12}>
+                            <Alert severity="info">
+                                If you would like to edit the competition or team, please delete this Match
+                                and upload a new entry.
+                            </Alert>
+                        </Grid>
+
                         <Grid item xs={12} sm={12}>
                             {this.state.showLinearProgress && <LinearProgress />}
                         </Grid>
