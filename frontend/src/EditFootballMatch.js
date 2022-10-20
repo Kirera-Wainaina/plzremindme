@@ -213,6 +213,19 @@ class EditModal extends React.Component {
         e.preventDefault();
         this.setState({ showLinearProgress: true });
         const formdata = this.createFormData();
+        this.uploadData(formdata);
+    }
+
+    uploadData(formdata) {
+        fetch('/api/admin/EditFootballMatch', {
+            method: 'POST',
+            body: formdata,
+            headers: { 'content-encoding': 'multipart/form-data'}
+        })
+        .then(response => this.setState({
+            showLinearProgress: false,
+            statusCode: response.status,
+        }))
     }
 
     createFormData() {
