@@ -17,6 +17,10 @@ class EditFootballMatch extends FormDataHandler {
                     const ref = querySnapshot.docs[0].ref;
                     delete this.fields.docId;
 
+                    if (this.fields['matchDay']) {
+                        this.fields['matchDay'] = parseInt(this.fields['matchDay']);
+                    }
+
                     if (this.fields.stage && this.fields.stage != 'Group') {
                         // it was group stage and now it is not
                         // delete match day. Other stages of a tournament do not have the field
