@@ -179,11 +179,27 @@ function MatchItem(props) {
                         <Typography variant="body2">Match Day {match.matchDay}</Typography>
                     </Grid>
 
-                    <Grid item xs={12} sm={4}>
-                        <Card>
-                             <p>competition logo</p>
-                                
-                        </Card>
+                    <Grid item container xs={12} sm={6}>
+                        <Grid item xs={4}>
+                            <Card
+                                sx={{
+                                    width: '100%' 
+                                }}
+                            >
+                                <CardMedia 
+                                    component='img'
+                                    src={competition.logoLink}
+                                    alt={competition.name}
+                                    height='30px'
+                                    sx={{ objectFit: 'contain'}}
+                                />
+                            </Card>
+                        </Grid>
+                        
+                        <Grid item xs={8}>
+                            <Typography variant="body2">{competition.name}</Typography>
+                        </Grid>
+
                     </Grid>
                 </Grid>
 
