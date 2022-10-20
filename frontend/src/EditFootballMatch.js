@@ -266,14 +266,20 @@ class EditModal extends React.Component {
         const dateTime = this.state.dateTime;
         const SECONDS_IN_HOUR = 3600;
         const MILLISECONDS_IN_HOUR = SECONDS_IN_HOUR * 1000;
+        let dateRef;
 
-        const year = dateTime['$y'];
-        const month = dateTime['$M'] < 9 ? `0${dateTime['$M'] + 1}` : dateTime['$M'] + 1;
-        const day = dateTime['$D'] < 10 ? `0${dateTime['$D']}` : dateTime['$D'];
-        const hour = dateTime['$H'] < 10 ? `0${dateTime['$H']}` : dateTime['$H'];
-        const minute = dateTime['$m'] < 10 ? `0${dateTime['$m']}` : dateTime['$m'];
+        if (dateTime['$y']) {
+            const year = dateTime['$y'];
+            const month = dateTime['$M'] < 9 ? `0${dateTime['$M'] + 1}` : dateTime['$M'] + 1;
+            const day = dateTime['$D'] < 10 ? `0${dateTime['$D']}` : dateTime['$D'];
+            const hour = dateTime['$H'] < 10 ? `0${dateTime['$H']}` : dateTime['$H'];
+            const minute = dateTime['$m'] < 10 ? `0${dateTime['$m']}` : dateTime['$m'];
 
-        const dateRef = new Date(`${year}-${month}-${day}T${hour}:${minute}Z`);
+            dateRef = new Date(`${year}-${month}-${day}T${hour}:${minute}Z`);
+        } else {
+            return this.props.match.dateTime    // if time hasn't been edited
+        }
+
         const matchDateInMilliseconds = dateRef.getTime();
         const matchDateInISO = new Date(matchDateInMilliseconds - (this.state.gmt * MILLISECONDS_IN_HOUR))
             .toISOString();
