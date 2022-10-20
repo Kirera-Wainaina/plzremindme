@@ -209,7 +209,7 @@ function FootballTeams(props) {
                     props.setTeams(data)
                 })
         }
-    }, [])
+    }, [sessionStorage.getItem('football-teams')])
 
     function openEditModal(team) {
         setTeamId(team.docId);

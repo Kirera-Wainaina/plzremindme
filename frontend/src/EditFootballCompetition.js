@@ -281,7 +281,7 @@ function LeaguesAndTournaments(props) {
                     props.setCompetitions(data);
                 })
         }
-    }, [])
+    }, [sessionStorage.getItem('football-competitions')])
 
     function openEditModal(competition) {
         setCompetitionId(competition.docId);
