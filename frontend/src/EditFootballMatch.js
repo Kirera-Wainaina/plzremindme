@@ -105,7 +105,7 @@ function FootballMatches(props) {
                     props.setMatches(data);
                 })
         }
-    }, [])
+    }, [sessionStorage.getItem('football-matches')]) // the fetch request is sent out if an update has been made
 
     function openEditModal(match) {
         setMatchId(match.docId);
