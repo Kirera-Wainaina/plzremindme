@@ -1,5 +1,5 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
-import { Alert, Avatar, Box, Card, CardContent, CardMedia, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, MenuItem, Modal, TextField, Typography } from "@mui/material";
+import { Alert, Avatar, Box, Button, Card, CardContent, CardMedia, Grid, IconButton, LinearProgress, List, ListItem, ListItemAvatar, MenuItem, Modal, TextField, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -243,7 +243,8 @@ class EditModal extends React.Component {
                         width: '80vw',
                         height: '75vh',
                         mt: 5,
-                        padding: 5
+                        padding: 5,
+                        overflowY: 'scroll'
                     }}
                 >
                     <Grid container>
@@ -451,6 +452,15 @@ class EditModal extends React.Component {
 
                                     </Grid>
                                 </Box>
+
+                                <Button variant="contained" 
+                                    type="submit"
+                                    disabled={this.state.showLinearProgress}
+                                    sx={{ m: 2 }} 
+                                >
+                                    Submit
+                                </Button>
+
 
                             </Box>
                         </Grid>
