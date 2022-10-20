@@ -195,7 +195,8 @@ class EditModal extends React.Component {
             showLinearProgress: false,
             statusCode: null,
             competitions: JSON.parse(sessionStorage.getItem('football-competitions')),
-            matchDay: null
+            matchDay: null,
+            stage: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -331,6 +332,29 @@ class EditModal extends React.Component {
                                         <Typography variant="body1">{teamB.teamName}</Typography>
                                     </CardContent>
                                 </Card>
+
+                                {
+                                    competition.category == 'tournament' &&
+                                    <TextField
+                                        label='Stage'
+                                        variant="filled"
+                                        onChange={this.handleChange}
+                                        name='stage'
+                                        defaultValue={match.stage}
+                                        margin='normal'
+                                        select
+                                        required
+                                        fullWidth
+                                    >
+                                        {['Group', 'Round of 16', 'Quarter Finals', 'Semi Finals', 'Finals']
+                                            .map((stage, index) => (
+                                                <MenuItem key={index} value={stage}>
+                                                    {stage}
+                                                </MenuItem>
+                                            )
+                                        )}
+                                    </TextField>
+                                }
 
                                 {
                                     (competition.category == 'league' || 
