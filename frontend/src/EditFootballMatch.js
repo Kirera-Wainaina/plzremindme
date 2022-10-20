@@ -198,7 +198,7 @@ class EditModal extends React.Component {
             showLinearProgress: false,
             statusCode: null,
             competitions: JSON.parse(sessionStorage.getItem('football-competitions')),
-            matchDay: null,
+            matchDay: this.props.matchDay,
             stage: this.props.match.stage ? this.props.match.stage : null,
             group: null,
             dateTime: new Date(this.props.match.dateTime),
@@ -209,9 +209,63 @@ class EditModal extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit() {
-
+    handleSubmit(e) {
+        e.preventDefault();
+        this.setState({ showLinearProgress: true });
+        const formdata = this.createFormData();
     }
+
+    createFormData() {
+        const formdata = new FormData();
+        const match = this.props.match;
+        const matchDateInISO = this.getMatchDateInISO()
+        const competition = this.state.competitions
+            .filter(competition => competition.docId == match.competitionId)[0];
+
+        if (competition.category == 'tournament'){
+            if (match.stage != this.state.stage) {
+                formdata.append('stage', this.state.stage);
+            }
+
+            if (match.group != this.state.group) {
+                formdata.append('group', this.state.group)
+            }
+        }
+
+        if (competition.category == 'league' || 
+            (competition.category == 'tournament' && this.state.stage == 'Group')) {
+                if (match.matchDay != this.state.matchDay) {
+                    formdata.append('matchDay', this.state.matchDay);
+                }
+        }
+
+        if (matchDateInISO != match.dateTime) {
+            formdata.append('dateTime', matchDateInISO);
+        }
+
+        return formdata
+    }
+
+    getMatchDateInISO() {
+        // create utc time
+        const dateTime = this.state.dateTime;
+        const SECONDS_IN_HOUR = 3600;
+        const MILLISECONDS_IN_HOUR = SECONDS_IN_HOUR * 1000;
+
+        const year = dateTime['$y'];
+        const month = dateTime['$M'] < 9 ? `0${dateTime['$M'] + 1}` : dateTime['$M'] + 1;
+        const day = dateTime['$D'] < 10 ? `0${dateTime['$D']}` : dateTime['$D'];
+        const hour = dateTime['$H'] < 10 ? `0${dateTime['$H']}` : dateTime['$H'];
+        const minute = dateTime['$m'] < 10 ? `0${dateTime['$m']}` : dateTime['$m'];
+
+        const dateRef = new Date(`${year}-${month}-${day}T${hour}:${minute}Z`);
+        const matchDateInMilliseconds = dateRef.getTime();
+        const matchDateInISO = new Date(matchDateInMilliseconds - (this.state.gmt * MILLISECONDS_IN_HOUR))
+            .toISOString();
+
+        return matchDateInISO;
+    }
+
 
     handleChange() {
         this.setState({ [e.target.name]: e.target.value })
