@@ -75,6 +75,18 @@ class Filter extends React.Component {
             })
         }
 
+        if (criteria.tournamentStage) {
+            filtered = filtered.filter(match => match.stage == criteria.tournamentStage);
+        }
+
+        if (criteria.tournamentGroup) {
+            filtered = filtered.filter(match => match.group == criteria.tournamentGroup);
+        }
+
+        if (criteria.matchDay) {
+            filtered = filtered.filter(match => match.matchDay == criteria.matchDay);
+        }
+
         this.props.setFilteredMatches(filtered)
     }
 
