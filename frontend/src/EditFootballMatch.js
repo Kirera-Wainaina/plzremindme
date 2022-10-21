@@ -26,7 +26,10 @@ export default class EditFootballMatch extends React.Component {
             <Grid container justifyContent='center' spacing={2}>
 
                 <Grid item xs={12} sm={8} sx={{ mt: '1%' }}>
-                    <Filter />
+                    <Filter 
+                        filteredMatches={filteredMatches}
+                        matches={matches}
+                    />
                 </Grid>
 
                 <Grid item xs={12} sm={8}>
@@ -59,6 +62,11 @@ class Filter extends React.Component {
     render() {
         return (
             <Card>
+                <FilterModal 
+                    isOpen={this.state.showFilterModal}
+                    close={() => this.setState({ showFilterModal: false })}
+                />
+
                 <Grid container direction='row'>
 
                     <Grid item xs={2} sm={1}>
@@ -87,6 +95,34 @@ class Filter extends React.Component {
             </Card>
         )
     }
+}
+
+function FilterModal(props) {
+    return (
+        <Modal
+            open={props.isOpen}
+            onClose={props.close}
+        >
+            <Card
+                sx={{
+                    width: '80%',
+                    ml: '10%',
+                    mt: '3%'
+                }}
+            >
+                <Grid container>
+
+                    <Grid item xs={12}>
+                        <Typography variant='h6' align='center' sx={{ mt: 5 }}>
+                            Filter Matches By:
+                        </Typography>
+                    </Grid>
+
+                </Grid>
+            </Card>
+
+        </Modal>
+    )
 }
 
 function FootballMatches(props) {
