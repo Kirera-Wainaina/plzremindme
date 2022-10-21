@@ -65,6 +65,7 @@ class Filter extends React.Component {
         let teams = JSON.parse(sessionStorage.getItem('football-teams'));
 
         if (!searchTerm) {
+            this.props.setFilteredMatches([]);
             return;
         }
 
