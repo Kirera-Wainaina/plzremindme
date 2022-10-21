@@ -143,7 +143,7 @@ function FilterModal(props) {
         setCompetitionId(e.target.value);
         const data = competitions.filter(competition => competition.docId == e.target.value)[0];
         setCompetitionData(data);
-        setEligibleTeams(findEligibleTeams(data))
+        setEligibleTeams(findEligibleTeams(data));
     }
 
     function findEligibleTeams(competition) {
@@ -171,6 +171,14 @@ function FilterModal(props) {
             matchDay: matchDay ? matchDay : null,
             teamId: teamId ? teamId : null
         }
+    }
+
+    function resetFilter() {
+        setCompetitionId('');
+        setTeamId('');
+        setTournamentStage('');
+        setTournamentGroup('');
+        setMatchDay('')
     }
 
     return (
@@ -328,6 +336,12 @@ function FilterModal(props) {
                             }}
                         >
                             Run Filter
+                        </Button>
+
+                        <Button
+                            onClick={resetFilter}
+                        >
+                            Reset Filter
                         </Button>
                     </Grid>
 
