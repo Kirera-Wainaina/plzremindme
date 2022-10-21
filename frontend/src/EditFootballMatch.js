@@ -54,10 +54,16 @@ class Filter extends React.Component {
         }
 
         this.searchMatchThroughInput = this.searchMatchThroughInput.bind(this);
+        this.runFilter = this.runFilter.bind(this);
     }
 
     searchMatchThroughInput(e) {
 
+    }
+
+    runFilter(criteria) {
+        console.log('criteria passed');
+        console.log(criteria)
     }
 
     render() {
@@ -66,6 +72,7 @@ class Filter extends React.Component {
                 <FilterModal 
                     isOpen={this.state.showFilterModal}
                     close={() => this.setState({ showFilterModal: false })}
+                    runFilter={this.runFilter}
                 />
 
                 <Grid container direction='row'>
@@ -129,6 +136,17 @@ function FilterModal(props) {
         }
 
         return teams
+    }
+
+    function passFilterCriteria() {
+
+        return {
+            competitionId: competitionId ? competitionId : null,
+            tournamentStage: tournamentStage ? tournamentStage : null,
+            tournamentGroup: tournamentGroup ? tournamentGroup : null,
+            matchDay: matchDay ? matchDay : null,
+            teamId: teamId ? teamId : null
+        }
     }
 
     return (
@@ -281,7 +299,7 @@ function FilterModal(props) {
                         <Button 
                             variant='contained' 
                             onClick={() => {
-                                props.runFilter();
+                                props.runFilter(passFilterCriteria());
                                 props.close()
                             }}
                         >
