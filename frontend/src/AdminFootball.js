@@ -1,4 +1,4 @@
-import { Grid, Tab, Tabs } from "@mui/material";
+import { Divider, Grid, Tab, Tabs } from "@mui/material";
 import React from "react";
 import AddFootballTeam from "./AddFootballTeam";
 import EditFootballTeam from "./EditFootballTeam";
@@ -21,13 +21,23 @@ export default function AdminFootball() {
                     onChange={handleChange}
                     value={value}
                     orientation='vertical'
+                    sx={{
+                        borderRight: 1,
+                        borderColor: 'divider'
+                    }}
                 >
                     <Tab label='Add Teams' value={0}/>
+                    <Divider />
                     <Tab label='Edit Teams' value={1}/>
+                    <Divider />
                     <Tab label='Add Competitions' value={2}/>
+                    <Divider />
                     <Tab label='Edit Competitions' value={3}/>
+                    <Divider />
                     <Tab label='Add Matches' value={4}/>
+                    <Divider />
                     <Tab label='Edit Matches' value={5}/>
+                    <Divider />
                 </Tabs>
 
             </Grid>
