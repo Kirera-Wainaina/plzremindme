@@ -59,7 +59,28 @@ class Filter extends React.Component {
     }
 
     searchMatchThroughInput(e) {
+        const matches = this.props.filteredMatches.length ? 
+            this.props.filteredMatches : this.props.matches;
+        const searchTerm = e.target.value.toLowerCase();
+        let teams = JSON.parse(sessionStorage.getItem('football-teams'));
 
+        if (!searchTerm) {
+            return;
+        }
+
+        const filtered = matches.filter(match => {
+            const teamAId = match.teamA;
+            const teamBId = match.teamB;
+            
+            const teamA = teams.filter(team => team.docId == teamAId)[0];
+            const teamB = teams.filter(team => team.docId == teamBId)[0];
+
+
+            return teamA.teamName.toLowerCase().includes(searchTerm) || 
+                teamB.teamName.toLowerCase().includes(searchTerm)
+        })
+
+        this.props.setFilteredMatches(filtered);
     }
 
     runFilter(criteria) {
