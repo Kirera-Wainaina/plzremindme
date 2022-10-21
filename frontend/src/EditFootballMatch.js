@@ -104,6 +104,7 @@ function FilterModal(props) {
     const [competitionData, setCompetitionData] = React.useState({});
     const [tournamentStage, setTournamentStage] = React.useState('');
     const [tournamentGroup, setTournamentGroup] = React.useState('');
+    const [matchDay, setMatchDay] = React.useState('');
 
     function handleCompetitionChange(e) {
         setCompetitionId(e.target.value);
@@ -205,6 +206,23 @@ function FilterModal(props) {
                                     ))
                                 }
                             </TextField>
+                        </Grid>
+                    }
+
+                    {
+                        (competitionData.category == 'league' ||
+                        (competitionData.category == 'tournament' && tournamentStage == 'Group')) &&
+                        <Grid item xs={12} sx={{ mx: 5 }}>
+                            <TextField 
+                                label='Match Day'
+                                variant="filled"
+                                onChange={e => setMatchDay(e.target.value)}
+                                name='matchDay'
+                                value={matchDay}
+                                margin='normal'
+                                type='number'
+                                fullWidth
+                            />
                         </Grid>
                     }
 
