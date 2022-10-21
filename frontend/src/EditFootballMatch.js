@@ -151,7 +151,10 @@ class Filter extends React.Component {
 }
 
 function FilterModal(props) {
-    const competitions = JSON.parse(sessionStorage.getItem('football-competitions'));
+    let competitions = [];
+    if (sessionStorage.getItem('football-competitions')) {
+        competitions = JSON.parse(sessionStorage.getItem('football-competitions'));
+    }
     const [competitionId, setCompetitionId] = React.useState('');
     const [competitionData, setCompetitionData] = React.useState({});
     const [tournamentStage, setTournamentStage] = React.useState('');
