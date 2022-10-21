@@ -1,6 +1,7 @@
 import { EditSharp, FilterList } from "@mui/icons-material";
 import { Alert, Avatar, Box, Button, Card, CardContent, CardMedia, Grid, 
     IconButton, LinearProgress, List, ListItem, ListItemAvatar, 
+    ListItemText, ListItemIcon,
     MenuItem, Modal, TextField, Typography } from "@mui/material";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import Delete from '@mui/icons-material/Delete';
@@ -98,6 +99,9 @@ class Filter extends React.Component {
 }
 
 function FilterModal(props) {
+    const competitions = JSON.parse(sessionStorage.getItem('football-competitions'));
+    const [competitionId, setCompetitionId] = React.useState('');
+
     return (
         <Modal
             open={props.isOpen}
@@ -116,6 +120,36 @@ function FilterModal(props) {
                         <Typography variant='h6' align='center' sx={{ mt: 5 }}>
                             Filter Matches By:
                         </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ mx: 5 }}>
+                        <Typography variant='subtitle1'>Competition: </Typography>
+                        <TextField
+                            label='Competition'
+                            variant='outlined'
+                            value={competitionId}
+                            onChange={e => setCompetitionId(e.target.value)}
+                            name='competitionId'
+                            fullWidth
+                            select
+                        >
+                            {competitions.map(competition => (
+                                <MenuItem key={competition.docId} value={competition.docId}>
+                                    <ListItemIcon>
+                                        <Card sx={{ mr: '10px', padding: '5px' }}>
+                                            <CardMedia
+                                                component='img'
+                                                image={competition.logoLink}
+                                                alt={competition.name}
+                                                height='50px'
+                                                sx={{ width: '50px', objectFit: 'contain' }}
+                                            />
+                                        </Card>
+                                    </ListItemIcon>
+                                    <ListItemText>{competition.name}</ListItemText>
+                                </MenuItem>
+                            ))}
+                        </TextField>
                     </Grid>
 
                 </Grid>
