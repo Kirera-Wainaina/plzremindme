@@ -103,6 +103,7 @@ function FilterModal(props) {
     const [competitionId, setCompetitionId] = React.useState('');
     const [competitionData, setCompetitionData] = React.useState({});
     const [tournamentStage, setTournamentStage] = React.useState('');
+    const [tournamentGroup, setTournamentGroup] = React.useState('');
 
     function handleCompetitionChange(e) {
         setCompetitionId(e.target.value);
@@ -179,6 +180,30 @@ function FilterModal(props) {
                                         </MenuItem>
                                     )
                                 )}
+                            </TextField>
+                        </Grid>
+                    }
+
+                    {
+                        tournamentStage == 'Group' &&
+                        <Grid item xs={12} sx={{ mx: 5 }}>
+                            <TextField
+                                label='Group'
+                                variant="filled"
+                                onChange={e => setTournamentGroup(e.target.value)}
+                                name='group'
+                                value={tournamentGroup}
+                                margin='normal'
+                                select
+                                fullWidth
+                            >
+                                {
+                                    GROUPS.map((group, index) => (
+                                        <MenuItem key={index} value={group}>
+                                            {group}
+                                        </MenuItem>
+                                    ))
+                                }
                             </TextField>
                         </Grid>
                     }
