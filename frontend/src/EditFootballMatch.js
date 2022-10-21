@@ -101,6 +101,14 @@ class Filter extends React.Component {
 function FilterModal(props) {
     const competitions = JSON.parse(sessionStorage.getItem('football-competitions'));
     const [competitionId, setCompetitionId] = React.useState('');
+    const [competitionData, setCompetitionData] = React.useState({});
+    const [tournamentStage, setTournamentStage] = React.useState('');
+
+    function handleCompetitionChange(e) {
+        setCompetitionId(e.target.value);
+        const data = competitions.filter(competition => competition.docId == e.target.value)[0];
+        setCompetitionData(data);
+    }
 
     return (
         <Modal
@@ -123,12 +131,11 @@ function FilterModal(props) {
                     </Grid>
 
                     <Grid item xs={12} sx={{ mx: 5 }}>
-                        <Typography variant='subtitle1'>Competition: </Typography>
                         <TextField
                             label='Competition'
                             variant='outlined'
                             value={competitionId}
-                            onChange={e => setCompetitionId(e.target.value)}
+                            onChange={e => handleCompetitionChange(e)}
                             name='competitionId'
                             fullWidth
                             select
@@ -151,6 +158,30 @@ function FilterModal(props) {
                             ))}
                         </TextField>
                     </Grid>
+
+                    {
+                        competitionData.category == 'tournament' && // filter by stage
+                        <Grid item xs={12} sx={{ mx: 5 }}>
+                            <TextField
+                                label='Stage'
+                                variant="filled"
+                                onChange={(e) => setTournamentStage(e.target.value)}
+                                name='stage'
+                                value={tournamentStage}
+                                margin='normal'
+                                select
+                                fullWidth
+                            >
+                                {['Group', 'Round of 16', 'Quarter Finals', 'Semi Finals', 'Finals']
+                                    .map((stage, index) => (
+                                        <MenuItem key={index} value={stage}>
+                                            {stage}
+                                        </MenuItem>
+                                    )
+                                )}
+                            </TextField>
+                        </Grid>
+                    }
 
                 </Grid>
             </Card>
