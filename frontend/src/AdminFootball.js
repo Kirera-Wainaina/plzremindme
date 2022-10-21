@@ -23,20 +23,59 @@ export default function AdminFootball() {
                     orientation='vertical'
                     sx={{
                         borderRight: 1,
-                        borderColor: 'divider'
+                        borderColor: 'divider',
+                        height: {
+                            sm: '100vh'
+                        }
                     }}
                 >
-                    <Tab label='Add Teams' value={0}/>
+                    <Tab label='Add Teams' value={0} 
+                        sx={{ 
+                            display: 'flex', 
+                            alignItems: 'flex-start',
+                            ml: '5%'
+                        }}
+                    />
                     <Divider />
-                    <Tab label='Edit Teams' value={1}/>
+                    <Tab label='Edit Teams' value={1}
+                        sx={{ 
+                            display: 'flex', 
+                            alignItems: 'flex-start',
+                            ml: '5%'
+                        }}
+                    />
                     <Divider />
-                    <Tab label='Add Competitions' value={2}/>
+                    <Tab label='Add Competitions' value={2}
+                        sx={{ 
+                            display: 'flex', 
+                            alignItems: 'flex-start',
+                            ml: '5%'
+                        }}
+                    />
                     <Divider />
-                    <Tab label='Edit Competitions' value={3}/>
+                    <Tab label='Edit Competitions' value={3}
+                        sx={{ 
+                            display: 'flex', 
+                            alignItems: 'flex-start',
+                            ml: '5%'
+                        }}
+                    />
                     <Divider />
-                    <Tab label='Add Matches' value={4}/>
+                    <Tab label='Add Matches' value={4}
+                        sx={{ 
+                            display: 'flex', 
+                            alignItems: 'flex-start',
+                            ml: '5%'
+                        }}
+                    />
                     <Divider />
-                    <Tab label='Edit Matches' value={5}/>
+                    <Tab label='Edit Matches' value={5}
+                        sx={{ 
+                            display: 'flex', 
+                            alignItems: 'flex-start',
+                            ml: '5%'
+                        }}
+                    />
                     <Divider />
                 </Tabs>
 
