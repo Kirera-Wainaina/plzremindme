@@ -105,11 +105,30 @@ function FilterModal(props) {
     const [tournamentStage, setTournamentStage] = React.useState('');
     const [tournamentGroup, setTournamentGroup] = React.useState('');
     const [matchDay, setMatchDay] = React.useState('');
+    const [eligibleTeams, setEligibleTeams] = React.useState([]);
+    const [teamId, setTeamId] = React.useState('');
 
     function handleCompetitionChange(e) {
         setCompetitionId(e.target.value);
         const data = competitions.filter(competition => competition.docId == e.target.value)[0];
         setCompetitionData(data);
+        setEligibleTeams(findEligibleTeams(data))
+    }
+
+    function findEligibleTeams(competition) {
+        let teams = JSON.parse(sessionStorage.getItem('football-teams'));
+        
+        if (competition.teamType == 'country') { // only international tournaments fall here
+            teams = teams.filter(team => team.teamType == 'country')
+        } else {
+            teams = teams.filter(team => team.teamType == 'club');
+        }
+
+        if (competition.country) { // national tournament or league
+            teams = teams.filter(team => team.clubCountry == competition.country);
+        }
+
+        return teams
     }
 
     return (
@@ -158,6 +177,38 @@ function FilterModal(props) {
                                     <ListItemText>{competition.name}</ListItemText>
                                 </MenuItem>
                             ))}
+                        </TextField>
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ mx: 5 }}>
+                        <TextField
+                            label='Team'
+                            variant="filled"
+                            onChange={e => setTeamId(e.target.value)}
+                            name='Team'
+                            value={teamId}
+                            margin='normal'
+                            select
+                            fullWidth  
+                        >
+                            {
+                                eligibleTeams.map(team => (
+                                    <MenuItem key={team.docId} value={team.docId}>
+                                        <ListItemIcon>
+                                            <Card sx={{ mr: '10px', padding: '5px' }}>
+                                                <CardMedia
+                                                    component='img'
+                                                    image={team.logoLink}
+                                                    alt={team.teamName}
+                                                    height='50px'
+                                                    sx={{ width: '50px', objectFit: 'contain' }}
+                                                />
+                                            </Card>
+                                        </ListItemIcon>
+                                        <ListItemText>{team.teamName}</ListItemText>
+                                    </MenuItem>
+                                ))
+                            }
                         </TextField>
                     </Grid>
 
@@ -225,6 +276,19 @@ function FilterModal(props) {
                             />
                         </Grid>
                     }
+
+                    <Grid item xs={12} sx={{ m: 3 }}>
+                        <Button 
+                            variant='contained' 
+                            onClick={() => {
+                                props.runFilter();
+                                props.close()
+                            }}
+                        >
+                            Run Filter
+                        </Button>
+                    </Grid>
+
 
                 </Grid>
             </Card>
