@@ -30,6 +30,7 @@ export default class EditFootballMatch extends React.Component {
                     <Filter 
                         filteredMatches={filteredMatches}
                         matches={matches}
+                        setFilteredMatches={filtered => this.setState({ filteredMatches: filtered })}
                     />
                 </Grid>
 
@@ -62,8 +63,19 @@ class Filter extends React.Component {
     }
 
     runFilter(criteria) {
-        console.log('criteria passed');
-        console.log(criteria)
+        let filtered = [...this.props.matches];
+
+        if (criteria.competitionId) {
+            filtered = filtered.filter(match => match.competitionId == criteria.competitionId)
+        }
+
+        if (criteria.teamId) {
+            filtered = filtered.filter(match => {
+                return match.teamA == criteria.teamId || match.teamB == criteria.teamId
+            })
+        }
+
+        this.props.setFilteredMatches(filtered)
     }
 
     render() {
