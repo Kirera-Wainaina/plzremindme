@@ -193,27 +193,6 @@ function FilterModal(props) {
                     </Grid>
 
                     {
-                        (props.category == 'league' || // league
-                        (props.level == 'national' && props.category == 'tournament')) && // national tournament
-                        <Grid item xs={12} sx={{ mx: 5 }}>
-                            <Typography variant='subtitle1'>Country: </Typography>
-                            <ToggleButtonGroup
-                                value={props.country}
-                                exclusive
-                                onChange={(event, value) => props.handleFilters('country', value)}
-                                color='primary'
-                                sx={{ m: 3 }}
-                            >
-                                {
-                                    COUNTRIES.map(country => (
-                                        <ToggleButton value={country} key={country}>{country}</ToggleButton>
-                                    ))
-                                }
-                            </ToggleButtonGroup>
-                        </Grid>
-                    }
-
-                    {
                         props.category == 'tournament' &&
                         <Grid item xs={12} sx={{ mx: 5 }}>
                             <Typography variant='subtitle1'>Level: </Typography>
@@ -226,6 +205,31 @@ function FilterModal(props) {
                             >
                                 <ToggleButton value='national'>National</ToggleButton>
                                 <ToggleButton value='international'>International</ToggleButton>
+                            </ToggleButtonGroup>
+                        </Grid>
+                    }
+                    
+                    {
+                        (props.category == 'league' || // league
+                        (props.level == 'national' && props.category == 'tournament')) && // national tournament
+                        <Grid item xs={12} sx={{ mx: 5 }}>
+                            <Typography variant='subtitle1'>Country: </Typography>
+                            <ToggleButtonGroup
+                                value={props.country}
+                                exclusive
+                                onChange={(event, value) => props.handleFilters('country', value)}
+                                color='primary'
+                                sx={{ 
+                                    m: 3,
+                                    display: 'flex',
+                                    flexWrap: 'wrap'
+                                }}
+                            >
+                                {
+                                    COUNTRIES.map(country => (
+                                        <ToggleButton value={country} key={country}>{country}</ToggleButton>
+                                    ))
+                                }
                             </ToggleButtonGroup>
                         </Grid>
                     }

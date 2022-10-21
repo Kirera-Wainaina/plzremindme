@@ -169,7 +169,11 @@ function FilterModal(props) {
                                 exclusive
                                 onChange={(event, value) => props.handleFilters('clubCountry', value)}
                                 color='primary'
-                                sx={{ m: 3}}
+                                sx={{ 
+                                    m: 3,
+                                    display: 'flex',
+                                    flexWrap: 'wrap'
+                                }}
                             >
                                {COUNTRIES.map(country => (
                                     <ToggleButton value={country} key={country}>{country}</ToggleButton>
