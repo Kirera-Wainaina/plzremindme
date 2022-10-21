@@ -13,9 +13,11 @@ export default function AdminFootball() {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('sm'))
     const [value, setValue] = React.useState(0);
+    const [expanded, setExpanded] = React.useState(false)
 
     function handleChange(event, newValue) {
         setValue(newValue);
+        setExpanded(false);
     }
 
     return (
@@ -24,18 +26,8 @@ export default function AdminFootball() {
             <Grid item xs={12} sm={2}>
                 <Accordion 
                     defaultExpanded={matches}
-                    sx={{ 
-                        // position: {
-                            // xs: 'fixed',
-                            // sm: 'static'
-                        // },
-                        // width: {
-                            // xs: '100vw',
-                            // sm: '100%'
-                        // },
-                        // zIndex: 1,
-                        // backgroundColor: 'white'
-                     }}
+                    expanded={matches ? matches : expanded}
+                    onClick={() => setExpanded(!expanded)}
                 >
                     <AccordionSummary
                         expandIcon={<ExpandMore />}
